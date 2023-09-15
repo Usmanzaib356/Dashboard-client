@@ -1,0 +1,834 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.a1
+{
+    width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
+}
+.a2
+{
+    width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+}
+.a3
+{
+    width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"
+}
+.a4
+{
+    width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"
+}
+.a5
+{
+    width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+}
+.a6
+{
+    width: 25rem;
+}
+.a7
+{
+    width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100";
+}
+.toggled {
+    overflow: visible;
+    width: 6.5rem!important;
+}
+.toggled1 {
+    width: 0!important;
+    overflow: hidden;
+}
+
+
+
+
+
+.switch {
+    --button-width: 3.5em;
+    --button-height: 2em;
+    --toggle-diameter: 1.5em;
+    --button-toggle-offset: calc((var(--button-height) - var(--toggle-diameter)) / 2);
+    --toggle-shadow-offset: 10px;
+    --toggle-wider: 3em;
+    --color-grey: #4e73df;
+    --color-green: #27374D;
+   }
+   
+   .slider {
+    display: inline-block;
+    width: var(--button-width);
+    height: var(--button-height);
+    background-color: var(--color-grey);
+    border-radius: calc(var(--button-height) / 2);
+    position: relative;
+    transition: 0.3s all ease-in-out;
+   }
+   
+   .slider::after {
+    content: "";
+    display: inline-block;
+    width: var(--toggle-diameter);
+    height: var(--toggle-diameter);
+    background-color: #fff;
+    border-radius: calc(var(--toggle-diameter) / 2);
+    position: absolute;
+    top: var(--button-toggle-offset);
+    transform: translateX(var(--button-toggle-offset));
+    box-shadow: var(--toggle-shadow-offset) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+    transition: 0.3s all ease-in-out;
+   }
+   
+   .switch input[type="checkbox"]:checked + .slider {
+    background-color: var(--color-green);
+   }
+   
+   .switch input[type="checkbox"]:checked + .slider::after {
+    transform: translateX(calc(var(--button-width) - var(--toggle-diameter) - var(--button-toggle-offset)));
+    box-shadow: calc(var(--toggle-shadow-offset) * -1) 0 calc(var(--toggle-shadow-offset) * 4) rgba(0, 0, 0, 0.1);
+   }
+   
+   .switch input[type="checkbox"] {
+    display: none;
+   }
+   
+   .switch input[type="checkbox"]:active + .slider::after {
+    width: var(--toggle-wider);
+   }
+   
+   .switch input[type="checkbox"]:checked:active + .slider::after {
+    transform: translateX(calc(var(--button-width) - var(--toggle-wider) - var(--button-toggle-offset)));
+   }
+   
+   
+
+   @media (max-width: 450px) {
+    .switch {
+      --button-width: 2.7em;
+      --button-height: 1.5em;
+      margin-top: 8px;
+    }
+  }
+  
+
+
+
+  /* Add products */
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 68em;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+  }
+  
+  .title {
+    font-size: 28px;
+    color: royalblue;
+    font-weight: 600;
+    letter-spacing: -1px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+  }
+  
+  .title::before,.title::after {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    left: 0px;
+    background-color: royalblue;
+  }
+  
+  .title::before {
+    width: 18px;
+    height: 18px;
+    background-color: royalblue;
+  }
+  
+  .title::after {
+    width: 18px;
+    height: 18px;
+    animation: pulse 1s linear infinite;
+  }
+  
+  .message, .signin {
+    color: rgba(88, 87, 87, 0.822);
+    font-size: 14px;
+  }
+  
+  .signin {
+    text-align: center;
+  }
+  
+  .signin a {
+    color: royalblue;
+  }
+  
+  .signin a:hover {
+    text-decoration: underline royalblue;
+  }
+  
+  .flex {
+    display: flex;
+    width: 100%;
+    gap: 6px;
+  }
+  
+  .form label {
+    position: relative;
+  }
+  
+  .form label .input {
+    width: 100%;
+    padding: 10px 10px 20px 10px;
+    outline: 0;
+    border: 1px solid rgba(105, 105, 105, 0.397);
+    border-radius: 10px;
+  }
+  
+  .form label .input + span {
+    position: absolute;
+    left: 10px;
+    top: 15px;
+    color: grey;
+    font-size: 0.9em;
+    cursor: text;
+    transition: 0.3s ease;
+  }
+  
+  .form label .input:placeholder-shown + span {
+    top: 15px;
+    font-size: 0.9em;
+  }
+  
+  .form label .input:focus + span,.form label .input:valid + span {
+    top: 30px;
+    font-size: 0.7em;
+    font-weight: 600;
+  }
+  
+  .form label .input:valid + span {
+    color: green;
+  }
+  
+  .submitt {
+    border: none;
+    outline: none;
+    background-color: royalblue;
+    padding: 10px;
+    border-radius: 10rem;
+    color: #fff;
+    font-size: 16px;
+    transform: .3s ease;
+    width: 100%;
+
+  }
+  
+  .submitt:hover{
+     color: #fff;
+     text-decoration: none;
+  }
+
+ .input-radius-login-f{
+  border-radius: 10rem;
+ }
+
+  .submitt:hover {
+    background-color: rgb(56, 90, 194);
+  }
+  
+  @keyframes pulse {
+    from {
+      transform: scale(0.9);
+      opacity: 1;
+    }
+  
+    to {
+      transform: scale(1.8);
+      opacity: 0;
+    }
+  }
+
+
+
+/* Signup Css */
+
+.signupformContainer{
+  background-color: #4e73df;
+  min-height: 100vh; 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+.signupform{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+/* New */
+
+.login-form-bg{
+
+  background-color: #fff;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  width: 67%;
+  padding: 3rem 0px;
+
+
+}
+
+/* New */
+
+
+.formm {
+  background-color:#fff;
+  padding: 1rem 2rem;
+  margin: auto;
+  align-items: center;
+  text-align: center;
+  display: block;
+  padding: 1rem;
+  width: 400px;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-align: center;
+  color: #3a3b45!important;
+  font-family: Nunito,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.input-container {
+  position: relative;
+}
+
+.input-container input, .form button {
+  outline: none;
+  border: 2px solid #e5e7eb;
+  
+}
+
+.input-container input {
+  background-color: #fff;
+  padding: 1rem;
+  padding-right: 3rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  width: 100%;
+  border-radius: 10rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.submit-container {
+  display: flex;
+  justify-content: center;
+  outline: none;
+  width: 100%;
+}
+
+.submit {
+  display: block;
+  margin: 0 auto;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  background-color: #4F46E5;
+  color: #ffffff;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  width: 50%;
+  border-radius: 0.5rem;
+  text-transform: uppercase;
+}
+
+
+.signup-link {
+  color: #6B7280;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  text-align: center;
+}
+
+.signup-link a {
+  text-decoration: none;
+}
+
+
+@media screen and (max-width: 450px) {
+  .signupformContainer{
+    height: 100vh; 
+    background-color: #4e73df;
+    align-items: center; 
+  }
+  
+  .signupform{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+  }
+
+
+  .formm {
+    background-color:#fff;
+    height: 32.2em;
+    align-items: center;
+    text-align: center;
+    display: block;
+    padding: 1rem;
+    width: 350px;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+
+  
+}
+
+
+/* Loader css */
+
+.three-body {
+  --uib-size: 35px;
+  --uib-speed: 0.8s;
+  --uib-color: #5D3FD3;
+  position: relative;
+  display: inline-block;
+  height: var(--uib-size);
+  width: var(--uib-size);
+  animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
+ }
+ 
+ .three-body__dot {
+  position: absolute;
+  height: 100%;
+  width: 30%;
+ }
+ 
+ .three-body__dot:after {
+  content: '';
+  position: absolute;
+  height: 0%;
+  width: 100%;
+  padding-bottom: 100%;
+  background-color: var(--uib-color);
+  border-radius: 50%;
+ }
+ 
+ .three-body__dot:nth-child(1) {
+  bottom: 5%;
+  left: 0;
+  transform: rotate(60deg);
+  transform-origin: 50% 85%;
+ }
+ 
+ .three-body__dot:nth-child(1)::after {
+  bottom: 0;
+  left: 0;
+  animation: wobble1 var(--uib-speed) infinite ease-in-out;
+  animation-delay: calc(var(--uib-speed) * -0.3);
+ }
+ 
+ .three-body__dot:nth-child(2) {
+    bottom: 5%;
+  right: 0;
+  transform: rotate(-60deg);
+  transform-origin: 50% 85%;
+ }
+ 
+ .three-body__dot:nth-child(2)::after {
+  bottom: 0;
+  left: 0;
+  animation: wobble1 var(--uib-speed) infinite
+     calc(var(--uib-speed) * -0.15) ease-in-out;
+ }
+ 
+ .three-body__dot:nth-child(3) {
+  bottom: -5%;
+  left: 0;
+  transform: translateX(116.666%);
+ }
+ 
+ .three-body__dot:nth-child(3)::after {
+  top: 0;
+  left: 0;
+  animation: wobble2 var(--uib-speed) infinite ease-in-out;
+ }
+ 
+ @keyframes spin78236 {
+  0% {
+   transform: rotate(0deg);
+  }
+ 
+  100% {
+   transform: rotate(360deg);
+  }
+ }
+ 
+ @keyframes wobble1 {
+  0%,
+   100% {
+   transform: translateY(0%) scale(1);
+   opacity: 1;
+  }
+ 
+  50% {
+   transform: translateY(-66%) scale(0.65);
+   opacity: 0.8;
+  }
+ }
+ 
+ @keyframes wobble2 {
+  0%,
+   100% {
+   transform: translateY(0%) scale(1);
+   opacity: 1;
+  }
+ 
+  50% {
+   transform: translateY(66%) scale(0.65);
+   opacity: 0.8;
+  }
+ }
+ 
+
+/* Products page Loader */
+.loaderss {
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  border-radius: 50%;
+}
+
+.loaderss{
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+}
+
+.loaderss {
+  border: 4px solid rgba(0, 0, 0, .1);
+  border-left-color: transparent;
+  width: 36px;
+  height: 36px;
+  animation: spin89345 1s linear infinite;
+}
+
+@keyframes spin89345 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+  /* Products Table */
+
+
+/* DashBoard Idea */
+
+/* https://themesdesign.in/nazox-ajax/layouts/ecommerce-cart.html */
+
+
+/* CArt template url */
+
+/* https://csshint.com/bootstrap-shoping-carts/ */
+
+/* Team table css */
+
+
+/* chart css */
+
+.chart-area{
+  height: 100%;
+}
+
+
+.chartpract {
+ 
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+
+
+
+
+/* Admin Compoent Css */
+.container-fluid {
+  overflow: hidden;
+}
+
+
+.haha rect{
+  border-width: 1px;
+}
+
+
+
+
+/* Dark theme Css sidebar navbar  footer */
+
+.darkthemesidebar {
+   background-color: #2d3448;
+}
+
+.navbardarktheme{
+  background-color: #2d3448;
+}
+
+
+.srchdark{
+  background-color: #2d3448;
+  color: #FFF;
+  
+}
+
+.srcbtn{
+  background-color: #2d3448;
+}
+
+.FooterTheme{
+  background-color: #2d3448;
+}
+
+@media screen and (max-width: 450px) {
+  .themetext {
+     margin-top: 1em;
+     
+  }
+}
+
+
+@media (max-width: 576px) {
+  .searchbar-nav-none {
+      display: none;
+  }
+}
+
+
+/* Dark theme admin css */
+
+.darkthemecontent{
+  background-color: #272b34;
+}
+
+.card-bodys{
+  background-color:#2d3448 ;
+}
+
+.cardboders{
+  background-color:#2d3448 ;
+}
+
+
+
+.bodydarkcard{
+  background-color: #2d3448;
+}
+
+
+.chartheader{
+  background-color: #2d3448;
+}
+
+
+/* Add products and add inventory dark theme css */
+#formm{
+  background-color: #2d3448;
+  color: white;
+}
+
+#inputt{
+  background-color: #2d3448;
+  color: white;
+}
+
+
+/* All products and All inventory dark theme css */
+
+#productsText{
+  color: white;
+}
+
+.darktable{
+  background-color: #2d3448;
+}
+
+
+.tablehead{
+  background-color: #2d3448;
+  color: white;
+}
+
+
+/* Team dark theme css */
+.teamdark{
+  background-color: #2d3448;
+}
+
+
+/* Table dark theme */
+
+.table-dark{
+  background-color: #2d3448 ;
+  color: #fff;
+}
+
+.abcc{
+  color: #fff;
+}
+
+.text-h-none-nav:hover{
+   background-color: #272b34 !important;
+}
+
+/* Logout buttun css */
+
+.logout_btn {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 17px;
+  padding: 0.8em 1.9em;
+  font-weight: 500;
+  background: #1F2937;
+  color: white;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.6em;
+}
+
+.gradient {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  border-radius: 0.6em;
+  margin-top: -0.25em;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3));
+}
+
+.label {
+  position: relative;
+  top: -1px;
+}
+
+.transition {
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 500ms;
+  background-color: rgba(16, 185, 129, 0.6);
+  border-radius: 9999px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logout_btn:hover .transition {
+  width: 14em;
+  height: 14em;
+}
+
+.logout_btn:active {
+  transform: scale(0.97);
+}
+
+  .btnlgt{
+  margin-right: 2em;
+  }
+
+@media screen and (max-width:450px) {
+  .btnlgt{
+    margin-right: 0.2em;
+   }
+.logout_btn{
+  margin-top: 14px;
+  font-size: 15px;
+  padding: 0.5em 0.9em;
+}
+   
+}
+
+#themetext{
+  margin-top: 18px;
+}
+
+@media screen and (max-width:450px) {
+  #themetext{
+    margin-top: 1.2em;
+ 
+  }
+
+}
+
+
+
+
+
+
+/*  new css  */
+
+.logo-image img{
+
+  width: 32px;
+  height: 32px;
+}
+
+.gap-for-logo{
+ display: flex;
+ gap: 10px;
+}
+
+
+
+
+.logout-drop-down{
+ position: absolute;
+ z-index: 2;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ top: 4.5rem;
+ background: #FFFFFF;
+ width: 10rem;
+ text-align: center;
+ right: 10px;
+ padding: 10px 15px;
+ border-radius: 8px;
+ box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.logout-drop-down-bg{
+  background-color:#2d3448;
+
+} 
+
+
+
+
+
