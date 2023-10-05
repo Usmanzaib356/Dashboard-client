@@ -13,16 +13,21 @@ const AuthContextProvider = ({ children }) => {
     localStorage.setItem('theme', theme ? 'dark' : 'light');
   }, [theme]);
 
-  useEffect(() => {
-    const check = Cookies.get('islogin');
-    if (check === 'true') {
-      return setIsLogin(true);
-    }
-  }, []);
+
 
   const [sidebar, setSidebar] = useState(false);
+  const [usersGet, setUsersGet] = useState([]);
+  const [Products, setProducts] = useState([])
+  const [suppliers, setSuppliers] = useState([])
+  const [dispatchCenter, setDispatchCenter] = useState([])
+  const [dispatchOrder, setDispatchOrder] = useState([])
+  const [store, setStore] = useState([])
+  
+  
 
-  const serverURL = 'http://localhost:8080';
+
+
+  const serverURL = 'https://ill-bee-train.cyclic.cloud/';
 
   return (
     <AuthContext.Provider
@@ -36,6 +41,18 @@ const AuthContextProvider = ({ children }) => {
         setSidebar,
         inventoryIn,
         setInventoryIn,
+        usersGet,
+        setUsersGet,
+        Products, 
+        setProducts,
+        suppliers, 
+        setSuppliers,
+        dispatchCenter,
+        setDispatchCenter,
+        dispatchOrder,
+        setDispatchOrder,
+        store, 
+        setStore,
       }}
     >
       {children}

@@ -1,4 +1,4 @@
-import React,{useRef,useState} from 'react'
+import React,{useRef,useState,useNavigate,useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import useAuth from "../hooks/useAuth"
 import axios from 'axios';
@@ -34,49 +34,24 @@ function Suppliers() {
   };
 
 
-
-// Add Products Funtion
-
-   //  useRef
-   const name = useRef()
-   const price = useRef()
-   const quantity = useRef() 
-   const image = useRef()
    
 // Context Api
-const { Server_Url,theme } = useAuth()
-
-function add (e){
-e.preventDefault()
-setLoader(true)
-    
+const { serverURL,theme,suppliers, setSuppliers } = useAuth()
  
-//  Axois post req
-const url = Server_Url + "/addinventory"
-const formData = new FormData()
-formData.append("name", name.current.value);
-formData.append("price", price.current.value);
-formData.append("quantity", price.current.value);
-formData.append("image", image.current.files[0]);
 
-axios.post(url,formData).then(
-(res)=>{
-    console.log(res);
-    setMsg(res.data.msg)
-    setColor(true)
-    setLoader(false)
-}
-).catch(
-(err)=>{
-    console.log(err);
-    setMsg(err.response.data);
-    setColor(false)
-    setLoader(false)
-}
-)    
-
-}
-
+    // get request
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const url = serverURL + '/supplier/supplier'
+                const response = await axios.get(url)
+                setSuppliers(response.data.data)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData()
+    }, [])
 
 
 
@@ -116,7 +91,7 @@ axios.post(url,formData).then(
                                             </Link>
                                         </Button>
                                     </div>
-                            <CommonTable suppliers data={dummySuppliers}/>
+                            <CommonTable suppliers data={suppliers}/>
                         </div>
 
 

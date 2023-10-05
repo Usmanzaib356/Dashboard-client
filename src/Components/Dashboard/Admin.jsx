@@ -18,7 +18,7 @@ function Admin() {
     useEffect(() => {
 
 
-        const url = Server_Url + "/chartdata"
+        const url = 'https://famous-jacket-goat.cyclic.app' + "/chartdata"
         const token = Cookies.get("Token")
 
         axios.get(url, {
