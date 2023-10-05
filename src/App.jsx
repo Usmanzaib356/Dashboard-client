@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import {  Route, Routes } from 'react-router-dom';
 
 import Admin from './Components/Dashboard/Admin';
 import ViewUsers from './Components/ViewUsers';
@@ -33,6 +33,10 @@ import ReturnInventory from './Components/AddNewItems/ReturnInventory';
 import AddSupplier from './Components/AddNewItems/AddSupplier';
 import AddWarehouse from './Components/AddNewItems/AddWarehouse';
 import GlobalAuth from './Components/GlobalAuth';
+import ServerError from './Components/ServerError';
+import UpdateDispatchCenter from './Components/UpdateItems/UpdateDispatchCenter';
+import UpdateDispatchOrder from './Components/UpdateItems/UpdateDispatchOrder';
+import UpdateStore from './Components/UpdateItems/UpdateStore';
 
 function App() {
   const { islogin } = useAuth();
@@ -80,7 +84,9 @@ function App() {
           <Route path="/add-return-inventory" element={<ReturnInventory />} />
           <Route path="/add-supplier" element={<AddSupplier />} />
           <Route path="/add-warehouse" element={<AddWarehouse />} />
-
+          <Route path="/update-center/:dispatchUpdateId" element={<UpdateDispatchCenter />} />
+          <Route path="/update-orders/:dispatchUpdateOrderId" element={<UpdateDispatchOrder />} />
+          <Route path="/update-store/:storeId" element={<UpdateStore />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/chart" element={<Adminpermission />} />
           <Route path="/side" element={<Sidebar />} />
@@ -91,6 +97,7 @@ function App() {
 
         <Route path="/login" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/error" element={<ServerError />} />
       </Routes>
     </>
   );
