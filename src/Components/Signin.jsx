@@ -21,7 +21,7 @@ function Signin() {
 
 
   // Context Api
-  const { serverURL, setIsLogin } = useAuth()
+  const { serverURL, setIsLogin,islogin } = useAuth()
 
 
   // UseRef 
@@ -32,10 +32,10 @@ function Signin() {
   // Buttun Function
   async function Submit(e) {
     e.preventDefault();
-  
+
     if (!loading && validateInputs()) {
       setLoading(true);
-  
+
       const url = serverURL + "/user/login-user";
       const json = {
         email: email.current.value,
@@ -44,14 +44,19 @@ function Signin() {
 
       try {
         const response = await axios.post(url, json);
-        setIsLogin(true);
+        setIsLogin(true);   
         setLoading(false);
         console.log(response);
         setMsg(response.data.data);
+        const token = response.data.token
+        const expirationTime = new Date();
+        expirationTime.setTime(expirationTime.getTime() + 30 * 60 * 1000); 
+        Cookies.set("token", token, { expires: expirationTime });
+        Cookies.set("login",true)
         setColor(true);
         naviagte('/')
       } catch (err) {
-        console.error(err.response.data);
+        console.log(err);
         setMsg(err.response.data);
         setColor(false);
       } finally {
@@ -59,7 +64,7 @@ function Signin() {
       }
     }
   }
-  
+
 
   const validateInputs = () => {
     let valid = true;
@@ -101,7 +106,7 @@ function Signin() {
               <label htmlFor="" className='d-flex mt-2'>Passowrd</label>
               <input className='input-radius-login-f' ref={password} type="password" placeholder="Password" />
               <p className="error-message text-danger">{passwordError}</p>
-              <p className={`text-left ${color ? 'text-success' : 'text-danger' } `}>{msg}</p>
+              <p className={`text-left ${color ? 'text-success' : 'text-danger'} `}>{msg}</p>
             </div>
             <div className="submit-container mt-4">
               <button className="submitt" type='submit' onClick={(e) => Submit(e)}>Login</button>

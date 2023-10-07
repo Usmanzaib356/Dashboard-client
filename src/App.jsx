@@ -49,16 +49,17 @@ function App() {
   if (isLoading) {
     return <div> Loading... </div>;
   }
+  
 
   // axois get
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<GlobalAuth />}>
+        <Route path="/" element={<  GlobalAuth />}>
           <Route index element={<Admin />} />
 
-          <Route path="/view-users" element={<ViewUsers />} />
+          <Route path="/view-users" element={  <ViewUsers />  } />
           <Route path="/users-role" element={<UserRoles />} />
           <Route path="/products" element={<Products />} />
           <Route path="/inventory" element={<InventoryIn />} />

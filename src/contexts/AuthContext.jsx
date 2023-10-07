@@ -13,6 +13,14 @@ const AuthContextProvider = ({ children }) => {
     localStorage.setItem('theme', theme ? 'dark' : 'light');
   }, [theme]);
 
+  useEffect(()=>{
+    const login = Cookies.get("login")
+    if (login) {
+      setIsLogin(true)
+    }
+  })
+
+  console.log(islogin);
 
 
   const [sidebar, setSidebar] = useState(false);
@@ -22,7 +30,6 @@ const AuthContextProvider = ({ children }) => {
   const [dispatchCenter, setDispatchCenter] = useState([])
   const [dispatchOrder, setDispatchOrder] = useState([])
   const [store, setStore] = useState([])
-  
   
 
 
