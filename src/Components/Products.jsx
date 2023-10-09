@@ -7,6 +7,7 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CommonTable from './CommonTable';
+import { Button } from 'react-bootstrap';
 import { productsDummyData } from '../utils/data';
 function Products() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
@@ -38,15 +39,25 @@ function Products() {
                 const url = serverURL + '/products/product'
                 const response = await axios.get(url)
                 setProducts(response.data.data)
-                if(response.statusText !== 'OK'){
-                  return nav('/error')
-                }
             } catch (error) {
                 console.log(error);
             }
         }
         fetchData()
     }, [])
+
+        // Delete Center
+        const handleDelete = async (deleteProduct) => {
+            try {
+                const url = serverURL + `/products/${deleteProduct}`
+                await axios.delete(url)
+                const UpdateItem = Products.filter(item => item._id !== deleteProduct )
+                setProducts(UpdateItem)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    
 
     return (
         <>
@@ -74,7 +85,18 @@ function Products() {
                                 {/*   <!-- /.container-fluid --> */}
 
                                 <div className='container-fluid'>
-                                    <CommonTable products data={Products} />
+                                <div className='mb-3 d-flex justify-content-end'>
+                                        <Button variant="primary" >
+                                            <Link to='/add-products' className='text-light text-decoration-none'>
+                                                Create New 
+                                            </Link>
+                                        </Button>
+                                    </div>
+                                    <CommonTable
+                                     products
+                                     data={Products}
+                                     deleteProduct={handleDelete}
+                                    />
                                 </div>
                             </div>
                             {/*   <!-- End of Main Content -->

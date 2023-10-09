@@ -52,7 +52,7 @@ function Signin() {
         const expirationTime = new Date();
         expirationTime.setTime(expirationTime.getTime() + 30 * 60 * 1000); 
         Cookies.set("token", token, { expires: expirationTime });
-        Cookies.set("login",true)
+        Cookies.set("login",true,{ expires: expirationTime })
         setColor(true);
         naviagte('/')
       } catch (err) {

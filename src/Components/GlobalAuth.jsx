@@ -7,12 +7,12 @@ const GlobalAuth = () => {
   const authenticated = islogin;
   console.log(authenticated);
 
-  useEffect(()=>{
-    if (!authenticated) {
-      navigate('/login');
-      console.log('navigate');
-    }
-  },[authenticated])
+  // useEffect(()=>{
+  //   if (!authenticated) {
+  //     navigate('/login');
+  //     console.log('navigate');
+  //   }
+  // },[authenticated])
   return <Outlet />;
 };
 

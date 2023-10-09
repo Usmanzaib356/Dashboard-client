@@ -29,12 +29,13 @@ const AuthContextProvider = ({ children }) => {
   const [suppliers, setSuppliers] = useState([])
   const [dispatchCenter, setDispatchCenter] = useState([])
   const [dispatchOrder, setDispatchOrder] = useState([])
+  const [remainingOrders, setRemainingOrders] = useState([])
   const [store, setStore] = useState([])
   
 
 
 
-  const serverURL = 'https://ill-bee-train.cyclic.cloud/';
+  const serverURL = 'http://localhost:8080';
 
   return (
     <AuthContext.Provider
@@ -60,6 +61,8 @@ const AuthContextProvider = ({ children }) => {
         setDispatchOrder,
         store, 
         setStore,
+        remainingOrders, 
+        setRemainingOrders,
       }}
     >
       {children}

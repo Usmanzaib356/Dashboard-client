@@ -1,82 +1,42 @@
 import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom';
-import useAuth from "../../hooks/useAuth"
-import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-import { Button } from 'react-bootstrap';
-function AddSupplier() {
-    const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
+import useAuth from '../../hooks/useAuth';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { FormGroup, FormLabel } from 'react-bootstrap';
 
-
-    const changeStyle = () => {
-        if (style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion") {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled");
-        }
-        else {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion")
-        }
-    };
-    const changeStyle1 = () => {
-        if (style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion") {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled1");
-        }
-        else {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion")
-        }
-    };
-
-
-
-    // Add Products Funtion
-
-
-
-    // Context Api
+function UpdateSupllier() {
     const { serverURL, theme } = useAuth()
     const [msg, setmsg] = useState()
+    const { supplierId } = useParams()
 
+    // Use ref
+    const supplier_name = useRef()
+    const location = useRef()
+    const date = useRef()
 
-
-
-
-        // Use ref
-        const supplier_name = useRef()
-        const location = useRef()
-        const date = useRef()
-
-
-
-
-
-
-    // Add New inventory
-    const HandleAddNewSupplier = async (e) => {
+    const updateHandle = async (e) => {
         e.preventDefault()
-
-        try {
-            const url = serverURL + '/supplier/supplier'
-            const json = {
-                supplier_name: supplier_name.current.value,
-                location: location.current.value,
-                date:date.current.value
-            }
-            const response = await axios.post(url,json)
-            console.log(response);
-            setmsg("Supplier has been add successfully")
-
-        } catch (error) {
-            console.log(error); 
+        const url = serverURL + `/supplier/${supplierId}`
+        const json = {
+            supplier_name: supplier_name.current.value,
+            location: location.current.value,
+            date:date.current.value
         }
-
-
+        try {
+            const response = await axios.put(url, json)
+            console.log(response);
+            setmsg("Update has been successfully")
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-
     return (
-        <>
 
+        <>
             <div>
                 <section id="page-top">
                     {/*  <!-- Page Wrapper --> */}
@@ -105,20 +65,20 @@ function AddSupplier() {
                                         <div className={`card shadow mb-4 ${theme ? 'table-dark' : ''}`}>
                                             <div className={`card-header py-3 ${theme ? 'table-dark' : ''}`}>
                                                 <h6 className="m-0  font-weight-bold text-primary" style={{ fontSize: "16px" }}>
-                                                    Add New Supplier
+                                                    Update Supplier
                                                 </h6>
                                             </div>
                                             <div className='card-body'>
                                                 <div className="">
-                                                    <div className="mb-4" >
-                                                        <label htmlFor="">Supplier Name  <sup className='text-danger'>*</sup></label>
-                                                        <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
-                                                            required
-                                                            type='text'
-                                                            placeholder=' Supplier Name'
-                                                            ref={supplier_name}
-                                                        />
-                                                    </div>
+                                                <div className="mb-4" >
+                                                            <label htmlFor="">Supplier Name  <sup className='text-danger'>*</sup></label>
+                                                            <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
+                                                                required
+                                                                type='text'
+                                                                placeholder=' Supplier Name'
+                                                                ref={supplier_name}
+                                                            />
+                                                        </div>
                                                     <div className="row">
                                                         <div className="col-md-6 mb-3">
                                                             <label htmlFor="">date <sup className='text-danger'>*</sup></label>
@@ -147,7 +107,7 @@ function AddSupplier() {
                                                 <p className='text-center text-success'>{msg}</p>
                                                 <div className='mt-1 w-100'>
                                                     <button type='submit' className='btn  btn-primary w-100'
-                                                     onClick={(e)=>HandleAddNewSupplier(e)}   
+                                                    onClick={(e)=>updateHandle(e)}
                                                     >
                                                         Update
                                                     </button>
@@ -173,9 +133,8 @@ function AddSupplier() {
                     </a>
                 </section>
             </div>
-
         </>
     )
 }
 
-export default AddSupplier;
+export default UpdateSupllier;

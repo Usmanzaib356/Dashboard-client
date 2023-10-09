@@ -37,6 +37,7 @@ function ViewUsers() {
             try {
                 const url = serverURL + '/user/get-users'
                 const response = await axios.get(url)
+                console.log(response);
                 setUsersGet(response.data.data)
             } catch (error) {
                 console.log(error);

@@ -7,12 +7,14 @@ function CommonTable(props) {
     viewUsers,
     usersRoles,
     products,
+    deleteProduct,
     inventoryIn,
     overallInventory,
     faultyInventoryMechanism,
     returnInventoryMechanism,
     inventoryStatus,
     suppliers,
+    deleteSupplier,
     warehouses,
     data,
     storesDummyData,
@@ -1135,8 +1137,8 @@ function CommonTable(props) {
                                 <i className="fa fa-eye"></i>
                               </a>
 
-                              <a
-                                href={`/edit-products/${row.id}`}
+                              <Link
+                                to={`/update-products/${row._id}`}
                                 className=" mx-2 btn btn-success btn-sm "
                                 type="button"
                                 data-toggle="tooltip"
@@ -1144,7 +1146,7 @@ function CommonTable(props) {
                                 title="Edit"
                               >
                                 <i className="fa fa-edit"></i>
-                              </a>
+                              </Link>
 
                               <input type="hidden" name="id" id="" value="37" />
                               <input type="hidden" name="id" id="" value="37" />
@@ -1155,6 +1157,7 @@ function CommonTable(props) {
                                 data-toggle="tooltip"
                                 data-placement="top"
                                 title="Delete"
+                                onClick={()=>deleteProduct(row._id)}
                               >
                                 <i className="fa fa-trash"></i>
                               </button>
@@ -1318,8 +1321,8 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.location}</td>
                           <td className="sorting_1 ">{row.date}</td>
                           <td className="text-center">
-                            <a
-                              href={`/edit-users/${row.id}`}
+                            <Link
+                              to={`/update-supplier/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1327,7 +1330,7 @@ function CommonTable(props) {
                               title="Edit"
                             >
                               <i className="fa fa-edit"></i>
-                            </a>
+                            </Link>
                             <input type="hidden" name="id" value="1" />
                             <button
                               className="btn btn-danger btn-sm  delete"
@@ -1335,6 +1338,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
+                              onClick={()=>deleteSupplier(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1489,17 +1493,6 @@ function CommonTable(props) {
                           <td>{row.courierService}</td>
 
                           <td className="text-center">
-                            <a
-                              href={`/change-password/${row.id}`}
-                              className="btn btn-warning btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Change Password"
-                            >
-                              <i className="fa fa-key"></i>
-                            </a>
-
                             <a
                               href={`/edit-users/${row.id}`}
                               className="mx-2 btn btn-success btn-sm "

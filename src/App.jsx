@@ -22,7 +22,6 @@ import DispatchedCenters from './Components/Orders/DispatchedCenters';
 import DispatchedOrders from './Components/Orders/DispatchedOrders';
 import RemainingOrders from './Components/Orders/RemainingOrders';
 import AllOrders from './Components/Orders/AllOrders';
-import AddUser from './Components/modal/AddUser';
 import Adminpermission from './Components/Adminpermission';
 import Sidebar from './Components/Sidebar';
 import Navbar from './Components/Navbar';
@@ -37,6 +36,9 @@ import ServerError from './Components/ServerError';
 import UpdateDispatchCenter from './Components/UpdateItems/UpdateDispatchCenter';
 import UpdateDispatchOrder from './Components/UpdateItems/UpdateDispatchOrder';
 import UpdateStore from './Components/UpdateItems/UpdateStore';
+import UpdateSupllier from './Components/UpdateItems/UpdateSupplier';
+import AddProducts from './Components/AddNewItems/AddProducts';
+import UpdateProducts from './Components/UpdateItems/UpdateProducts';
 
 function App() {
   const { islogin } = useAuth();
@@ -74,6 +76,7 @@ function App() {
           />
           <Route path="/inventory-status" element={<InventoryStatus />} />
           <Route path="/suppliers" element={<Suppliers />} />
+          <Route path="/update-supplier/:supplierId" element={<UpdateSupllier />} />
           <Route path="/warehouses" element={<Warehouses />} />
           <Route path="/stores" element={<Stores />} />
           <Route path="/all-orders" element={<AllOrders />} />
@@ -85,8 +88,10 @@ function App() {
           <Route path="/add-return-inventory" element={<ReturnInventory />} />
           <Route path="/add-supplier" element={<AddSupplier />} />
           <Route path="/add-warehouse" element={<AddWarehouse />} />
+          <Route path="/add-products" element={<AddProducts />} />
           <Route path="/update-center/:dispatchUpdateId" element={<UpdateDispatchCenter />} />
           <Route path="/update-orders/:dispatchUpdateOrderId" element={<UpdateDispatchOrder />} />
+          <Route path="/update-products/:productId" element={<UpdateProducts />} />
           <Route path="/update-store/:storeId" element={<UpdateStore />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/chart" element={<Adminpermission />} />

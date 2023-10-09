@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import React from 'react'
 import CommonTable from '../CommonTable';
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
+import axios from 'axios';
 import { DispatchedCenter } from '../../utils/data'
 function RemainingOrders() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
@@ -30,14 +31,28 @@ function RemainingOrders() {
         }
     };
 
+    const { serverURL,theme,remainingOrders,setRemainingOrders, } = useAuth()
 
-    const { theme } = useAuth()
+
+    // get request
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const url = serverURL + '/remaining-orders/remaining-orders'
+                const response = await axios.get(url)
+                setRemainingOrders(response.data.data)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData()
+    }, [])
+
     return (
 
         <>
             <div>
                 <section id="page-top">
-
                     {/*  <!-- Page Wrapper --> */}
                     <div id="wrapper">
 
@@ -63,7 +78,7 @@ function RemainingOrders() {
                                 <div className='container-fluid'>
                                     {/* <CommonTable   /> */}
                                     <CommonTable remainingOrders
-                                        data={DispatchedCenter} />
+                                        data={remainingOrders} />
                                 </div>
 
 
