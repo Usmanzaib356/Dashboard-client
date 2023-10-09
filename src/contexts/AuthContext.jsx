@@ -35,7 +35,7 @@ const AuthContextProvider = ({ children }) => {
 
 
 
-  const serverURL = 'http://localhost:8080';
+  const serverURL = 'https://ill-bee-train.cyclic.cloud';
 
   return (
     <AuthContext.Provider

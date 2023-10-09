@@ -50,9 +50,9 @@ function InventoryIn() {
         const url = serverURL + '/inventory/inventories';
         const token = Cookies.get("token")
         const headers = {
-          authorization: `Bearer${token}`
+          Authorization: `Bearer ${token}`
         }
-        const response = await axios.get(url,  {headers} )
+        const response = await axios.get(url, {headers} )
         console.log(response);
         setInventoryIn(response.data.data)
       } catch (error) {
