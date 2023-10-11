@@ -5,7 +5,6 @@ export const AuthContext = createContext();
 const AuthContextProvider = ({ children }) => {
   const [islogin, setIsLogin] = useState(false);
   const [inventoryIn, setInventoryIn] = useState([]);
-  // const [rolee] = useState("")
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? true : false
   );
@@ -13,29 +12,23 @@ const AuthContextProvider = ({ children }) => {
     localStorage.setItem('theme', theme ? 'dark' : 'light');
   }, [theme]);
 
-  useEffect(()=>{
-    const login = Cookies.get("login")
+  useEffect(() => {
+    const login = Cookies.get('login');
     if (login) {
-      setIsLogin(true)
+      setIsLogin(true);
     }
-  })
-
-  console.log(islogin);
-
+  });
 
   const [sidebar, setSidebar] = useState(false);
   const [usersGet, setUsersGet] = useState([]);
-  const [Products, setProducts] = useState([])
-  const [suppliers, setSuppliers] = useState([])
-  const [dispatchCenter, setDispatchCenter] = useState([])
-  const [dispatchOrder, setDispatchOrder] = useState([])
-  const [remainingOrders, setRemainingOrders] = useState([])
-  const [store, setStore] = useState([])
-  
+  const [Products, setProducts] = useState([]);
+  const [suppliers, setSuppliers] = useState([]);
+  const [dispatchCenter, setDispatchCenter] = useState([]);
+  const [dispatchOrder, setDispatchOrder] = useState([]);
+  const [remainingOrders, setRemainingOrders] = useState([]);
+  const [store, setStore] = useState([]);
 
-
-
-  const serverURL = 'https://ill-bee-train.cyclic.cloud';
+  const serverURL = 'https://ill-bee-train.cyclic.cloud/';
 
   return (
     <AuthContext.Provider
@@ -51,17 +44,17 @@ const AuthContextProvider = ({ children }) => {
         setInventoryIn,
         usersGet,
         setUsersGet,
-        Products, 
+        Products,
         setProducts,
-        suppliers, 
+        suppliers,
         setSuppliers,
         dispatchCenter,
         setDispatchCenter,
         dispatchOrder,
         setDispatchOrder,
-        store, 
+        store,
         setStore,
-        remainingOrders, 
+        remainingOrders,
         setRemainingOrders,
       }}
     >
