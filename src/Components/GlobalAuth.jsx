@@ -5,15 +5,14 @@ const GlobalAuth = () => {
   const { islogin } = useAuth();
   const authenticated = islogin;
   const navigate = useNavigate();
-  const authenticated = islogin;
 
-  useEffect(() => {
-    if (!authenticated) {
-      navigate('/login');
-      console.log('navigate');
-    }
-  }, [authenticated]);
-  return <Outlet />;
+  // useEffect(() => {
+  //   if (!authenticated) {
+  //     navigate('/login');
+  //     console.log('navigate');
+  //   }
+  // }, [authenticated]);
+  // return <Outlet />;
 };
 
 export default GlobalAuth;
