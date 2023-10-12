@@ -48,30 +48,19 @@ function InventoryIn() {
     const fetchData = async () => {
       try {
         const url = serverURL + '/inventory/inventories';
-        const token = Cookies.get("token")
+        const token = Cookies.get('token');
         const headers = {
-          Authorization: `Bearer ${token}`
-        }
-        const response = await axios.get(url, {headers} )
-        setInventoryIn(response.data.data)
+          Authorization: `Bearer ${token}`,
+        };
+        const response = await axios.get(url, { headers });
+
+        setInventoryIn(response.data.data);
       } catch (error) {
         console.log(error);
       }
     }
     fetchData()
   }, [])
-
-      // Delete Center
-      const handleDelete = async (deleteInnventoryIn) => {
-        try {
-            const url = serverURL + `/inventory/${deleteInnventoryIn}`
-            await axios.delete(url)
-            const UpdateItem = inventoryIn.filter(item => item._id !== deleteInnventoryIn)
-            setInventoryIn(UpdateItem)
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
 
 
