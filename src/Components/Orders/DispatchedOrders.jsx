@@ -6,6 +6,7 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
+import AddOrder from '../modal/AddOrder';
 function DispatchedOrders() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
@@ -72,7 +73,7 @@ function DispatchedOrders() {
                                 {/* <!-- Begin Page Content --> */}
                                 {/*   <!-- /.container-fluid --> */}
                                 <div className='container-fluid'>
-                                    {/* <CommonTable   /> */}
+                                    <AddOrder/>
                                     <CommonTable 
                                         dispatchedOrders
                                         data={dispatchOrder} 

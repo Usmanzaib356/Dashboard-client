@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useParams } from 'react-router-dom';
 import useAuth from "../../hooks/useAuth"
 import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-function UpdateProduct() {
+function UpdateInventory() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
 
@@ -27,38 +27,35 @@ function UpdateProduct() {
     };
 
     // Context Api
-    const { serverURL, theme, Products 
-         } = useAuth()
+    const { serverURL, theme } = useAuth()
     const [msg, setmsg] = useState()
     const [Title, setTitle] = useState()
     const [des, setDes] = useState()
     const [color, setColor] = useState(false)
-    const [productDetail, setProductDetail] = useState([])
 
-    const { productId } = useParams()
+    const { inventoryId } = useParams()
 
     // Use ref
-    const title = useRef()
-    const description = useRef()
-    const quantity = useRef()
-    const price = useRef()
-    const sellingPrice = useRef()
-    const Image = useRef()
+    const invoice = useRef()
+    const date = useRef()
+    const supplier = useRef()
+    const warehouse = useRef()
+    const stock = useRef()
+    const total_price = useRef()
 
     // Add New inventory
     const UpdateProduct = async (e) => {
         e.preventDefault()
 
-        if (validateInputs()) {
             try {
-                const url = serverURL + `/products/${productId}`
+                const url = serverURL + `/inventory/${inventoryId}`
                 const json = {
-                    title: title.current.value,
-                    desc: description.current.value,
-                    quantity: quantity.current.value,
-                    price: price.current.value,
-                    selling_price: sellingPrice.current.value,
-                    imgURL: Image.current.value
+                    invoice: invoice.current.value,
+                    date: date.current.value,
+                    supplier: supplier.current.value,
+                    warehouse: warehouse.current.value,
+                    stock: stock.current.value,
+                    total_price: total_price.current.value
                 }
                 const response = await axios.put(url, json)
                 console.log(response);
@@ -72,41 +69,9 @@ function UpdateProduct() {
             }
         }
 
-    }
-
-    const validateInputs = () => {
-        let valid = true;
-        setTitle('');
-        setDes('');
-
-        const validTitle = title.current.value.trim()
-        const validDes = description.current.value.trim()
-
-        if (validTitle.length < 5 || validTitle.length > 50) {
-            setTitle('Title must be between 5 and 50 characters.');
-            valid = false;
-        }
-
-        if (validDes.length < 10 || validDes.length > 50) {
-            setDes('Description must be between 10 and 50 characters.');
-            valid = false;
-        }
-
-        return valid;
-    };
 
 
 
-    useEffect(()=>{
-        const getOneItem = Products.filter( item => item._id == productId )
-         getOneItem.map((item)=>{
-            return(
-              setProductDetail(item)   
-            )
-        })
-    },[])
-
-    
     return (
         <>
 
@@ -131,83 +96,83 @@ function UpdateProduct() {
                                 {/*   <!-- /.container-fluid --> */}
                                 <div className='container-fluid'>
 
-                                    <Link to='/products'>
+                                    <Link to='/inventory'>
                                         Go Back
                                     </Link>
                                     <form action="">
                                         <div className={`card shadow mb-4 ${theme ? 'table-dark' : ''}`}>
                                             <div className={`card-header py-3 ${theme ? 'table-dark' : ''}`}>
                                                 <h6 className="m-0  font-weight-bold text-primary" style={{ fontSize: "16px" }}>
-                                                    Update Products
+                                                    Update Inventory
                                                 </h6>
                                             </div>
                                             <div className='card-body'>
                                                 <div className="">
                                                     <div className="mb-4" >
-                                                        <label htmlFor="">Title  <sup className='text-danger'>*</sup></label>
+                                                        <label htmlFor="">Date <sup className='text-danger'>*</sup></label>
                                                         <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
                                                             required
-                                                            type='text'
-                                                            placeholder={productDetail.title}
-                                                            ref={title}
+                                                            type='date'
+                                                            placeholder=' Title'
+                                                            ref={date}
                                                         />
                                                     </div>
                                                     <p className='text-danger'>{Title}</p>
                                                     <div className="mb-4" >
-                                                        <label htmlFor="">Description  <sup className='text-danger'>*</sup></label>
+                                                        <label htmlFor="">invoice  <sup className='text-danger'>*</sup></label>
                                                         <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
                                                             required
                                                             type='text'
-                                                            placeholder={productDetail.desc}
-                                                            ref={description}
+                                                            placeholder='invoice'
+                                                            ref={invoice}
                                                         />
                                                     </div>
                                                     <p className='text-danger'>{des}</p>
                                                     <div className="row">
                                                         <div className="col-md-6 mb-3">
-                                                            <label htmlFor="">Quantity <sup className='text-danger'>*</sup></label>
+                                                            <label htmlFor="">stock <sup className='text-danger'>*</sup></label>
                                                             <input
                                                                 type="number"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
-                                                                ref={quantity}
+                                                                ref={stock}
                                                                 required
-                                                                placeholder={productDetail.quantity}
+                                                                placeholder='stock'
 
                                                             />
                                                         </div>
                                                         <div className="col-md-6 mb-3">
-                                                            <label htmlFor="">Price  <sup className='text-danger'>*</sup></label>
+                                                            <label htmlFor="">supplier  <sup className='text-danger'>*</sup></label>
                                                             <input
-                                                                type="number"
+                                                                type="text"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 required
                                                                 name='Price'
-                                                                ref={price}
-                                                                placeholder={productDetail.price}
+                                                                ref={supplier}
+                                                                placeholder='supplier'
                                                             />
                                                         </div>
                                                     </div>
                                                     <div className="row">
                                                         <div className="col-md-6 mb-3">
-                                                            <label htmlFor="">Selling Price <sup className='text-danger'>*</sup></label>
+                                                            <label htmlFor="">total_price <sup className='text-danger'>*</sup></label>
                                                             <input
                                                                 type="number"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
-                                                                ref={sellingPrice}
+                                                                ref={total_price}
                                                                 required
-                                                                placeholder={productDetail.selling_price}
+                                                                placeholder='total_price'
 
                                                             />
                                                         </div>
                                                         <div className="col-md-6 mb-3">
-                                                            <label htmlFor="">Image  <sup className='text-danger'>*</sup></label>
+                                                            <label htmlFor="">warehouse  <sup className='text-danger'>*</sup></label>
                                                             <input
                                                                 type="text"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 required
                                                                 name='total_price'
-                                                                ref={Image}
-                                                                placeholder='Image'
+                                                                ref={warehouse}
+                                                                placeholder='warehouse'
                                                             />
                                                         </div>
                                                     </div>
@@ -246,4 +211,4 @@ function UpdateProduct() {
     )
 }
 
-export default UpdateProduct;
+export default UpdateInventory;

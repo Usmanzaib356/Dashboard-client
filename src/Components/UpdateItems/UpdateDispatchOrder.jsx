@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState,useEffect } from 'react'
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -7,8 +7,10 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function UpdateDispatchOrder() {
-    const { serverURL, theme,  } = useAuth()
+    const { serverURL, theme, dispatchOrder,
+        setDispatchOrder } = useAuth()
     const [msg,setmsg] = useState()
+    const [dispatchedDetail,setDispatchedDetail] = useState({})
     const {dispatchUpdateOrderId} = useParams()
     
     // Use ref
@@ -20,7 +22,6 @@ function UpdateDispatchOrder() {
      const updateHandle = async (e)=>{
         e.preventDefault()
         const url = serverURL + `/dispatched-orders/${dispatchUpdateOrderId}`
-        console.log();
         const json = {
             order_number:orderNumber.current.value,
             dispatch_center:DispatchCenter.current.value,
@@ -34,7 +35,17 @@ function UpdateDispatchOrder() {
         } catch (error) {
             console.log(error);
         }
-     } 
+     }
+     
+
+    useEffect(()=>{
+        const getOneItem = dispatchOrder.filter( item => item._id == dispatchUpdateOrderId )
+         getOneItem.map((item)=>{
+            return(
+              setDispatchedDetail(item)   
+            )
+        })
+    },[])
 
     return (
 
@@ -77,7 +88,7 @@ function UpdateDispatchOrder() {
                                                             <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 required
                                                                 type='text'
-                                                                placeholder=' Order Number'
+                                                                placeholder={dispatchedDetail.order_number}
                                                                 ref={orderNumber}
                                                             />
                                                         </div>
@@ -86,7 +97,7 @@ function UpdateDispatchOrder() {
                                                             <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 required
                                                                 type='text'
-                                                                placeholder=' Center Name'
+                                                                placeholder={dispatchedDetail.dispatch_center}
                                                                 ref={DispatchCenter}
                                                             />
                                                         </div>
@@ -98,7 +109,7 @@ function UpdateDispatchOrder() {
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 ref={dispatchdate}
                                                                 required
-                                                                placeholder='date'
+                                                                placeholder={dispatchedDetail.dispatch_date}
 
                                                             />
                                                         </div>
@@ -110,7 +121,7 @@ function UpdateDispatchOrder() {
                                                                 required
                                                                 name='total_price'
                                                                 ref={totalAmount}
-                                                                placeholder='Total Amount'
+                                                                placeholder={dispatchedDetail.total_amount}
                                                             />
                                                         </div>
                                                     </div>

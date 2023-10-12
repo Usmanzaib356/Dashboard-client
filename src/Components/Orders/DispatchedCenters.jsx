@@ -84,11 +84,15 @@ function DispatchedCenters() {
                                 {/*   <!-- /.container-fluid --> */}
                                 <div className='container-fluid'>
                                     <AddCenter addNewCenter ></AddCenter>
-                                    <CommonTable
+                                   {
+                                    dispatchCenter ? (
+                                        <CommonTable
                                         DispatchedCenter
                                         data={dispatchCenter}
                                         DispatchedCenterdelete={handleDelete}
                                     />
+                                    ):('Loading')
+                                   }
                                 </div>
                             </div>
                             {/*   <!-- End of Main Content -->

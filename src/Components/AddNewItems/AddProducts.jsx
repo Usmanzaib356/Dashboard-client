@@ -42,7 +42,7 @@ function AddProducts() {
     const sellingPrice = useRef()
     const Image = useRef()
 
-    // Add New inventory
+    // Add New Products
     const HandleAddNewProducts = async (e) => {
         e.preventDefault()
 

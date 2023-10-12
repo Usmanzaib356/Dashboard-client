@@ -31,7 +31,7 @@ function AddStore() {
                 store_name: StoreName.current.value,
                 status: status.current.value
             }
-            const response = await axios.post(url, json)
+             await axios.post(url, json)
             setMsg("Store has been add successfully")
         } catch (error) {
             console.log(error);

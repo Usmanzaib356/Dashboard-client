@@ -20,7 +20,6 @@ const AuthContextProvider = ({ children }) => {
     }
   })
 
-  console.log(islogin);
 
 
   const [sidebar, setSidebar] = useState(false);

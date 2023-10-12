@@ -5,7 +5,6 @@ const GlobalAuth = () => {
   const { islogin } = useAuth()
   const navigate = useNavigate();
   const authenticated = islogin;
-  console.log(authenticated);
 
   // useEffect(()=>{
   //   if (!authenticated) {

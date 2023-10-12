@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -7,15 +7,21 @@ import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 function UpdateDispatchCenter() {
-    const { serverURL, theme, dispatchCenter, setDispatchCenter } = useAuth()
+    const { serverURL, theme, dispatchCenter } = useAuth()
     const [msg,setmsg] = useState()
+    const [dispatchedDetail,setDispatchedDetail] = useState({})
     const {dispatchUpdateId} = useParams()
+    
     
     // Use ref
     const centerName = useRef()
     const location = useRef()
     const courierService = useRef()
 
+    
+
+    
+    
      const updateHandle = async (e)=>{
         e.preventDefault()
         const url = serverURL + `/dispatched-centers/${dispatchUpdateId}`
@@ -31,6 +37,16 @@ function UpdateDispatchCenter() {
             console.log(error);
         }
      } 
+
+     useEffect(()=>{
+        const getOneItem = dispatchCenter.filter( item => item._id == dispatchUpdateId )
+         getOneItem.map((item)=>{
+            return(
+              setDispatchedDetail(item)   
+            )
+        })
+    },[])
+
 
     return (
 
@@ -72,7 +88,7 @@ function UpdateDispatchCenter() {
                                                             <label htmlFor="">Dispatch Center Name</label>
                                                             <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 required
-                                                                placeholder=' Center Name'
+                                                                placeholder={dispatchedDetail.center_name}
                                                                 ref={centerName}
                                                             />
                                                         </div>
@@ -85,7 +101,7 @@ function UpdateDispatchCenter() {
                                                                 ref={location}
                                                                 required
                                                                 name='stock'
-                                                                placeholder='Location'
+                                                                placeholder={dispatchedDetail.location}
 
                                                             />
                                                         </div>
@@ -98,7 +114,7 @@ function UpdateDispatchCenter() {
                                                                 name='total_price'
                                                                 ref={courierService}
                                                                 
-                                                                placeholder='Courier Service'
+                                                                placeholder={dispatchedDetail.courier_service}
                                                             />
                                                         </div>
                                                     </div>

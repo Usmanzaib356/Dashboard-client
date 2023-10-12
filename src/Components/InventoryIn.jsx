@@ -53,7 +53,6 @@ function InventoryIn() {
           Authorization: `Bearer ${token}`
         }
         const response = await axios.get(url, {headers} )
-        console.log(response);
         setInventoryIn(response.data.data)
       } catch (error) {
         console.log(error);
@@ -61,6 +60,18 @@ function InventoryIn() {
     }
     fetchData()
   }, [])
+
+      // Delete Center
+      const handleDelete = async (deleteInnventoryIn) => {
+        try {
+            const url = serverURL + `/inventory/${deleteInnventoryIn}`
+            await axios.delete(url)
+            const UpdateItem = inventoryIn.filter(item => item._id !== deleteInnventoryIn)
+            setInventoryIn(UpdateItem)
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 
@@ -98,7 +109,11 @@ function InventoryIn() {
                     </Button>
                   </div>
                   {inventoryIn ? (
-                    <CommonTable inventoryIn data={inventoryIn} />
+                    <CommonTable
+                     inventoryIn 
+                     data={inventoryIn}
+                     deleteInnventoryIn={handleDelete}
+                     />
                   ) : (
                     'loading'
                   )}

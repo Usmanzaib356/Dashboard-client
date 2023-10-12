@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState,useEffect } from 'react'
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
@@ -8,7 +8,10 @@ import axios from 'axios';
 import { FormGroup, FormLabel } from 'react-bootstrap';
 
 function UpdateSupllier() {
-    const { serverURL, theme } = useAuth()
+    const { serverURL, theme,suppliers, 
+        setSuppliers } = useAuth()
+    const [supplierDetail,setSupplierDetail] = useState({})
+    
     const [msg, setmsg] = useState()
     const { supplierId } = useParams()
 
@@ -27,12 +30,21 @@ function UpdateSupllier() {
         }
         try {
             const response = await axios.put(url, json)
-            console.log(response);
             setmsg("Update has been successfully")
         } catch (error) {
             console.log(error);
         }
     }
+
+
+    useEffect(()=>{
+        const getOneItem = suppliers.filter( item => item._id == supplierId )
+         getOneItem.map((item)=>{
+            return(
+              setSupplierDetail(item)   
+            )
+        })
+    },[])
 
     return (
 
@@ -75,7 +87,7 @@ function UpdateSupllier() {
                                                             <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 required
                                                                 type='text'
-                                                                placeholder=' Supplier Name'
+                                                                placeholder={supplierDetail.supplier_name}
                                                                 ref={supplier_name}
                                                             />
                                                         </div>
@@ -87,7 +99,7 @@ function UpdateSupllier() {
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 ref={date}
                                                                 required
-                                                                placeholder='date'
+                                                                placeholder={supplierDetail.date}
 
                                                             />
                                                         </div>
@@ -99,7 +111,7 @@ function UpdateSupllier() {
                                                                 required
                                                                 name='total_price'
                                                                 ref={location}
-                                                                placeholder='Location'
+                                                                placeholder={supplierDetail.location}
                                                             />
                                                         </div>
                                                     </div>

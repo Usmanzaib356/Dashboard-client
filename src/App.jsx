@@ -39,6 +39,7 @@ import UpdateStore from './Components/UpdateItems/UpdateStore';
 import UpdateSupllier from './Components/UpdateItems/UpdateSupplier';
 import AddProducts from './Components/AddNewItems/AddProducts';
 import UpdateProducts from './Components/UpdateItems/UpdateProducts';
+import UpdateInventory from './Components/UpdateItems/UpdateInventory';
 
 function App() {
   const { islogin } = useAuth();
@@ -91,6 +92,7 @@ function App() {
           <Route path="/add-products" element={<AddProducts />} />
           <Route path="/update-center/:dispatchUpdateId" element={<UpdateDispatchCenter />} />
           <Route path="/update-orders/:dispatchUpdateOrderId" element={<UpdateDispatchOrder />} />
+          <Route path="/update-inventory/:inventoryId" element={<UpdateInventory />} />
           <Route path="/update-products/:productId" element={<UpdateProducts />} />
           <Route path="/update-store/:storeId" element={<UpdateStore />} />
           <Route path="/chart" element={<Chart />} />
