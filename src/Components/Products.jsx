@@ -2,13 +2,11 @@ import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import Cookies from 'js-cookie';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CommonTable from './CommonTable';
 import { Button } from 'react-bootstrap';
-import { productsDummyData } from '../utils/data';
 function Products() {
   const [style, setStyle] = useState(
     'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
@@ -43,20 +41,6 @@ function Products() {
 
   // Delete Center
 
-  // get request
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const url = serverURL + '/products/product';
-        const response = await axios.get(url);
-
-        setProducts(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [serverURL]);
 
   const handleDelete = async (e, productId) => {
     e.preventDefault();

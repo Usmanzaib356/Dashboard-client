@@ -40,6 +40,11 @@ import UpdateSupllier from './Components/UpdateItems/UpdateSupplier';
 import AddProducts from './Components/AddNewItems/AddProducts';
 import UpdateProducts from './Components/UpdateItems/UpdateProducts';
 import UpdateInventory from './Components/UpdateItems/UpdateInventory';
+import DispatchedCenterDetail from './Components/DetailsItems/DispatchedCenterDetail';
+import DistaptchedOrderDetail from './Components/DetailsItems/DistaptchedOrderDetail';
+import SupplierDetail from './Components/DetailsItems/SupplierDetail';
+import InventoryInDetail from './Components/DetailsItems/InventoryInDetail';
+import Productdetail from './Components/DetailsItems/ProductDetail';
 
 function App() {
   const { islogin } = useAuth();
@@ -65,7 +70,9 @@ function App() {
           <Route path="/view-users" element={  <ViewUsers />  } />
           <Route path="/users-role" element={<UserRoles />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/product-detail/:productId" element={<Productdetail />} />
           <Route path="/inventory" element={<InventoryIn />} />
+          <Route path="/inventory-detail/:inventoryId" element={<InventoryInDetail />} />
           <Route path="/overall-inventory" element={<OverallInventory />} />
           <Route
             path="/faulty-inventory"
@@ -77,13 +84,16 @@ function App() {
           />
           <Route path="/inventory-status" element={<InventoryStatus />} />
           <Route path="/suppliers" element={<Suppliers />} />
+          <Route path="/supplier-detail/:supplierId" element={<SupplierDetail />} />
           <Route path="/update-supplier/:supplierId" element={<UpdateSupllier />} />
           <Route path="/warehouses" element={<Warehouses />} />
           <Route path="/stores" element={<Stores />} />
           <Route path="/all-orders" element={<AllOrders />} />
           <Route path="/remaining-orders" element={<RemainingOrders />} />
           <Route path="/dispatched-orders" element={<DispatchedOrders />} />
+          <Route path="/orders-detail/:dispatchUpdateOrderId" element={<DistaptchedOrderDetail />} />          
           <Route path="/dispatched-centers" element={<DispatchedCenters />} />
+          <Route path="/center-detail/:dispatchUpdateId" element={<DispatchedCenterDetail />} />
           <Route path="/add-inventory" element={<AddNewInventory />} />
           <Route path="/add-faulty" element={<AddFaulty />} />
           <Route path="/add-return-inventory" element={<ReturnInventory />} />

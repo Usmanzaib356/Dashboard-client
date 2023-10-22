@@ -1,30 +1,24 @@
-import React, { useRef, useState } from 'react'
-import useAuth from "../../hooks/useAuth"
+import React, { useState, useRef } from 'react';
+import useAuth from '../../hooks/useAuth';
 import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel, FormSelect, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
 function AddOrder() {
+    const { serverURL, remainingOrders } = useAuth();
 
-
-    const { serverURL, dispatchCenter, setDispatchCenter } = useAuth()
-
-    // InputFieldMessage
     const [orderNumber, setOrderNumber] = useState('');
     const [dispatchCenterValid, setDispatchCenterValid] = useState('');
     const [dispatchDate, setDispatchDate] = useState('');
     const [totalAmount, setTotalAmount] = useState('');
     const [msg, setMsg] = useState('');
-
-    // Modal 
+    const [remainingObject, setRemainingObject] = useState(null);
     const [showModal, setShowModal] = useState(false);
 
-
-    //  Ref
-    const order_number = useRef()
-    const dispatch_center = useRef()
-    const dispatch_date = useRef()
-    const total_amount = useRef()
-
+    const order_number = useRef(null);
+    const dispatch_center = useRef(null);
+    const dispatch_date = useRef(null);
+    const total_amount = useRef(null);
+    const OrderNo = useRef(null);
 
     const handleShowModal = () => {
         setShowModal(true);
@@ -36,17 +30,18 @@ function AddOrder() {
 
     const handleSend = async () => {
         if (validInputs()) {
-            const url = serverURL + '/dispatched-orders/dispatched-order'
+            const url = serverURL + '/dispatched-orders/dispatched-order';
             const json = {
                 order_number: order_number.current.value,
                 dispatch_center: dispatch_center.current.value,
                 dispatch_date: dispatch_date.current.value,
                 total_amount: total_amount.current.value,
-            }   
+            };
+
             try {
-                const response = await axios.post(url, json)
+                const response = await axios.post(url, json);
                 console.log(response);
-                setMsg('Center has been Save successfully')
+                setMsg('Center has been saved successfully');
             } catch (error) {
                 console.log(error);
             }
@@ -54,36 +49,43 @@ function AddOrder() {
     };
 
     const validInputs = () => {
-        let valid = true
-        setOrderNumber('')
-        setDispatchCenterValid('')
-        setDispatchDate('')
-        setTotalAmount('')
-
-        if (order_number.current.value.trim() === '') {
-            valid = false
-            setOrderNumber('Please enter your Center Name')
-        }
+        let valid = true;
+        setDispatchCenterValid('');
+        setDispatchDate('');
+        setTotalAmount('');
 
         if (dispatch_center.current.value.trim() === '') {
-            valid = false
-            setDispatchCenterValid('Please enter your Location')
+            valid = false;
+            setDispatchCenterValid('Please enter your Location');
         }
 
         if (dispatch_date.current.value.trim() === '') {
-            valid = false
-            setDispatchDate('Please enter your Services')
+            valid = false;
+            setDispatchDate('Please enter your Services');
         }
 
-        
         if (total_amount.current.value.trim() === '') {
-            valid = false
-            setTotalAmount('Please enter your Services')
+            valid = false;
+            setTotalAmount('Please enter your Services');
         }
 
-        return valid
+        return valid;
+    };
 
-    }
+    const handleOrderChange = (event) => {
+        const selectValue = event.target.value;
+        setOrderNumber(selectValue);
+
+        // Find the selected order and set the total_amount
+        const selectedOrder = remainingOrders.find((item) => item.order_number === selectValue);
+        if (selectedOrder) {
+            total_amount.current.value = selectedOrder.total_amount;
+            setTotalAmount(selectedOrder.total_amount);
+        } else {
+            total_amount.current.value = '';
+            setTotalAmount('');
+        }
+    };
 
     return (
         <>
@@ -91,24 +93,36 @@ function AddOrder() {
                 <Button variant="primary" onClick={handleShowModal}>
                     Add New Order
                 </Button>
-                <Modal show={showModal} onHide={handleCloseModal} >
-                    <ModalHeader >
-                        <ModalTitle  >New Order</ModalTitle>
+                <Modal show={showModal} onHide={handleCloseModal}>
+                    <ModalHeader>
+                        <ModalTitle>New Order</ModalTitle>
                         <button className='btn' onClick={handleCloseModal}>
-                            <li className='fa fa-times' ></li>
+                            <li className='fa fa-times'></li>
                         </button>
                     </ModalHeader>
                     <ModalBody>
                         <Form>
-                            <FormGroup >
+                            <FormGroup className='d-flex flex-column' style={{ width: '100%' }}>
                                 <FormLabel>Dispatch Order</FormLabel>
-                                <FormControl
-                                    type="number"
+                                <select
+                                    name="supplier_id"
+                                    className='form-control'
+                                    required
+                                    onChange={(event) => handleOrderChange(event)}
                                     ref={order_number}
-                                    placeholder='Order'
-                                />
+                                >
+                                    <option value="0" disabled>
+                                        Select Order no
+                                    </option>
+                                    {remainingOrders.map((item, i) => {
+                                        return (
+                                            <option key={i} value={item.order_number} >
+                                                {item.order_number}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
                             </FormGroup>
-                            <p className="error-message text-danger">{orderNumber}</p>
                             <FormGroup className='mt-2'>
                                 <FormLabel>Dispatch Center </FormLabel>
                                 <FormControl
@@ -126,24 +140,24 @@ function AddOrder() {
                                         ref={dispatch_date}
                                         required
                                         aria-required="true"
-                                        placeholder='Date'
+                                        placeholder='date'
                                     />
                                     <p className="error-message text-danger">{dispatchDate}</p>
                                 </FormGroup>
-
                                 <FormGroup>
                                     <FormLabel>Total Amount</FormLabel>
                                     <FormControl
+                                        disabled
                                         type="number"
                                         ref={total_amount}
-                                        placeholder='Amount'
+                                        placeholder={totalAmount}
                                     />
-                                    <p className="error-message text-danger">{totalAmount}</p>
+                                    
                                 </FormGroup>
                             </Row>
                         </Form>
                     </ModalBody>
-                    <p className=" text-center text-success">{msg}</p>
+                    <p className="text-center text-success">{msg}</p>
                     <ModalFooter>
                         <Button variant="danger" onClick={handleCloseModal}>
                             <li className='fa fa-times-circle mr-1'></li>
@@ -157,7 +171,7 @@ function AddOrder() {
                 </Modal>
             </div>
         </>
-    )
+    );
 }
 
 export default AddOrder;

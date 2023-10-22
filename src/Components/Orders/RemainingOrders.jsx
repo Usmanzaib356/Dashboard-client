@@ -34,20 +34,7 @@ function RemainingOrders() {
     const { serverURL,theme,remainingOrders,setRemainingOrders, } = useAuth()
 
 
-    // get request
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = serverURL + '/remaining-orders/remaining-orders'
-                const response = await axios.get(url)
-                setRemainingOrders(response.data.data)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData()
-    }, [])
-
+    
     return (
 
         <>

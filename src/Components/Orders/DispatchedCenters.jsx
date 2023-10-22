@@ -33,22 +33,7 @@ function DispatchedCenters() {
 
 
 
-    const { serverURL, theme, dispatchCenter, setDispatchCenter } = useAuth()
-
-    // get request
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = serverURL + '/dispatched-centers/dispatched-centers'
-                const response = await axios.get(url)
-                setDispatchCenter(response.data.data)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData()
-    }, [])
-
+    const { serverURL, theme, dispatchCenter, setDispatchCenter } = useAuth
     // Delete Center
     const handleDelete = async (DispatchedCenterdelete) => {
         try {
@@ -84,15 +69,12 @@ function DispatchedCenters() {
                                 {/*   <!-- /.container-fluid --> */}
                                 <div className='container-fluid'>
                                     <AddCenter addNewCenter ></AddCenter>
-                                   {
-                                    dispatchCenter ? (
                                         <CommonTable
                                         DispatchedCenter
                                         data={dispatchCenter}
                                         DispatchedCenterdelete={handleDelete}
                                     />
-                                    ):('Loading')
-                                   }
+                                   
                                 </div>
                             </div>
                             {/*   <!-- End of Main Content -->

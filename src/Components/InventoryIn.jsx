@@ -13,13 +13,13 @@ function InventoryIn() {
   const [style, setStyle] = useState(
     'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
   );
-  const [msg, setMsg] = useState('');
-  const [color, setColor] = useState(false);
-  const [loader, setLoader] = useState(false);
+  // const [msg, setMsg] = useState('');
+  // const [color, setColor] = useState(false);
+  // const [loader, setLoader] = useState(false);
 
   const changeStyle = () => {
     if (
-      style == 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
+      style === 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
     ) {
       setStyle(
         'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled'
@@ -42,25 +42,20 @@ function InventoryIn() {
 
   //   Fetch Data from API
   const { serverURL, inventoryIn, setInventoryIn, theme } = useAuth();
-  // get request
+  
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const url = serverURL + '/inventory/inventories';
-        const token = Cookies.get('token');
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
-        const response = await axios.get(url, { headers });
-
-        setInventoryIn(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
+  const handleDelete = async ( deleteInnventoryIn) => {
+    try {
+      const url = serverURL + `/inventory/${deleteInnventoryIn}`;
+      await axios.delete(url);
+      const updatedInventory = inventoryIn.filter((Inventory) => {
+        return Inventory._id !== deleteInnventoryIn;
+      });
+      setInventoryIn(updatedInventory);
+    } catch (error) {
+      console.log(error);
     }
-    fetchData()
-  }, [])
+  };
 
 
 

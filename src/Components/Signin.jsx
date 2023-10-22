@@ -23,7 +23,7 @@ function Signin() {
     if (!loading && validateInputs()) {
       setLoading(true);
 
-      const url = serverURL + 'user/login-user';
+      const url = serverURL + '/user/login-user';
       const json = {
         email: email.current.value,
         password: password.current.value,

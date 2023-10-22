@@ -31,20 +31,7 @@ function ViewUsers() {
     // Context Api
     const { serverURL, theme, setUsersGet,usersGet } = useAuth()
 
-    //  Get user
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = serverURL + '/user/get-users'
-                const response = await axios.get(url)
-                console.log(response);
-                setUsersGet(response.data.data)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData()
-    }, [])
+    
 
     return (
         <>

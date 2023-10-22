@@ -29,20 +29,7 @@ function DispatchedOrders() {
 
     const { serverURL,theme, dispatchOrder, setDispatchOrder } = useAuth()
 
-    // get request
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = serverURL + '/dispatched-orders/dispatched-orders'
-                const response = await axios.get(url)
-                setDispatchOrder(response.data.data)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData()
-    }, [])
-
+   
     const handleDelete = async (dispatchedOrdersDelete) => {
         try {
             const url = serverURL + `/dispatched-orders/${dispatchedOrdersDelete}`

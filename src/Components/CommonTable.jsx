@@ -19,7 +19,7 @@ function CommonTable(props) {
     deleteSupplier,
     warehouses,
     data,
-    storesDummyData,
+    store,
     storeDelete,
     DispatchedCenter,
     DispatchedCenterdelete,
@@ -154,7 +154,7 @@ function CommonTable(props) {
             ? 'Inventory Status'
             : suppliers
             ? 'Suppliers'
-            : storesDummyData
+            : store
             ? 'Stores'
             : warehouses
             ? 'Warehouses'
@@ -759,7 +759,7 @@ function CommonTable(props) {
                       </tr>
                     )}
 
-                    {storesDummyData && (
+                    {store && (
                       <tr role="row">
                         <th
                           className="sorting sorting_asc"
@@ -915,7 +915,7 @@ function CommonTable(props) {
                           aria-label="Name: activate to sort column descending"
                           style={{ width: '177.766px' }}
                         >
-                          Center Name
+                          Order#:
                         </th>
                         <th
                           className="sorting"
@@ -926,7 +926,7 @@ function CommonTable(props) {
                           aria-label="Email: activate to sort column ascending"
                           style={{ width: '336.406px' }}
                         >
-                          Location
+                          Product
                         </th>
 
                         <th
@@ -938,7 +938,19 @@ function CommonTable(props) {
                           aria-label="Email: activate to sort column ascending"
                           style={{ width: '336.406px' }}
                         >
-                          Courier Service
+                          Quantity
+                        </th>
+
+                        <th
+                          className="sorting"
+                          tabIndex="0"
+                          aria-controls="dataTable"
+                          rowSpan="1"
+                          colSpan="1"
+                          aria-label="Email: activate to sort column ascending"
+                          style={{ width: '336.406px' }}
+                        >
+                          Total Amount
                         </th>
 
                         <th
@@ -1130,7 +1142,7 @@ function CommonTable(props) {
                           <td className="text-center   align-middle ">
                             <div className="d-flex align-items-center justify-content-center flex-wrap">
                               <Link
-                                to={`/view-products/${row._id}`}
+                                to={`/product-detail/${row._id}`}
                                 className="btn btn-primary btn-sm "
                                 type="button"
                                 data-toggle="tooltip"
@@ -1195,7 +1207,7 @@ function CommonTable(props) {
                           <td className="">{row.total_price}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap">
                             <Link
-                              to={`/view-products/${row._id}`}
+                              to={`/inventory-detail/${row._id}`}
                               className="btn btn-primary btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1350,7 +1362,7 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.date}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
                           <Link
-                                  to={`${row._id}`}
+                                  to={`/supplier-detail/${row._id}`}
                                   className="btn btn-primary btn-sm "
                                   type="button"
                                   data-toggle="tooltip"
@@ -1436,7 +1448,7 @@ function CommonTable(props) {
                       ))}
                     </tbody>
                   )}
-                  {storesDummyData && (
+                  {store && (
                     <tbody className={`${theme ? 'table-dark' : ''}`}>
                       {displayedRows.map((row, index) => (
                         <tr
@@ -1557,10 +1569,10 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even' : 'odd'}
                           key={index}
                         >
-                          <td className="sorting_1">{row.CenterName}</td>
-                          <td>{row.location}</td>
-                          <td>{row.courierService}</td>
-
+                          <td className="sorting_1">{row.order_number}</td>
+                          <td>{row.product_id}</td>
+                          <td>{row.quantity}</td>
+                          <td>{row.total_amount}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
                           <Link
                                   to={`${row._id}`}
@@ -1571,12 +1583,11 @@ function CommonTable(props) {
                                   title="View"
                                 >
                                   <i className="fa fa-eye">
-                                    
                                   </i>
                                   
                                 </Link>
                             <a
-                              href={`/edit-users/${row.id}`}
+                              href={`/edit-users/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1616,7 +1627,7 @@ function CommonTable(props) {
 
                           <td className="text-start d-flex align-items-center justify-content-center flex-wrap">
                             <Link
-                                  to={`${row._id}`}
+                                  to={`/center-detail/${row._id}`}
                                   className="btn btn-primary btn-sm "
                                   type="button"
                                   data-toggle="tooltip"
@@ -1624,7 +1635,6 @@ function CommonTable(props) {
                                   title="View"
                                 >
                                   <i className="fa fa-eye">
-                                    
                                   </i>
                                   
                                 </Link>
@@ -1670,7 +1680,7 @@ function CommonTable(props) {
                           <td>{row.total_amount}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
                           <Link
-                                  to={`${row._id}`}
+                                  to={`/orders-detail/${row._id}`}
                                   className="btn btn-primary btn-sm "
                                   type="button"
                                   data-toggle="tooltip"

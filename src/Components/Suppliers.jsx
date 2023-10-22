@@ -39,19 +39,7 @@ function Suppliers() {
     const { serverURL, theme, suppliers, setSuppliers } = useAuth()
 
 
-    // get request
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = serverURL + '/supplier/supplier'
-                const response = await axios.get(url)
-                setSuppliers(response.data.data)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData()
-    }, [])
+    
 
     // Delete Center
     const handleDelete = async (deleteSupplier) => {
