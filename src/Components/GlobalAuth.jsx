@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-
+import useAuth from '../hooks/useAuth';
 const GlobalAuth = () => {
+  const { islogin } = useAuth();
+  const authenticated = islogin;
   const navigate = useNavigate();
-  const authenticated = true;
 
-  if (!authenticated) {
-    navigate('/login');
-  }
+  useEffect(() => {
+    if (!authenticated) {
+      navigate('/login');
+      console.log('navigate');
+    }
+  }, [authenticated]);
   return <Outlet />;
 };
 

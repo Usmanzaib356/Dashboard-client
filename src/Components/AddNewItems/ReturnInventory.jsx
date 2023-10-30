@@ -28,69 +28,7 @@ function ReturnInventory() {
     };
 
 
-
-    // Add Products Funtion
-
-
-
-    // Context Api
-    const { Server_Url, theme } = useAuth()
-
-    // function add (e){
-    // e.preventDefault()
-    // setLoader(true)
-
-
-    // //  Axois post req
-    // const url = Server_Url + "/addinventory"
-    // const formData = new FormData()
-    // formData.append("name", name.current.value);
-    // formData.append("price", price.current.value);
-    // formData.append("quantity", price.current.value);
-    // formData.append("image", image.current.files[0]);
-
-    // axios.post(url,formData).then(
-    // (res)=>{
-    //     console.log(res);
-    //     setMsg(res.data.msg)
-    //     setColor(true)
-    //     setLoader(false)
-    // }
-    // ).catch(
-    // (err)=>{
-    //     console.log(err);
-    //     setMsg(err.response.data);
-    //     setColor(false)
-    //     setLoader(false)
-    // }
-    // )    
-
-    // }
-
-
-
-
-    //  useRef
-    const order = useRef()
-    const dispatchDate = useRef()
-    const product = useRef()
-    const comments = useRef()
-    const quantity = useRef()
-
-
-    // Add New inventory
-    const HandleReturnInventory = (e) => {
-        e.preventDefault()
-
-        console.log(
-            order.current.value,
-            dispatchDate.current.value,
-            quantity.current.value,
-            product.current.value,
-            comments.current.value,
-        );
-
-    }
+  
 
 
     return (

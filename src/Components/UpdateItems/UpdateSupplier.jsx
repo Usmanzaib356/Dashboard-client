@@ -1,52 +1,50 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState,useEffect } from 'react'
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { FormGroup, FormLabel } from 'react-bootstrap';
 
-function UpdateDispatchCenter() {
-    const { serverURL, theme, dispatchCenter } = useAuth()
-    const [msg,setmsg] = useState()
-    const [dispatchedDetail,setDispatchedDetail] = useState({})
-    const {dispatchUpdateId} = useParams()
+function UpdateSupllier() {
+    const { serverURL, theme,suppliers, 
+        setSuppliers } = useAuth()
+    const [supplierDetail,setSupplierDetail] = useState({})
     
-    
+    const [msg, setmsg] = useState()
+    const { supplierId } = useParams()
+
     // Use ref
-    const centerName = useRef()
+    const supplier_name = useRef()
     const location = useRef()
-    const courierService = useRef()
+    const date = useRef()
 
-    
-
-    
-    
-     const updateHandle = async (e)=>{
+    const updateHandle = async (e) => {
         e.preventDefault()
-        const url = serverURL + `/dispatched-centers/${dispatchUpdateId}`
+        const url = serverURL + `/supplier/${supplierId}`
         const json = {
-            center_name:centerName.current.value,
-            location:location.current.value,
-            courier_service:courierService.current.value
+            supplier_name: supplier_name.current.value,
+            location: location.current.value,
+            date:date.current.value
         }
         try {
-            const response = await axios.put(url,json)
+            const response = await axios.put(url, json)
             setmsg("Update has been successfully")
         } catch (error) {
             console.log(error);
         }
-     } 
+    }
 
-     useEffect(()=>{
-        const getOneItem = dispatchCenter.filter( item => item._id == dispatchUpdateId )
+
+    useEffect(()=>{
+        const getOneItem = suppliers.filter( item => item._id == supplierId )
          getOneItem.map((item)=>{
             return(
-              setDispatchedDetail(item)   
+              setSupplierDetail(item)   
             )
         })
     },[])
-
 
     return (
 
@@ -72,49 +70,48 @@ function UpdateDispatchCenter() {
                                 {/*   <!-- /.container-fluid --> */}
                                 <div className='container-fluid'>
 
-                                    <Link to='/dispatched-centers'>
+                                    <Link to='/suppliers'>
                                         Go Back
                                     </Link>
                                     <form action="">
                                         <div className={`card shadow mb-4 ${theme ? 'table-dark' : ''}`}>
                                             <div className={`card-header py-3 ${theme ? 'table-dark' : ''}`}>
                                                 <h6 className="m-0  font-weight-bold text-primary" style={{ fontSize: "16px" }}>
-                                                    Update Center
+                                                    Update Supplier
                                                 </h6>
                                             </div>
                                             <div className='card-body'>
                                                 <div className="">
                                                 <div className="mb-4" >
-                                                            <label htmlFor="">Dispatch Center Name</label>
+                                                            <label htmlFor="">Supplier Name  <sup className='text-danger'>*</sup></label>
                                                             <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 required
-                                                                placeholder={dispatchedDetail.center_name}
-                                                                ref={centerName}
+                                                                type='text'
+                                                                placeholder={supplierDetail.supplier_name}
+                                                                ref={supplier_name}
                                                             />
                                                         </div>
                                                     <div className="row">
                                                         <div className="col-md-6 mb-3">
-                                                            <label htmlFor="">Location <sup className='text-danger'>*</sup></label>
+                                                            <label htmlFor="">date <sup className='text-danger'>*</sup></label>
                                                             <input
-                                                                type="text"
+                                                                type="date"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
-                                                                ref={location}
+                                                                ref={date}
                                                                 required
-                                                                name='stock'
-                                                                placeholder={dispatchedDetail.location}
+                                                                placeholder={supplierDetail.date}
 
                                                             />
                                                         </div>
                                                         <div className="col-md-6 mb-3">
-                                                            <label htmlFor="">Courier Service  <sup className='text-danger'>*</sup></label>
+                                                            <label htmlFor="">Location  <sup className='text-danger'>*</sup></label>
                                                             <input
                                                                 type="text"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 required
                                                                 name='total_price'
-                                                                ref={courierService}
-                                                                
-                                                                placeholder={dispatchedDetail.courier_service}
+                                                                ref={location}
+                                                                placeholder={supplierDetail.location}
                                                             />
                                                         </div>
                                                     </div>
@@ -152,4 +149,4 @@ function UpdateDispatchCenter() {
     )
 }
 
-export default UpdateDispatchCenter
+export default UpdateSupllier;

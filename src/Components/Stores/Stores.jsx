@@ -34,19 +34,7 @@ function Stores() {
 
     const { theme, serverURL, store, setStore, } = useAuth()
 
-    // get request
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = serverURL + '/stores/stores'
-                const response = await axios.get(url)
-                setStore(response.data.data)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData()
-    }, [])
+    
 
     // Delete Store
     const handleDelete = async (storeDelete) => {
@@ -90,7 +78,7 @@ function Stores() {
                                 <div className='container-fluid'>
                                     <AddStore addNewStore ></AddStore>
                                     <CommonTable 
-                                    storesDummyData 
+                                    store
                                     data={store}
                                     storeDelete={handleDelete}
                                     />

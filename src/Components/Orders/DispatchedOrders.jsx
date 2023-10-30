@@ -6,6 +6,7 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
+import AddOrder from '../modal/AddOrder';
 function DispatchedOrders() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
@@ -28,20 +29,7 @@ function DispatchedOrders() {
 
     const { serverURL,theme, dispatchOrder, setDispatchOrder } = useAuth()
 
-    // get request
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const url = serverURL + '/dispatched-orders/dispatched-orders'
-                const response = await axios.get(url)
-                setDispatchOrder(response.data.data)
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData()
-    }, [])
-
+   
     const handleDelete = async (dispatchedOrdersDelete) => {
         try {
             const url = serverURL + `/dispatched-orders/${dispatchedOrdersDelete}`
@@ -72,7 +60,7 @@ function DispatchedOrders() {
                                 {/* <!-- Begin Page Content --> */}
                                 {/*   <!-- /.container-fluid --> */}
                                 <div className='container-fluid'>
-                                    {/* <CommonTable   /> */}
+                                    <AddOrder/>
                                     <CommonTable 
                                         dispatchedOrders
                                         data={dispatchOrder} 

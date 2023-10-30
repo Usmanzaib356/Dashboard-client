@@ -6,20 +6,20 @@ import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CommonTable from './CommonTable';
-import { dummyInventoryIn } from '../utils/data';
 import { Button } from 'react-bootstrap';
 import { useEffect } from 'react';
+import Cookies from 'js-cookie';
 function InventoryIn() {
   const [style, setStyle] = useState(
     'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
   );
-  const [msg, setMsg] = useState('');
-  const [color, setColor] = useState(false);
-  const [loader, setLoader] = useState(false);
+  // const [msg, setMsg] = useState('');
+  // const [color, setColor] = useState(false);
+  // const [loader, setLoader] = useState(false);
 
   const changeStyle = () => {
     if (
-      style == 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
+      style === 'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
     ) {
       setStyle(
         'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled'
@@ -42,21 +42,22 @@ function InventoryIn() {
 
   //   Fetch Data from API
   const { serverURL, inventoryIn, setInventoryIn, theme } = useAuth();
-  useEffect(() => {
-    console.log('useeffct');
-    async function getData() {
-      try {
-        const url = serverURL + '/inventory//inventory';
-        const res = await axios.get(url);
-        setInventoryIn(res.data.data);
-        console.log(typeof res.data.data);
-        console.log(res.data.data);
-      } catch (error) {
-        console.log(error);
-      }
+  
+
+  const handleDelete = async ( deleteInnventoryIn) => {
+    try {
+      const url = serverURL + `/inventory/${deleteInnventoryIn}`;
+      await axios.delete(url);
+      const updatedInventory = inventoryIn.filter((Inventory) => {
+        return Inventory._id !== deleteInnventoryIn;
+      });
+      setInventoryIn(updatedInventory);
+    } catch (error) {
+      console.log(error);
     }
-    getData();
-  }, []);
+  };
+
+
 
   return (
     <>
@@ -92,7 +93,11 @@ function InventoryIn() {
                     </Button>
                   </div>
                   {inventoryIn ? (
-                    <CommonTable inventoryIn data={inventoryIn} />
+                    <CommonTable
+                     inventoryIn 
+                     data={inventoryIn}
+                     deleteInnventoryIn={handleDelete}
+                     />
                   ) : (
                     'loading'
                   )}

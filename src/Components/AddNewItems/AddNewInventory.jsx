@@ -1,11 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import useAuth from "../../hooks/useAuth"
 import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
-import { Button } from 'react-bootstrap';
 
 
 function AddNewInventory() {
@@ -36,10 +35,16 @@ function AddNewInventory() {
 
 
     // Context Api
-    const { Server_Url, theme } = useAuth()
+    const { serverURL, theme, Products } = useAuth()
+    const [msg, setmsg] = useState()
+    const [color, setColor] = useState(false)
+    const [inputProducts, setinputProducts] = useState([])
+    
+
 
     const [productForm, setProductForm] = useState([])
     const handleInputChange = (index, field, value) => {
+        console.log(productForm);
         const updatedProductForm = [...productForm];
         updatedProductForm[index][field] = value;
         setProductForm(updatedProductForm);
@@ -47,17 +52,70 @@ function AddNewInventory() {
 
     function removeProductHandler(item) {
         setProductForm(prevProducts => prevProducts.filter((_, index) => {
-            return index !== item  
+            return index !== item
         }));
     }
 
-
-    const handleSubmit = (e)=>{
+    const handleSubmit = (e) => {
         e.preventDefault()
         console.log(productForm);
 
     }
+
+    // Use ref
+    const invoice = useRef()
+    const date = useRef()
+    const supplier = useRef()
+    const warehouse = useRef()
+    const stock = useRef()
+    const total_price = useRef()
+
+
+    // // get request
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             const url = serverURL + '/products/product'
+    //             const response = await axios.get(url)
+    //             setinputProducts(response.data.data)
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     fetchData()
+    // }, [])
+
+    const productData = productForm.map((product) => ({
+        title: product.supplier,
+        quantity: product.quantity,
+        price: product.price
+    }));
+
+
+    // Add New Inventory
+    const HandleAddNewInventory = async (e) => {
+        e.preventDefault()
+
+        try {
+            const url = serverURL + '/inventory/inventory'
+            const json = {
+                // inventoryData,
+                // productData
+            }
+            const response = await axios.post(url, json)
+            console.log(response);
+            setmsg("Product has been add successfully")
+            setColor(true)
+
+        } catch (error) {
+            console.log(error);
+            setmsg(error.response.data.message)
+            setColor(false)
+        }
+    }
+
     
+
     return (
         <>
 
@@ -101,9 +159,8 @@ function AddNewInventory() {
                                                                 type="text"
                                                                 name='invoice_no'
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
-                                                                
-
-
+                                                                placeholder='Invoice'
+                                                                ref={invoice}
                                                             />
                                                         </div>
                                                         <div className="col-md-6 mb-3">
@@ -112,8 +169,7 @@ function AddNewInventory() {
                                                                 type="date"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 name='date'
-
-                                                                
+                                                                ref={date}
                                                             />
                                                         </div>
                                                     </div>
@@ -122,8 +178,7 @@ function AddNewInventory() {
                                                             <label htmlFor="">Supplier <sup className='text-danger'>*</sup></label>
 
                                                             <select name="supplier_id" className={`form-control ${theme ? 'srchdark' : null}`}
-
-                                                                
+                                                                ref={supplier}
                                                             >
                                                                 <option value="0" disabled>
                                                                     Select Supplier
@@ -140,8 +195,7 @@ function AddNewInventory() {
                                                         <div className="col-md-6 mb-3">
                                                             <label htmlFor="">Warehouse <sup className='text-danger'>*</sup></label>
                                                             <select name="warehouse_id" className={`form-control ${theme ? 'srchdark' : null}`}
-
-                                                                
+                                                                ref={warehouse}
                                                             >
                                                                 <option value="0" disabled>
                                                                     Select warehouse
@@ -161,7 +215,8 @@ function AddNewInventory() {
                                                                 type="number"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 name='stock'
-
+                                                                placeholder='Stock'
+                                                                ref={stock}
                                                             />
                                                         </div>
                                                         <div className="col-md-6 mb-3">
@@ -170,7 +225,8 @@ function AddNewInventory() {
                                                                 type="number"
                                                                 className={`form-control ${theme ? 'srchdark' : null}`}
                                                                 name='total_price'
-                                                                
+                                                                placeholder='Total Price '
+                                                                ref={total_price}
                                                             />
                                                         </div>
                                                     </div>
@@ -184,85 +240,72 @@ function AddNewInventory() {
                                                             Add Products
                                                         </h6>
                                                     </div>
-                                                    <div className='mt-4'>
-                                                        {productForm.map((item, i) => {
+                        <div className='mt-4'>
+                            {productForm.map((item, i) => {
 
-                                                            return (
-                                                                <div className="mt-4" key={i}>
-                                                                    <button type="button" onClick={() => { removeProductHandler(i) }} className={"btn btn-danger"}> 
-                                                                    <li className='fa fa-trash mr-2'></li>
-                                                                    Remove
-                                                                     </button>
-                                                                    <div className="my-4" >
-                                                                        <label htmlFor="">Product</label>
+                                return (
+                                    <div className="mt-4" key={i}>
+                                        <button type="button" onClick={() => { removeProductHandler(i) }} className={"btn btn-danger"}>
+                                            <li className='fa fa-trash mr-2'></li>
+                                            Remove
+                                        </button>
+                                        <div className="my-4" >
 
-                                                                        <select name="supplier_id" className={`form-control ${theme ? 'srchdark' : null}`}
-                                                                            required
-
-                                                                            value={item.supplier}
-                                                                            onChange={(e) => handleInputChange(i, 'supplier', e.target.value)}
-
-                                                                        >
-                                                                            <option value="0" >
-                                                                                Select Product
-
-                                                                            </option>
-
-                                                                            <option value="value 1" style={{ Width: '600px' }} >
-                                                                                value 1
-
-                                                                            </option>
-                                                                            <option value="value 2" style={{ Width: '600px' }} >
-                                                                                value 2
-                                                                            </option>
-
-
-                                                                        </select>
-                                                                    </div>
-                                                                    <div className="row">
-                                                                        <div className="col-md-6 mb-3">
-                                                                            <label htmlFor="">Quantity </label>
-                                                                            <input
-                                                                                type="number"
-                                                                                className={`form-control ${theme ? 'srchdark' : null}`}
-
-                                                                                value={item.quantity}
-                                                                                onChange={(e) => handleInputChange(i, 'quantity', e.target.value)}
-                                                                                name='stock'
-
-                                                                            />
-                                                                        </div>
-                                                                        <div className="col-md-6 mb-3">
-                                                                            <label htmlFor=""> Price  </label>
-                                                                            <input
-                                                                                type="number"
-                                                                                className={`form-control ${theme ? 'srchdark' : null}`}
-                                                                                value={item.price}
-                                                                                onChange={(e) => handleInputChange(i, 'price', e.target.value)}
-                                                                                name='total_price'
-
-                                                                            />
-                                                                        </div>
-                                                                    </div>
-
-                                                                </div>
-
-                                                            )
-                                                        })}
-
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => setProductForm([...productForm, { supplier: '', quantity: '', price: '' }])}
-                                                            className='btn btn-warning'>
+                                            <div className="mb-4" >
+                                                        <label htmlFor="">Product</label>
+                                                        <input name="Dispatch Center Name" className={`form-control ${theme ? 'srchdark' : null}`}
+                                                            required
+                                                            type='text'
+                                                            placeholder='Product'
                                                             
-                                                            Add Products  </button>
-                                                        <div className='mt-4 w-100'>
-                                                            <button type='submit' onClick={e=>handleSubmit(e)}  className='btn  btn-primary w-100'>
-                                                                Save
-                                                            </button>
-                                                        </div>
-
+                                                            onChange={(e) => handleInputChange(i, 'Products', e.target.value)}
+                                                                />
                                                     </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6 mb-3">
+                                                <label htmlFor="">Quantity </label>
+                                                <input
+                                                    type="number"
+                                                    className={`form-control ${theme ? 'srchdark' : null}`}
+
+                                                    value={item.quantity}
+                                                    onChange={(e) => handleInputChange(i, 'quantity', e.target.value)}
+                                                    name='stock'
+
+                                                />
+                                            </div>
+                                            <div className="col-md-6 mb-3">
+                                                <label htmlFor=""> Price  </label>
+                                                <input
+                                                    type="number"
+                                                    className={`form-control ${theme ? 'srchdark' : null}`}
+                                                    value={item.price}
+                                                    onChange={(e) => handleInputChange(i, 'price', e.target.value)}
+                                                    name='price'
+
+                                                />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                )
+                            })}
+
+                            <button
+                                type="button"
+                                onClick={() => setProductForm([...productForm, { product: '', quantity: '', price: '' }])}
+                                className='btn btn-warning'>
+
+                                Add Products  </button>
+                            <div className='mt-4 w-100'>
+                                <button type='submit' onClick={e => HandleAddNewInventory(e)} className='btn  btn-primary w-100'>
+                                    Save
+                                </button>
+                            </div>
+
+                        </div>
 
                                                 </div>
                                             </div>

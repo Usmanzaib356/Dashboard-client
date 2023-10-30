@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
@@ -7,15 +8,18 @@ function CommonTable(props) {
     viewUsers,
     usersRoles,
     products,
+    handleDelete,
     inventoryIn,
+    deleteInnventoryIn,
     overallInventory,
     faultyInventoryMechanism,
     returnInventoryMechanism,
     inventoryStatus,
     suppliers,
+    deleteSupplier,
     warehouses,
     data,
-    storesDummyData,
+    store,
     storeDelete,
     DispatchedCenter,
     DispatchedCenterdelete,
@@ -114,7 +118,8 @@ function CommonTable(props) {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedRows = filteredRows.slice(startIndex, endIndex);
-  
+  console.log(displayedRows);
+
   const startIndexForEntries = (currentPage - 1) * itemsPerPage + 1;
   const endIndexForEntries = Math.min(
     startIndex + itemsPerPage,
@@ -122,9 +127,7 @@ function CommonTable(props) {
   );
   const totalEntries = filteredRows.length;
 
-  const { 
-          theme, 
-        } = useAuth()
+  const { theme, serverURL } = useAuth();
 
   return (
     <div className={`card shadow mb-4 ${theme ? 'table-dark' : ''}`}>
@@ -151,7 +154,7 @@ function CommonTable(props) {
             ? 'Inventory Status'
             : suppliers
             ? 'Suppliers'
-            : storesDummyData
+            : store
             ? 'Stores'
             : warehouses
             ? 'Warehouses'
@@ -756,7 +759,7 @@ function CommonTable(props) {
                       </tr>
                     )}
 
-                    {storesDummyData && (
+                    {store && (
                       <tr role="row">
                         <th
                           className="sorting sorting_asc"
@@ -912,7 +915,7 @@ function CommonTable(props) {
                           aria-label="Name: activate to sort column descending"
                           style={{ width: '177.766px' }}
                         >
-                          Center Name
+                          Order#:
                         </th>
                         <th
                           className="sorting"
@@ -923,7 +926,7 @@ function CommonTable(props) {
                           aria-label="Email: activate to sort column ascending"
                           style={{ width: '336.406px' }}
                         >
-                          Location
+                          Product
                         </th>
 
                         <th
@@ -935,7 +938,19 @@ function CommonTable(props) {
                           aria-label="Email: activate to sort column ascending"
                           style={{ width: '336.406px' }}
                         >
-                          Courier Service
+                          Quantity
+                        </th>
+
+                        <th
+                          className="sorting"
+                          tabIndex="0"
+                          aria-controls="dataTable"
+                          rowSpan="1"
+                          colSpan="1"
+                          aria-label="Email: activate to sort column ascending"
+                          style={{ width: '336.406px' }}
+                        >
+                          Total Amount
                         </th>
 
                         <th
@@ -1016,9 +1031,8 @@ function CommonTable(props) {
                   </thead>
 
                   {/* Body of Table */}
-                       
+
                   {viewUsers && (
-                    
                     <tbody className={`${theme ? 'table-dark' : ''}`}>
                       {displayedRows.map((row, index) => (
                         <tr
@@ -1038,7 +1052,7 @@ function CommonTable(props) {
                           >
                             {row.status}
                           </td>
-                          <td className="text-center">
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap">
                             <a
                               href={`/change-password/${row.id}`}
                               className="btn btn-warning btn-sm "
@@ -1104,28 +1118,31 @@ function CommonTable(props) {
 
                   {products && (
                     <tbody className={`${theme ? 'table-dark' : ''}`}>
-                      {displayedRows.map((row, index) => (
-                        <tr
-                          className={index % 2 === 0 ? 'even     ' : 'odd '}
-                          key={index}
-                        >
-                          <td className="sorting_1 ">
-                            <div className="d-flex">
-                              <div>{row.image} </div>
-                              <div className="mx-3 flex-fill ">{row.title} </div>
-                              <div
-                                className="font-weight-bold text-right  my-auto "
-                                style={{ width: '120px' }}
-                              >
-                                SKU: {row.sku}{' '}
+                      {displayedRows.map((row, index) => {
+                        return (
+                          <tr
+                            className={index % 2 === 0 ? 'even     ' : 'odd '}
+                            key={index}
+                          >
+                            <td className="sorting_1 ">
+                              <div className="d-flex">
+                                <div>{row.image} </div>
+                                <div className="mx-3 flex-fill ">
+                                  {row.title}{' '}
+                                </div>
+                                <div
+                                  className="font-weight-bold text-right  my-auto "
+                                  style={{ width: '120px' }}
+                                >
+                                  SKU: {row.sku}{' '}
+                                </div>
                               </div>
-                            </div>
-                          </td>
+                            </td>
 
                           <td className="text-center   align-middle ">
-                            <div className="">
-                              <a
-                                href={`/view-products/${row.id}`}
+                            <div className="d-flex align-items-center justify-content-center flex-wrap">
+                              <Link
+                                to={`/product-detail/${row._id}`}
                                 className="btn btn-primary btn-sm "
                                 type="button"
                                 data-toggle="tooltip"
@@ -1133,35 +1150,47 @@ function CommonTable(props) {
                                 title="View"
                               >
                                 <i className="fa fa-eye"></i>
-                              </a>
+                              </Link>
 
-                              <a
-                                href={`/edit-products/${row.id}`}
-                                className=" mx-2 btn btn-success btn-sm "
-                                type="button"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Edit"
-                              >
-                                <i className="fa fa-edit"></i>
-                              </a>
+                                <Link
+                                  to={`/update-product/${row._id}`}
+                                  className=" mx-2 btn btn-success btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Edit"
+                                >
+                                  <i className="fa fa-edit"></i>
+                                </Link>
 
-                              <input type="hidden" name="id" id="" value="37" />
-                              <input type="hidden" name="id" id="" value="37" />
+                                <input
+                                  type="hidden"
+                                  name="id"
+                                  id=""
+                                  value="37"
+                                />
+                                <input
+                                  type="hidden"
+                                  name="id"
+                                  id=""
+                                  value="37"
+                                />
 
-                              <button
-                                className="btn btn-danger btn-sm  delete"
-                                type="button"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="Delete"
-                              >
-                                <i className="fa fa-trash"></i>
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
+                                <button
+                                  className="btn btn-danger btn-sm  delete"
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Delete"
+                                  onClick={(e) => handleDelete(e, row._id)}
+                                >
+                                  <i className="fa fa-trash"></i>
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   )}
 
@@ -1173,12 +1202,12 @@ function CommonTable(props) {
                           key={index}
                         >
                           <td className="">{row.invoice}</td>
-                          <td className="">{row.data}</td>
+                          <td className="">{row.date}</td>
                           <td className="">{row.stock}</td>
-                          <td className="">{row.price}</td>
-                          <td className="text-center">
-                            <a
-                              href={`/view-products/${row.id}`}
+                          <td className="">{row.total_price}</td>
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap">
+                            <Link
+                              to={`/inventory-detail/${row._id}`}
                               className="btn btn-primary btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1186,9 +1215,9 @@ function CommonTable(props) {
                               title="View"
                             >
                               <i className="fa fa-eye"></i>
-                            </a>
-                            <a
-                              href={`/edit-products/${row.id}`}
+                            </Link>
+                            <Link
+                             to={`/update-inventory/${row._id}`}
                               className=" mx-2 btn btn-success btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1196,7 +1225,7 @@ function CommonTable(props) {
                               title="Edit"
                             >
                               <i className="fa fa-edit"></i>
-                            </a>
+                            </Link>
                             <input type="hidden" name="id" id="" value="37" />
                             <button
                               className="btn btn-danger btn-sm  delete"
@@ -1204,6 +1233,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
+                              onClick={()=>deleteInnventoryIn(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1281,7 +1311,20 @@ function CommonTable(props) {
                         >
                           <td className="sorting_1 ">{row.status_id}</td>
                           <td className="sorting_1 ">{row.status}</td>
-                          <td className="text-center">
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+                          <Link
+                                  to={`${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye">
+                                    
+                                  </i>
+                                  
+                                </Link>
                             <a
                               href={`/edit-users/${row.id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1317,9 +1360,21 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.supplier_name}</td>
                           <td className="sorting_1 ">{row.location}</td>
                           <td className="sorting_1 ">{row.date}</td>
-                          <td className="text-center">
-                            <a
-                              href={`/edit-users/${row.id}`}
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+                          <Link
+                                  to={`/supplier-detail/${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye">
+                                    
+                                  </i>
+                                  
+                                </Link>                            <Link
+                              to={`/update-supplier/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1327,7 +1382,7 @@ function CommonTable(props) {
                               title="Edit"
                             >
                               <i className="fa fa-edit"></i>
-                            </a>
+                            </Link>
                             <input type="hidden" name="id" value="1" />
                             <button
                               className="btn btn-danger btn-sm  delete"
@@ -1335,6 +1390,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
+                              onClick={() => deleteSupplier(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1353,7 +1409,20 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.warehouse_name}</td>
                           <td className="sorting_1 ">{row.location}</td>
                           <td className="sorting_1 ">{row.date}</td>
-                          <td className="text-center">
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+                          <Link
+                                  to={`${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye">
+                                    
+                                  </i>
+                                  
+                                </Link>
                             <a
                               href={`/edit-users/${row.id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1379,7 +1448,7 @@ function CommonTable(props) {
                       ))}
                     </tbody>
                   )}
-                  {storesDummyData && (
+                  {store && (
                     <tbody className={`${theme ? 'table-dark' : ''}`}>
                       {displayedRows.map((row, index) => (
                         <tr
@@ -1396,7 +1465,20 @@ function CommonTable(props) {
                           >
                             {row.status}
                           </td>
-                          <td className="text-center">
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+                          <Link
+                                  to={`${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye">
+                                    
+                                  </i>
+                                  
+                                </Link>
                             <Link
                               to={`/update-store/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1416,7 +1498,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
-                              onClick={()=>storeDelete(row._id)}
+                              onClick={() => storeDelete(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1437,17 +1519,20 @@ function CommonTable(props) {
                           <td>{row.location}</td>
                           <td>{row.courierService}</td>
 
-                          <td className="text-center">
-                            <a
-                              href={`/change-password/${row.id}`}
-                              className="btn btn-warning btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Change Password"
-                            >
-                              <i className="fa fa-key"></i>
-                            </a>
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+                          <Link
+                                  to={`${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye">
+                                    
+                                  </i>
+                                  
+                                </Link>
 
                             <a
                               href={`/edit-users/${row.id}`}
@@ -1484,24 +1569,25 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even' : 'odd'}
                           key={index}
                         >
-                          <td className="sorting_1">{row.CenterName}</td>
-                          <td>{row.location}</td>
-                          <td>{row.courierService}</td>
-
-                          <td className="text-center">
+                          <td className="sorting_1">{row.order_number}</td>
+                          <td>{row.product_id}</td>
+                          <td>{row.quantity}</td>
+                          <td>{row.total_amount}</td>
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+                          <Link
+                                  to={`${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye">
+                                  </i>
+                                  
+                                </Link>
                             <a
-                              href={`/change-password/${row.id}`}
-                              className="btn btn-warning btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Change Password"
-                            >
-                              <i className="fa fa-key"></i>
-                            </a>
-
-                            <a
-                              href={`/edit-users/${row.id}`}
+                              href={`/edit-users/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1539,7 +1625,19 @@ function CommonTable(props) {
                           <td>{row.location}</td>
                           <td>{row.courier_service}</td>
 
-                          <td className="text-start">
+                          <td className="text-start d-flex align-items-center justify-content-center flex-wrap">
+                            <Link
+                                  to={`/center-detail/${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye">
+                                  </i>
+                                  
+                                </Link>
                             <Link
                               to={`/update-center/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1559,7 +1657,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
-                              onClick={()=>DispatchedCenterdelete(row._id)}
+                              onClick={() => DispatchedCenterdelete(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1580,17 +1678,20 @@ function CommonTable(props) {
                           <td>{row.dispatch_center}</td>
                           <td>{row.dispatch_date}</td>
                           <td>{row.total_amount}</td>
-                          <td className="text-center">
-                            <a
-                              href={`/change-password/${row.id}`}
-                              className="btn btn-warning btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Change Password"
-                            >
-                              <i className="fa fa-key"></i>
-                            </a>
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+                          <Link
+                                  to={`/orders-detail/${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye">
+                                    
+                                  </i>
+                                  
+                                </Link>
                             <Link
                               to={`/update-orders/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1610,7 +1711,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
-                              onClick={()=>dispatchedOrdersDelete(row._id)}
+                              onClick={() => dispatchedOrdersDelete(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
