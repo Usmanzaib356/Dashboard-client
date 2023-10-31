@@ -1,28 +1,29 @@
 import React, { useRef, useState } from 'react'
 import useAuth from "../../hooks/useAuth"
 import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel, FormSelect, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
 
 function AddUser() {
 
 
-    const { theme } = useAuth()
+    const { theme,dispatchCenter, setDispatchCenter,serverURL } = useAuth()
 
 
     // Modal 
-
     const [showModal, setShowModal] = useState(false);
     const [passwordMsg, setPasswordMsg] = useState('');
     const [passwordMatch, setPasswordMatch] = useState(true);
+    const [msg, setMsg] = useState("");
 
 
     //  Ref
-
     const firstName = useRef()
     const lastName = useRef()
     const email = useRef()
     const role = useRef()
     const status = useRef()
     const password = useRef()
+    const dispatch_center = useRef()
     const confirmPassword = useRef()
 
 
@@ -53,7 +54,7 @@ function AddUser() {
 
 
 
-    const handleSend = () => {
+    const handleSend = async () => {
 
         console.log(
 
@@ -63,9 +64,26 @@ function AddUser() {
             role.current.value,
             status.current.value,
             password.current.value,
-            confirmPassword.current.value,
+            dispatch_center.current.value
         );
 
+
+        try {
+            const url = serverURL + '/user/add-user'
+            const json = {
+                first_name: firstName.current.value,
+                last_name: lastName.current.value,
+                email: email.current.value,
+                role: role.current.value,
+                status: status.current.value,
+                password: password.current.value,
+            }
+             await axios.post(url, json)
+            setMsg("User has been add successfully")
+        } catch (error) {
+            console.log(error);
+        }
+    
 
     };
 
@@ -115,6 +133,33 @@ function AddUser() {
                                     ref={email}
                                 />
                             </FormGroup>
+
+                            <FormGroup className='d-flex flex-column mt-2'
+                                    style={{ width: '100%' }}
+                                >
+                                    <FormLabel>Dispatch Center</FormLabel>
+                                    <select name="Status" className='form-control'
+                                        required
+                                        ref={dispatch_center}
+                                    >
+                                        <option value="0" disabled>
+                                            Select Center
+
+                                        </option>
+                                        {
+                                            dispatchCenter.map((item,i)=>{
+                                                return(
+                                                    <option value="Active" key={i} >
+                                            {item.center_name}
+
+                                        </option>
+                                                )
+                                            })
+                                        }
+                                        
+
+                                    </select>
+                                </FormGroup>
 
 
                             <Row className='d-flex justify-content-between px-2 mt-3'>

@@ -75,7 +75,7 @@ function AddOrder() {
     const handleOrderChange = (event) => {
         const selectValue = event.target.value;
         setOrderNumber(selectValue);
-
+        
         // Find the selected order and set the total_amount
         const selectedOrder = remainingOrders.find((item) => item.order_number === selectValue);
         if (selectedOrder) {
@@ -83,7 +83,7 @@ function AddOrder() {
             setTotalAmount(selectedOrder.total_amount);
         } else {
             total_amount.current.value = '';
-            setTotalAmount('');
+            setTotalAmount('');         
         }
     };
 

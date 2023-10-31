@@ -906,18 +906,6 @@ function CommonTable(props) {
                     {remainingOrders && (
                       <tr role="row">
                         <th
-                          className="sorting sorting_asc"
-                          tabIndex="0"
-                          aria-controls="dataTable"
-                          rowSpan="1"
-                          colSpan="1"
-                          aria-sort="ascending"
-                          aria-label="Name: activate to sort column descending"
-                          style={{ width: '177.766px' }}
-                        >
-                          Order#:
-                        </th>
-                        <th
                           className="sorting"
                           tabIndex="0"
                           aria-controls="dataTable"
@@ -951,6 +939,18 @@ function CommonTable(props) {
                           style={{ width: '336.406px' }}
                         >
                           Total Amount
+                        </th>
+                        
+                        <th
+                          className="sorting"
+                          tabIndex="0"
+                          aria-controls="dataTable"
+                          rowSpan="1"
+                          colSpan="1"
+                          aria-label="Email: activate to sort column ascending"
+                          style={{ width: '336.406px' }}
+                        >
+                          Location
                         </th>
 
                         <th
@@ -1039,8 +1039,8 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even' : 'odd'}
                           key={index}
                         >
-                          <td className="sorting_1">{row.name}</td>
-                          <td>{row.email}</td>
+                          <td className="sorting_1"> {`${row.first_name} ${row.last_name}`} </td>
+          <td>{row.email}</td>
                           <td>{row.role}</td>
 
                           <td
@@ -1569,10 +1569,10 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even' : 'odd'}
                           key={index}
                         >
-                          <td className="sorting_1">{row.order_number}</td>
                           <td>{row.product_id}</td>
                           <td>{row.quantity}</td>
                           <td>{row.total_amount}</td>
+                          <td>{row.location}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
                           <Link
                                   to={`${row._id}`}
