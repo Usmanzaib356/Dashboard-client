@@ -6,9 +6,11 @@ import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { Button } from 'react-bootstrap';
+import userEvent from '@testing-library/user-event';
 function ReturnInventory() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
+        const {theme} = useAuth()
 
     const changeStyle = () => {
         if (style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion") {
@@ -27,9 +29,20 @@ function ReturnInventory() {
         }
     };
 
-
+ 
+    //  ref
   
+    const order = useRef()
+    const dispatchDate = useRef()
+    const product =  useRef()
+    const quantity = useRef()
+    const comments = useRef()
 
+    const HandleReturnInventory = ()=>{
+        
+    }
+
+    
 
     return (
         <>
