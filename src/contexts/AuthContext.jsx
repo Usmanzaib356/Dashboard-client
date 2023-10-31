@@ -38,7 +38,7 @@ const AuthContextProvider = ({ children }) => {
             try {
                 const url = serverURL + '/dispatched-centers/dispatched-centers'
                 const response = await axios.get(url)
-                setDispatchCenter(response.data.data)
+                setDispatchCenter(response.data.data) 
             } catch (error) {
                 console.log(error);
             }
