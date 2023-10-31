@@ -56,17 +56,6 @@ function AddUser() {
 
     const handleSend = async () => {
 
-        console.log(
-
-            firstName.current.value,
-            lastName.current.value,
-            email.current.value,
-            role.current.value,
-            status.current.value,
-            password.current.value,
-            dispatch_center.current.value
-        );
-
 
         try {
             const url = serverURL + '/user/add-user'
