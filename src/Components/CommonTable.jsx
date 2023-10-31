@@ -914,6 +914,17 @@ function CommonTable(props) {
                           aria-label="Email: activate to sort column ascending"
                           style={{ width: '336.406px' }}
                         >
+                          Order #
+                        </th>
+                        <th
+                          className="sorting"
+                          tabIndex="0"
+                          aria-controls="dataTable"
+                          rowSpan="1"
+                          colSpan="1"
+                          aria-label="Email: activate to sort column ascending"
+                          style={{ width: '336.406px' }}
+                        >
                           Product
                         </th>
 
@@ -1569,6 +1580,7 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even' : 'odd'}
                           key={index}
                         >
+                          <td>{row.order_number}</td>
                           <td>{row.product_id}</td>
                           <td>{row.quantity}</td>
                           <td>{row.total_amount}</td>
