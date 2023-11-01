@@ -27,9 +27,10 @@ function DispatchedOrders() {
         }
     };
 
-    const { serverURL,theme, dispatchOrder, setDispatchOrder } = useAuth()
+    const { serverURL,theme, dispatchOrder, setDispatchOrder,currentUser } = useAuth()
 
    
+
     const handleDelete = async (dispatchedOrdersDelete) => {
         try {
             const url = serverURL + `/dispatched-orders/${dispatchedOrdersDelete}`
@@ -64,6 +65,7 @@ function DispatchedOrders() {
                                     <CommonTable 
                                         dispatchedOrders
                                         data={dispatchOrder} 
+                                        currentUser
                                         dispatchedOrdersDelete={handleDelete} />
                                 </div>
                             </div>

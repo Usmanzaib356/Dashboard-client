@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 function CommonTable(props) {
   const {
     viewUsers,
+    currentUser,
     usersRoles,
     products,
     handleDelete,
@@ -27,6 +28,7 @@ function CommonTable(props) {
     dispatchedOrders,
     dispatchedOrdersDelete,
     remainingOrders,
+    remainingOrdersDelete,
   } = props;
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -1617,6 +1619,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
+                              onClick={()=>remainingOrdersDelete(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>

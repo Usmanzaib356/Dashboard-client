@@ -18,10 +18,11 @@ const AuthContextProvider = ({ children }) => {
     if (login) {
       setIsLogin(true);
     }
-  })
+})
 
   const [sidebar, setSidebar] = useState(false);
   const [usersGet, setUsersGet] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   const [Products, setProducts] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [dispatchCenter, setDispatchCenter] = useState([]);
@@ -71,7 +72,6 @@ const AuthContextProvider = ({ children }) => {
             const url = serverURL + '/remaining-orders/remaining-orders'
             const response = await axios.get(url)
             setRemainingOrders(response.data.data)
-            console.log(response);
         } catch (error) {
             console.log(error);
         }
@@ -154,7 +154,6 @@ useEffect(() => {
         try {
             const url = serverURL + '/user/get-users'
             const response = await axios.get(url)
-            console.log(response);
             setUsersGet(response.data.data)
         } catch (error) {
             console.log(error);
@@ -190,6 +189,8 @@ useEffect(() => {
         setStore,
         remainingOrders,
         setRemainingOrders,
+        currentUser, 
+        setCurrentUser,
       }}
     >
       {children}

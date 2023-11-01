@@ -34,6 +34,17 @@ function RemainingOrders() {
     const { serverURL,theme,remainingOrders,setRemainingOrders, } = useAuth()
 
 
+    const handleDelete = async (id) => {
+        try {
+            const url = serverURL + `/remaining-orders/${id}`
+            await axios.delete(url)
+            const removeItem = remainingOrders.filter(item => item._id !== id)
+            setRemainingOrders(removeItem)
+        } catch (error) {
+            console.log(error);
+            alert("Something went wrong")
+        }
+    }
     
     return (
 
@@ -65,6 +76,7 @@ function RemainingOrders() {
                                 <div className='container-fluid'>
                                     {/* <CommonTable   /> */}
                                     <CommonTable remainingOrders
+                                        remainingOrdersDelete={handleDelete} 
                                         data={remainingOrders} />
                                 </div>
 

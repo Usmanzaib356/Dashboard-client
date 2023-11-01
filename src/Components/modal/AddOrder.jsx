@@ -2,9 +2,10 @@ import React, { useState, useRef } from 'react';
 import useAuth from '../../hooks/useAuth';
 import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel, FormSelect, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 function AddOrder() {
-    const { serverURL, remainingOrders } = useAuth();
+    const { serverURL, remainingOrders,currentUser } = useAuth();
 
     const [orderNumber, setOrderNumber] = useState('');
     const [dispatchCenterValid, setDispatchCenterValid] = useState('');
@@ -18,7 +19,10 @@ function AddOrder() {
     const dispatch_center = useRef(null);
     const dispatch_date = useRef(null);
     const total_amount = useRef(null);
+    const centerRef = useRef(null);
     const OrderNo = useRef(null);
+    
+    
 
     const handleShowModal = () => {
         setShowModal(true);
@@ -38,6 +42,9 @@ function AddOrder() {
                 total_amount: total_amount.current.value,
             };
 
+            console.log(dispatchDate);
+            console.log(centerRef);
+
             try {
                 const response = await axios.post(url, json);
                 console.log(response);
@@ -54,10 +61,6 @@ function AddOrder() {
         setDispatchDate('');
         setTotalAmount('');
 
-        if (dispatch_center.current.value.trim() === '') {
-            valid = false;
-            setDispatchCenterValid('Please enter your Location');
-        }
 
         if (dispatch_date.current.value.trim() === '') {
             valid = false;
@@ -87,6 +90,8 @@ function AddOrder() {
         }
     };
 
+    const center = Cookies.get("center")
+    
     return (
         <>
             <div className='mb-3 d-flex justify-content-end'>
@@ -114,7 +119,7 @@ function AddOrder() {
                                     <option value="0" disabled>
                                         Select Order no
                                     </option>
-                                    {remainingOrders.map((item, i) => {
+                                        {remainingOrders.map((item, i) => {
                                         return (
                                             <option key={i} value={item.order_number} >
                                                 {item.order_number}
@@ -126,9 +131,11 @@ function AddOrder() {
                             <FormGroup className='mt-2'>
                                 <FormLabel>Dispatch Center </FormLabel>
                                 <FormControl
+                                    disabled
                                     type="text"
                                     ref={dispatch_center}
-                                    placeholder='Center'
+                                    value={center}
+
                                 />
                             </FormGroup>
                             <p className="error-message text-danger">{dispatchCenterValid}</p>

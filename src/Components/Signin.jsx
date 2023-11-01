@@ -12,7 +12,7 @@ function Signin() {
 
   const naviagte = useNavigate();
 
-  const { serverURL, setIsLogin, islogin } = useAuth();
+  const { serverURL, setIsLogin, setCurrentUser } = useAuth();
 
   const email = useRef();
   const password = useRef();
@@ -34,11 +34,13 @@ function Signin() {
         setIsLogin(true);
         setLoading(false);
         setMsg(response.data);
+        setCurrentUser(response.data.user)
         const token = response.data.token;
         const expirationTime = new Date();
         expirationTime.setTime(expirationTime.getTime() + 30 * 60 * 1000);
         Cookies.set('token', token, { expires: expirationTime });
         Cookies.set('login', true);
+        Cookies.set('center', response.data.user.dispatch_center);
         setColor(true);
         naviagte('/');
       } catch (err) {
