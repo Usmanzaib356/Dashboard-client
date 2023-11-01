@@ -120,7 +120,6 @@ function CommonTable(props) {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const displayedRows = filteredRows.slice(startIndex, endIndex);
-  console.log(displayedRows);
 
   const startIndexForEntries = (currentPage - 1) * itemsPerPage + 1;
   const endIndexForEntries = Math.min(
@@ -953,7 +952,7 @@ function CommonTable(props) {
                         >
                           Total Amount
                         </th>
-                        
+
                         <th
                           className="sorting"
                           tabIndex="0"
@@ -1052,8 +1051,11 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even' : 'odd'}
                           key={index}
                         >
-                          <td className="sorting_1"> {`${row.first_name} ${row.last_name}`} </td>
-          <td>{row.email}</td>
+                          <td className="sorting_1">
+                            {' '}
+                            {`${row.first_name} ${row.last_name}`}{' '}
+                          </td>
+                          <td>{row.email}</td>
                           <td>{row.role}</td>
 
                           <td
@@ -1152,18 +1154,18 @@ function CommonTable(props) {
                               </div>
                             </td>
 
-                          <td className="text-center   align-middle ">
-                            <div className="d-flex align-items-center justify-content-center flex-wrap">
-                              <Link
-                                to={`/product-detail/${row._id}`}
-                                className="btn btn-primary btn-sm "
-                                type="button"
-                                data-toggle="tooltip"
-                                data-placement="top"
-                                title="View"
-                              >
-                                <i className="fa fa-eye"></i>
-                              </Link>
+                            <td className="text-center   align-middle ">
+                              <div className="d-flex align-items-center justify-content-center flex-wrap">
+                                <Link
+                                  to={`/product-detail/${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye"></i>
+                                </Link>
 
                                 <Link
                                   to={`/update-product/${row._id}`}
@@ -1230,7 +1232,7 @@ function CommonTable(props) {
                               <i className="fa fa-eye"></i>
                             </Link>
                             <Link
-                             to={`/update-inventory/${row._id}`}
+                              to={`/update-inventory/${row._id}`}
                               className=" mx-2 btn btn-success btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1246,7 +1248,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
-                              onClick={()=>deleteInnventoryIn(row._id)}
+                              onClick={() => deleteInnventoryIn(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1325,19 +1327,16 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.status_id}</td>
                           <td className="sorting_1 ">{row.status}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                          <Link
-                                  to={`${row._id}`}
-                                  className="btn btn-primary btn-sm "
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="View"
-                                >
-                                  <i className="fa fa-eye">
-                                    
-                                  </i>
-                                  
-                                </Link>
+                            <Link
+                              to={`${row._id}`}
+                              className="btn btn-primary btn-sm "
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View"
+                            >
+                              <i className="fa fa-eye"></i>
+                            </Link>
                             <a
                               href={`/edit-users/${row.id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1374,19 +1373,17 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.location}</td>
                           <td className="sorting_1 ">{row.date}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                          <Link
-                                  to={`/supplier-detail/${row._id}`}
-                                  className="btn btn-primary btn-sm "
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="View"
-                                >
-                                  <i className="fa fa-eye">
-                                    
-                                  </i>
-                                  
-                                </Link>                            <Link
+                            <Link
+                              to={`/supplier-detail/${row._id}`}
+                              className="btn btn-primary btn-sm "
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View"
+                            >
+                              <i className="fa fa-eye"></i>
+                            </Link>{' '}
+                            <Link
                               to={`/update-supplier/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
                               type="button"
@@ -1423,19 +1420,16 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.location}</td>
                           <td className="sorting_1 ">{row.date}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                          <Link
-                                  to={`${row._id}`}
-                                  className="btn btn-primary btn-sm "
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="View"
-                                >
-                                  <i className="fa fa-eye">
-                                    
-                                  </i>
-                                  
-                                </Link>
+                            <Link
+                              to={`${row._id}`}
+                              className="btn btn-primary btn-sm "
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View"
+                            >
+                              <i className="fa fa-eye"></i>
+                            </Link>
                             <a
                               href={`/edit-users/${row.id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1479,19 +1473,16 @@ function CommonTable(props) {
                             {row.status}
                           </td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                          <Link
-                                  to={`${row._id}`}
-                                  className="btn btn-primary btn-sm "
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="View"
-                                >
-                                  <i className="fa fa-eye">
-                                    
-                                  </i>
-                                  
-                                </Link>
+                            <Link
+                              to={`${row._id}`}
+                              className="btn btn-primary btn-sm "
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View"
+                            >
+                              <i className="fa fa-eye"></i>
+                            </Link>
                             <Link
                               to={`/update-store/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1533,19 +1524,16 @@ function CommonTable(props) {
                           <td>{row.courierService}</td>
 
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                          <Link
-                                  to={`${row._id}`}
-                                  className="btn btn-primary btn-sm "
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="View"
-                                >
-                                  <i className="fa fa-eye">
-                                    
-                                  </i>
-                                  
-                                </Link>
+                            <Link
+                              to={`${row._id}`}
+                              className="btn btn-primary btn-sm "
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View"
+                            >
+                              <i className="fa fa-eye"></i>
+                            </Link>
 
                             <a
                               href={`/edit-users/${row.id}`}
@@ -1588,18 +1576,16 @@ function CommonTable(props) {
                           <td>{row.total_amount}</td>
                           <td>{row.location}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                          <Link
-                                  to={`${row._id}`}
-                                  className="btn btn-primary btn-sm "
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="View"
-                                >
-                                  <i className="fa fa-eye">
-                                  </i>
-                                  
-                                </Link>
+                            <Link
+                              to={`${row._id}`}
+                              className="btn btn-primary btn-sm "
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View"
+                            >
+                              <i className="fa fa-eye"></i>
+                            </Link>
                             <a
                               href={`/edit-users/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1619,7 +1605,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
-                              onClick={()=>remainingOrdersDelete(row._id)}
+                              onClick={() => remainingOrdersDelete(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1642,17 +1628,15 @@ function CommonTable(props) {
 
                           <td className="text-start d-flex align-items-center justify-content-center flex-wrap">
                             <Link
-                                  to={`/center-detail/${row._id}`}
-                                  className="btn btn-primary btn-sm "
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="View"
-                                >
-                                  <i className="fa fa-eye">
-                                  </i>
-                                  
-                                </Link>
+                              to={`/center-detail/${row._id}`}
+                              className="btn btn-primary btn-sm "
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View"
+                            >
+                              <i className="fa fa-eye"></i>
+                            </Link>
                             <Link
                               to={`/update-center/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
@@ -1694,19 +1678,16 @@ function CommonTable(props) {
                           <td>{row.dispatch_date}</td>
                           <td>{row.total_amount}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                          <Link
-                                  to={`/orders-detail/${row._id}`}
-                                  className="btn btn-primary btn-sm "
-                                  type="button"
-                                  data-toggle="tooltip"
-                                  data-placement="top"
-                                  title="View"
-                                >
-                                  <i className="fa fa-eye">
-                                    
-                                  </i>
-                                  
-                                </Link>
+                            <Link
+                              to={`/orders-detail/${row._id}`}
+                              className="btn btn-primary btn-sm "
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="View"
+                            >
+                              <i className="fa fa-eye"></i>
+                            </Link>
                             <Link
                               to={`/update-orders/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
