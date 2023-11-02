@@ -5,6 +5,7 @@ import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
+import MessageModal from '../modal/MessageModal';
 
 function AddNewInventory() {
   const [style, setStyle] = useState(
@@ -38,6 +39,7 @@ function AddNewInventory() {
   const { serverURL, theme, Products } = useAuth();
   const [msg, setmsg] = useState();
   const [color, setColor] = useState(false);
+  const [modal, setModal] = useState(true);
   const [inputProducts, setinputProducts] = useState([]);
 
   const [productForm, setProductForm] = useState([]);
@@ -87,13 +89,16 @@ function AddNewInventory() {
         productsData,
       };
 
-      const response = await axios.post(url, data);
+      const response = await axios.get(url);
+      if (response) {
+        return <MessageModal />;
+      }
       console.log(response);
       setmsg('Product has been add successfully');
       setColor(true);
     } catch (error) {
       console.log(error);
-      setmsg(error.response.data.message);
+      // setmsg(error.response.data.message);
       setColor(false);
     }
   };
@@ -278,7 +283,7 @@ function AddNewInventory() {
                                           theme ? 'srchdark' : null
                                         }`}
                                         required
-                                        value={item.title}
+                                        value={''}
                                         onChange={(e) =>
                                           handleInputChange(
                                             i,
@@ -324,6 +329,7 @@ function AddNewInventory() {
                                           )
                                         }
                                         name="quantity"
+                                        placeholder={'Enter Quantity'}
                                       />
                                     </div>
                                     <div className="col-md-6 mb-3">
@@ -342,6 +348,7 @@ function AddNewInventory() {
                                           )
                                         }
                                         name="price"
+                                        placeholder={'Enter Price'}
                                       />
                                     </div>
                                   </div>
@@ -381,6 +388,8 @@ function AddNewInventory() {
                     </div>
                   </form>
                 </div>
+
+                {modal ? <MessageModal /> : 'model is false'}
               </div>
               {/*   <!-- End of Main Content -->
 
