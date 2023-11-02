@@ -55,7 +55,8 @@ function ViewUsers() {
                                 {/*   <!-- /.container-fluid --> */}
                                 <div className='container-fluid'>
                                     <AddUser></AddUser>
-                                    <CommonTable viewUsers data={usersGet} />
+                                    <CommonTable
+                                    e viewUsers data={usersGet} />
                                 </div>
                             </div>
                             {/*   <!-- End of Main Content -->
