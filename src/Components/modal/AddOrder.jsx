@@ -1,184 +1,215 @@
 import React, { useState, useRef } from 'react';
 import useAuth from '../../hooks/useAuth';
-import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel, FormSelect, Row, Col } from 'react-bootstrap';
+import {
+  Button,
+  Modal,
+  Form,
+  FormControl,
+  FormGroup,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  ModalTitle,
+  FormLabel,
+  FormSelect,
+  Row,
+  Col,
+} from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
 function AddOrder() {
-    const { serverURL, remainingOrders,currentUser } = useAuth();
+  const { serverURL, remainingOrders, currentUser } = useAuth();
 
-    const [orderNumber, setOrderNumber] = useState('');
-    const [dispatchCenterValid, setDispatchCenterValid] = useState('');
-    const [dispatchDate, setDispatchDate] = useState('');
-    const [totalAmount, setTotalAmount] = useState('');
-    const [msg, setMsg] = useState('');
-    const [remainingObject, setRemainingObject] = useState(null);
-    const [showModal, setShowModal] = useState(false);
+  const [orderNumber, setOrderNumber] = useState('');
+  const [dispatchCenterValid, setDispatchCenterValid] = useState('');
+  const [dispatchDate, setDispatchDate] = useState('');
+  const [totalAmount, setTotalAmount] = useState('');
+  const [quantity, setQuantity] = useState(0);
+  const [msg, setMsg] = useState('');
+  const [remainingObject, setRemainingObject] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
-    const order_number = useRef(null);
-    const dispatch_center = useRef(null);
-    const dispatch_date = useRef(null);
-    const total_amount = useRef(null);
-    const centerRef = useRef(null);
-    const OrderNo = useRef(null);
-    
-    
+  const order_number = useRef(null);
+  const dispatch_center = useRef(null);
+  const dispatch_date = useRef(null);
+  const total_amount = useRef(null);
+  const order_quantity = useRef(null);
+  const centerRef = useRef(null);
+  const OrderNo = useRef(null);
 
-    const handleShowModal = () => {
-        setShowModal(true);
-    };
+  const handleShowModal = () => {
+    setShowModal(true);
+  };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
-    const handleSend = async () => {
-        if (validInputs()) {
-            const url = serverURL + '/dispatched-orders/dispatched-order';
-            const json = {
-                order_number: order_number.current.value,
-                dispatch_center: dispatch_center.current.value,
-                dispatch_date: dispatch_date.current.value,
-                total_amount: total_amount.current.value,
-            };
+  const handleSend = async () => {
+    if (validInputs()) {
+      const url = serverURL + '/dispatched-orders/dispatched-order';
+      const json = {
+        order_number: order_number.current.value,
+        dispatch_center: dispatch_center.current.value,
+        dispatch_date: dispatch_date.current.value,
+        total_amount: total_amount.current.value,
+      };
 
-            console.log(dispatchDate);
-            console.log(centerRef);
+      console.log(dispatchDate);
+      console.log(centerRef);
 
-            try {
-                const response = await axios.post(url, json);
-                console.log(response);
-                setMsg('Center has been saved successfully');
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    };
+      try {
+        const response = await axios.post(url, json);
+        console.log(response);
+        setMsg('Center has been saved successfully');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
-    const validInputs = () => {
-        let valid = true;
-        setDispatchCenterValid('');
-        setDispatchDate('');
-        setTotalAmount('');
+  const validInputs = () => {
+    let valid = true;
+    setDispatchCenterValid('');
+    setDispatchDate('');
+    setTotalAmount('');
 
+    if (dispatch_date.current.value.trim() === '') {
+      valid = false;
+      setDispatchDate('Please enter your Services');
+    }
 
-        if (dispatch_date.current.value.trim() === '') {
-            valid = false;
-            setDispatchDate('Please enter your Services');
-        }
+    if (total_amount.current.value.trim() === '') {
+      valid = false;
+      setTotalAmount('Please enter your Services');
+    }
 
-        if (total_amount.current.value.trim() === '') {
-            valid = false;
-            setTotalAmount('Please enter your Services');
-        }
+    return valid;
+  };
 
-        return valid;
-    };
+  const handleOrderChange = (event) => {
+    const selectValue = event.target.value;
+    setOrderNumber(selectValue);
 
-    const handleOrderChange = (event) => {
-        const selectValue = event.target.value;
-        setOrderNumber(selectValue);
-        
-        // Find the selected order and set the total_amount
-        const selectedOrder = remainingOrders.find((item) => item.order_number === selectValue);
-        if (selectedOrder) {
-            total_amount.current.value = selectedOrder.total_amount;
-            setTotalAmount(selectedOrder.total_amount);
-        } else {
-            total_amount.current.value = '';
-            setTotalAmount('');         
-        }
-    };
-
-    const center = Cookies.get("center")
-    
-    return (
-        <>
-            <div className='mb-3 d-flex justify-content-end'>
-                <Button variant="primary" onClick={handleShowModal}>
-                    Add New Order
-                </Button>
-                <Modal show={showModal} onHide={handleCloseModal}>
-                    <ModalHeader>
-                        <ModalTitle>New Order</ModalTitle>
-                        <button className='btn' onClick={handleCloseModal}>
-                            <li className='fa fa-times'></li>
-                        </button>
-                    </ModalHeader>
-                    <ModalBody>
-                        <Form>
-                            <FormGroup className='d-flex flex-column' style={{ width: '100%' }}>
-                                <FormLabel>Dispatch Order</FormLabel>
-                                <select
-                                    name="supplier_id"
-                                    className='form-control'
-                                    required
-                                    onChange={(event) => handleOrderChange(event)}
-                                    ref={order_number}
-                                >
-                                    <option value="0" disabled>
-                                        Select Order no
-                                    </option>
-                                        {remainingOrders.map((item, i) => {
-                                        return (
-                                            <option key={i} value={item.order_number} >
-                                                {item.order_number}
-                                            </option>
-                                        );
-                                    })}
-                                </select>
-                            </FormGroup>
-                            <FormGroup className='mt-2'>
-                                <FormLabel>Dispatch Center </FormLabel>
-                                <FormControl
-                                    disabled
-                                    type="text"
-                                    ref={dispatch_center}
-                                    value={center}
-
-                                />
-                            </FormGroup>
-                            <p className="error-message text-danger">{dispatchCenterValid}</p>
-                            <Row className='d-flex justify-content-between px-2 mt-3'>
-                                <FormGroup>
-                                    <FormLabel>Order Dispatch date</FormLabel>
-                                    <FormControl
-                                        type="date"
-                                        ref={dispatch_date}
-                                        required
-                                        aria-required="true"
-                                        placeholder='date'
-                                    />
-                                    <p className="error-message text-danger">{dispatchDate}</p>
-                                </FormGroup>
-                                <FormGroup>
-                                    <FormLabel>Total Amount</FormLabel>
-                                    <FormControl
-                                        disabled
-                                        type="number"
-                                        ref={total_amount}
-                                        placeholder={totalAmount}
-                                    />
-                                    
-                                </FormGroup>
-                            </Row>
-                        </Form>
-                    </ModalBody>
-                    <p className="text-center text-success">{msg}</p>
-                    <ModalFooter>
-                        <Button variant="danger" onClick={handleCloseModal}>
-                            <li className='fa fa-times-circle mr-1'></li>
-                            Close
-                        </Button>
-                        <Button variant="success" onClick={handleSend}>
-                            <li className='fa fa-plus-circle mr-1'></li>
-                            Add
-                        </Button>
-                    </ModalFooter>
-                </Modal>
-            </div>
-        </>
+    // Find the selected order and set the total_amount
+    const selectedOrder = remainingOrders.find(
+      (item) => item.order_number === selectValue
     );
+    console.log(selectedOrder);
+    if (selectedOrder) {
+      total_amount.current.value = selectedOrder.total_amount;
+      order_quantity.current.value = selectedOrder.quantity;
+      setQuantity(selectedOrder.quantity);
+      setTotalAmount(selectedOrder.total_amount);
+    } else {
+      total_amount.current.value = '';
+      setTotalAmount('');
+    }
+  };
+
+  const center = Cookies.get('center');
+
+  return (
+    <>
+      <div className="mb-3 d-flex justify-content-end">
+        <Button variant="primary" onClick={handleShowModal}>
+          Add New Order
+        </Button>
+        <Modal show={showModal} onHide={handleCloseModal}>
+          <ModalHeader>
+            <ModalTitle>New Order</ModalTitle>
+            <button className="btn" onClick={handleCloseModal}>
+              <li className="fa fa-times"></li>
+            </button>
+          </ModalHeader>
+          <ModalBody>
+            <Form>
+              <FormGroup
+                className="d-flex flex-column"
+                style={{ width: '100%' }}
+              >
+                <FormLabel>Dispatch Order</FormLabel>
+                <select
+                  name="supplier_id"
+                  className="form-control"
+                  required
+                  value={''}
+                  onChange={(event) => handleOrderChange(event)}
+                  ref={order_number}
+                >
+                  <option value="" disabled>
+                    Select Order no
+                  </option>
+                  {remainingOrders.map((item, i) => {
+                    return (
+                      <option key={i} value={item.order_number}>
+                        {item.order_number}
+                      </option>
+                    );
+                  })}
+                </select>
+              </FormGroup>
+
+              <FormGroup className="mt-2">
+                <FormLabel>Dispatch Center </FormLabel>
+                <FormControl
+                  disabled
+                  type="text"
+                  ref={dispatch_center}
+                  value={center}
+                />
+              </FormGroup>
+
+              <p className="error-message text-danger">{dispatchCenterValid}</p>
+              <Row className="d-flex justify-content-between px-2 mt-3">
+                <FormGroup>
+                  <FormLabel>Order Dispatch date</FormLabel>
+                  <FormControl
+                    type="date"
+                    ref={dispatch_date}
+                    required
+                    aria-required="true"
+                    placeholder="date"
+                  />
+                  <p className="error-message text-danger">{dispatchDate}</p>
+                </FormGroup>
+                <FormGroup>
+                  <FormLabel>Total Amount</FormLabel>
+                  <FormControl
+                    disabled
+                    type="number"
+                    ref={total_amount}
+                    placeholder={totalAmount}
+                  />
+                </FormGroup>
+                <FormGroup>
+                  <FormLabel>Quantity</FormLabel>
+                  <FormControl
+                    disabled
+                    type="number"
+                    ref={order_quantity}
+                    placeholder={quantity}
+                  />
+                </FormGroup>
+              </Row>
+            </Form>
+          </ModalBody>
+          <p className="text-center text-success">{msg}</p>
+          <ModalFooter>
+            <Button variant="danger" onClick={handleCloseModal}>
+              <li className="fa fa-times-circle mr-1"></li>
+              Close
+            </Button>
+            <Button variant="success" onClick={handleSend}>
+              <li className="fa fa-plus-circle mr-1"></li>
+              Add
+            </Button>
+          </ModalFooter>
+        </Modal>
+      </div>
+    </>
+  );
 }
 
 export default AddOrder;

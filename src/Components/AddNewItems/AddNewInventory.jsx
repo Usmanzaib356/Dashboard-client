@@ -37,7 +37,8 @@ function AddNewInventory() {
 
   // Context Api
   const { serverURL, theme, Products } = useAuth();
-  const [msg, setmsg] = useState();
+  const [msg, setMsg] = useState('');
+
   const [color, setColor] = useState(false);
   const [modal, setModal] = useState(true);
   const [inputProducts, setinputProducts] = useState([]);
@@ -89,16 +90,14 @@ function AddNewInventory() {
         productsData,
       };
 
-      const response = await axios.get(url);
-      if (response) {
-        return <MessageModal />;
-      }
-      console.log(response);
-      setmsg('Product has been add successfully');
+      const response = await axios.post(url, data);
+
       setColor(true);
+      setMsg(response.data.message);
     } catch (error) {
       console.log(error);
-      // setmsg(error.response.data.message);
+      setMsg(error.response.data.message);
+
       setColor(false);
     }
   };
@@ -382,14 +381,21 @@ function AddNewInventory() {
                                 Save
                               </button>
                             </div>
+                            <div className="w-full text-center py-2">
+                              <p
+                                className={`${
+                                  color ? 'text-success' : 'text-danger'
+                                }`}
+                              >
+                                {msg}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </form>
                 </div>
-
-                {modal ? <MessageModal /> : 'model is false'}
               </div>
               {/*   <!-- End of Main Content -->
 
