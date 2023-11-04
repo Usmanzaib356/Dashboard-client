@@ -54,6 +54,7 @@ function AddOrder() {
         dispatch_center: dispatch_center.current.value,
         dispatch_date: dispatch_date.current.value,
         total_amount: total_amount.current.value,
+        quantity: order_quantity.current.value,
       };
       try {
         const response = await axios.post(url, json);
@@ -92,7 +93,7 @@ function AddOrder() {
     const selectedOrder = remainingOrders.find(
       (item) => item.order_number === selectValue
     );
-    console.log(selectedOrder);
+
     if (selectedOrder) {
       total_amount.current.value = selectedOrder.total_amount;
       order_quantity.current.value = selectedOrder.quantity;
