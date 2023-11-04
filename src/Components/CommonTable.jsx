@@ -1048,6 +1048,17 @@ function CommonTable(props) {
                           aria-label="Action: activate to sort column ascending"
                           style={{ width: '179.938px' }}
                         >
+                          Quantity
+                        </th>
+                        <th
+                          className="sorting text-center"
+                          tabIndex="0"
+                          aria-controls="dataTable"
+                          rowSpan="1"
+                          colSpan="1"
+                          aria-label="Action: activate to sort column ascending"
+                          style={{ width: '179.938px' }}
+                        >
                           Action
                         </th>
                       </tr>
@@ -1690,6 +1701,7 @@ function CommonTable(props) {
                           <td>{row.dispatch_date}</td>
                           <td>{row.quantity}</td>
                           <td>{row.total_amount}</td>
+                          <td>{row.quantity}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
                             <Link
                               to={`/orders-detail/${row._id}`}

@@ -56,7 +56,9 @@ function AddOrder() {
         dispatch_date: dispatch_date.current.value,
         total_amount: total_amount.current.value,
       };
-      
+
+      console.log(dispatchDate);
+      console.log(centerRef);
 
       try {
         const response = await axios.post(url, json);
