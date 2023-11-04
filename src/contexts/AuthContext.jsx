@@ -30,8 +30,8 @@ const AuthContextProvider = ({ children }) => {
   const [remainingOrders, setRemainingOrders] = useState([]);
   const [store, setStore] = useState([]);
 
-  const serverURL = 'https://ill-bee-train.cyclic.cloud';
-  // const serverURL = 'http://localhost:8080';
+  // const serverURL = 'https://ill-bee-train.cyclic.cloud';
+  const serverURL = 'http://localhost:8080';
 
   // get dispatched-centers
   useEffect(() => {

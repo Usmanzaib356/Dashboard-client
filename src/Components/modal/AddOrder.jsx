@@ -47,7 +47,6 @@ function AddOrder() {
   };
 
   const handleSend = async () => {
-    console.log(dispatch_date.current.value);
     if (validInputs()) {
       const url = serverURL + '/dispatched-orders/dispatched-order';
       const json = {
@@ -58,13 +57,10 @@ function AddOrder() {
         quantity: order_quantity.current.value,
       };
 
-      console.log(dispatchDate);
-      console.log(centerRef);
-
       try {
         const response = await axios.post(url, json);
         console.log(response);
-        setMsg('Center has been saved successfully');    
+        setMsg('Dispatched Order has been saved successfully');
       } catch (error) {
         console.log(error);
       }
