@@ -47,6 +47,7 @@ function AddOrder() {
   };
 
   const handleSend = async () => {
+    console.log(dispatch_date.current.value);
     if (validInputs()) {
       const url = serverURL + '/dispatched-orders/dispatched-order';
       const json = {
@@ -55,14 +56,12 @@ function AddOrder() {
         dispatch_date: dispatch_date.current.value,
         total_amount: total_amount.current.value,
       };
-
-      console.log(dispatchDate);
-      console.log(centerRef);
+      
 
       try {
         const response = await axios.post(url, json);
         console.log(response);
-        setMsg('Center has been saved successfully');
+        setMsg('Center has been saved successfully');    
       } catch (error) {
         console.log(error);
       }
@@ -96,7 +95,7 @@ function AddOrder() {
     const selectedOrder = remainingOrders.find(
       (item) => item.order_number === selectValue
     );
-    console.log(selectedOrder);
+
     if (selectedOrder) {
       total_amount.current.value = selectedOrder.total_amount;
       order_quantity.current.value = selectedOrder.quantity;
@@ -134,7 +133,7 @@ function AddOrder() {
                   name="supplier_id"
                   className="form-control"
                   required
-                  value={''}
+                  // value={order_number}
                   onChange={(event) => handleOrderChange(event)}
                   ref={order_number}
                 >

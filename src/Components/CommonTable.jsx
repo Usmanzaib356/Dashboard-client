@@ -1015,6 +1015,18 @@ function CommonTable(props) {
                         >
                           Order Dispatch date
                         </th>
+                        <th
+                          className="sorting"
+                          tabIndex="0"
+                          aria-controls="dataTable"
+                          rowSpan="1"
+                          colSpan="1"
+                          aria-label="Email: activate to sort column ascending"
+                          style={{ width: '336.406px' }}
+                        >
+                          Order Quantity
+                        </th>
+
 
                         <th
                           className="sorting text-center"
@@ -1676,6 +1688,7 @@ function CommonTable(props) {
                           <td className="sorting_1">{row.order_number}</td>
                           <td>{row.dispatch_center}</td>
                           <td>{row.dispatch_date}</td>
+                          <td>{row.quantity}</td>
                           <td>{row.total_amount}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
                             <Link
