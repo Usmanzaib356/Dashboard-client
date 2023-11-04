@@ -22,6 +22,7 @@ function AddOrder() {
   const { serverURL, remainingOrders, currentUser } = useAuth();
 
   const [orderNumber, setOrderNumber] = useState('');
+  const [ProductId, setProductId] = useState('');
   const [dispatchCenterValid, setDispatchCenterValid] = useState('');
   const [dispatchDate, setDispatchDate] = useState('');
   const [totalAmount, setTotalAmount] = useState('');
@@ -31,6 +32,7 @@ function AddOrder() {
   const [showModal, setShowModal] = useState(false);
 
   const order_number = useRef(null);
+  const product_id = useRef(null);
   const dispatch_center = useRef(null);
   const dispatch_date = useRef(null);
   const total_amount = useRef(null);
@@ -44,27 +46,6 @@ function AddOrder() {
 
   const handleCloseModal = () => {
     setShowModal(false);
-  };
-
-  const handleSend = async () => {
-    if (validInputs()) {
-      const url = serverURL + '/dispatched-orders/dispatched-order';
-      const json = {
-        order_number: order_number.current.value,
-        dispatch_center: dispatch_center.current.value,
-        dispatch_date: dispatch_date.current.value,
-        total_amount: total_amount.current.value,
-        quantity: order_quantity.current.value,
-      };
-
-      try {
-        const response = await axios.post(url, json);
-        console.log(response);
-        setMsg('Dispatched Order has been saved successfully');
-      } catch (error) {
-        console.log(error);
-      }
-    }
   };
 
   const validInputs = () => {
@@ -92,17 +73,41 @@ function AddOrder() {
 
     // Find the selected order and set the total_amount
     const selectedOrder = remainingOrders.find(
-      (item) => item.order_number === selectValue
+      (item) => item._id === selectValue
     );
 
     if (selectedOrder) {
+      product_id.current.value = selectedOrder.product_id;
       total_amount.current.value = selectedOrder.total_amount;
       order_quantity.current.value = selectedOrder.quantity;
       setQuantity(selectedOrder.quantity);
+      setProductId(selectedOrder.product_id);
       setTotalAmount(selectedOrder.total_amount);
     } else {
       total_amount.current.value = '';
       setTotalAmount('');
+    }
+  };
+  const handleSend = async () => {
+    if (validInputs()) {
+      const url = serverURL + '/dispatched-orders/dispatched-order';
+      const json = {
+        product_id: ProductId,
+        order_number: order_number.current.value,
+        dispatch_center: dispatch_center.current.value,
+        dispatch_date: dispatch_date.current.value,
+        total_amount: total_amount.current.value,
+        quantity: order_quantity.current.value,
+      };
+      console.log(json);
+
+      try {
+        const response = await axios.post(url, json);
+        console.log(response);
+        setMsg('Dispatched Order has been saved successfully');
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -132,21 +137,27 @@ function AddOrder() {
                   name="supplier_id"
                   className="form-control"
                   required
-                  // value={order_number}
                   onChange={(event) => handleOrderChange(event)}
                   ref={order_number}
                 >
-                  <option value="" disabled>
-                    Select Order no
-                  </option>
+                  <option>Select Order no</option>
                   {remainingOrders.map((item, i) => {
                     return (
-                      <option key={i} value={item.order_number}>
-                        {item.order_number}
+                      <option key={i} value={item._id}>
+                        {item._id}
                       </option>
                     );
                   })}
                 </select>
+              </FormGroup>
+              <FormGroup className="mt-2">
+                <FormLabel>Product ID</FormLabel>
+                <FormControl
+                  disabled
+                  type="number"
+                  ref={product_id}
+                  placeholder={ProductId}
+                />
               </FormGroup>
 
               <FormGroup className="mt-2">

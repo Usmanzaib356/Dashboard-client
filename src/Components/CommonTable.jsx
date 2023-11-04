@@ -1027,7 +1027,6 @@ function CommonTable(props) {
                           Order Quantity
                         </th>
 
-
                         <th
                           className="sorting text-center"
                           tabIndex="0"
@@ -1593,8 +1592,8 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even' : 'odd'}
                           key={index}
                         >
-                          <td>{row.order_number}</td>
-                          <td>{row.product_id}</td>
+                          <td>{row._id}</td>
+                          <td>{row.product_title}</td>
                           <td>{row.quantity}</td>
                           <td>{row.total_amount}</td>
                           <td>{row.location}</td>
