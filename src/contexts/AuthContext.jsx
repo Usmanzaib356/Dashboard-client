@@ -30,8 +30,8 @@ const AuthContextProvider = ({ children }) => {
   const [remainingOrders, setRemainingOrders] = useState([]);
   const [store, setStore] = useState([]);
 
-  // const serverURL = 'https://ill-bee-train.cyclic.cloud';
-  const serverURL = 'http://localhost:8080';
+  const serverURL = 'https://ill-bee-train.cyclic.cloud';
+  // const serverURL = 'http://localhost:8080';
 
   // get dispatched-centers
   useEffect(() => {
@@ -54,6 +54,7 @@ const AuthContextProvider = ({ children }) => {
         const url = serverURL + '/dispatched-orders/dispatched-orders';
         const response = await axios.get(url);
         setDispatchOrder(response.data.data);
+        console.log(dispatchOrder);
       } catch (error) {
         console.log(error);
       }
