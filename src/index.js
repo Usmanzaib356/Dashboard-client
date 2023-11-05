@@ -4,13 +4,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import AuthContextProvider from './contexts/AuthContext';
+import ErrorBoundary from './ErrorBoundry/ErrorBoundry';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
+    <ErrorBoundary fallback="Error Occured">
      <AuthContextProvider>
-       <App />
+       <App  />
      </AuthContextProvider>
+     </ErrorBoundary>
     </BrowserRouter>
   
 );

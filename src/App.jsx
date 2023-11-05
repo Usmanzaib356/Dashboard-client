@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {  Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import Admin from './Components/Dashboard/Admin';
 import ViewUsers from './Components/ViewUsers';
@@ -57,22 +57,27 @@ function App() {
   if (isLoading) {
     return <div> Loading... </div>;
   }
-  
 
   // axois get
 
   return (
     <>
       <Routes>
-        <Route path="/" element={<  GlobalAuth />}>
+        <Route path="/" element={<GlobalAuth />}>
           <Route index element={<Admin />} />
 
-          <Route path="/view-users" element={  <ViewUsers />  } />
+          <Route path="/view-users" element={<ViewUsers />} />
           <Route path="/users-role" element={<UserRoles />} />
           <Route path="/products" element={<Products />} />
-          <Route path="/product-detail/:productId" element={<Productdetail />} />
+          <Route
+            path="/product-detail/:productId"
+            element={<Productdetail />}
+          />
           <Route path="/inventory" element={<InventoryIn />} />
-          <Route path="/inventory-detail/:inventoryId" element={<InventoryInDetail />} />
+          <Route
+            path="/inventory-detail/:inventoryId"
+            element={<InventoryInDetail />}
+          />
           <Route path="/overall-inventory" element={<OverallInventory />} />
           <Route
             path="/faulty-inventory"
@@ -84,34 +89,58 @@ function App() {
           />
           <Route path="/inventory-status" element={<InventoryStatus />} />
           <Route path="/suppliers" element={<Suppliers />} />
-          <Route path="/supplier-detail/:supplierId" element={<SupplierDetail />} />
-          <Route path="/update-supplier/:supplierId" element={<UpdateSupllier />} />
+          <Route
+            path="/supplier-detail/:supplierId"
+            element={<SupplierDetail />}
+          />
+          <Route
+            path="/update-supplier/:supplierId"
+            element={<UpdateSupllier />}
+          />
           <Route path="/warehouses" element={<Warehouses />} />
           <Route path="/stores" element={<Stores />} />
           <Route path="/all-orders" element={<AllOrders />} />
           <Route path="/remaining-orders" element={<RemainingOrders />} />
           <Route path="/dispatched-orders" element={<DispatchedOrders />} />
-          <Route path="/orders-detail/:dispatchUpdateOrderId" element={<DistaptchedOrderDetail />} />          
+          <Route
+            path="/orders-detail/:dispatchUpdateOrderId"
+            element={<DistaptchedOrderDetail />}
+          />
           <Route path="/dispatched-centers" element={<DispatchedCenters />} />
-          <Route path="/center-detail/:dispatchUpdateId" element={<DispatchedCenterDetail />} />
+          <Route
+            path="/center-detail/:dispatchUpdateId"
+            element={<DispatchedCenterDetail />}
+          />
           <Route path="/add-inventory" element={<AddNewInventory />} />
           <Route path="/add-faulty" element={<AddFaulty />} />
           <Route path="/add-return-inventory" element={<ReturnInventory />} />
           <Route path="/add-supplier" element={<AddSupplier />} />
           <Route path="/add-warehouse" element={<AddWarehouse />} />
           <Route path="/add-products" element={<AddProducts />} />
-          <Route path="/update-center/:dispatchUpdateId" element={<UpdateDispatchCenter />} />
-          <Route path="/update-orders/:dispatchUpdateOrderId" element={<UpdateDispatchOrder />} />
-          <Route path="/update-inventory/:inventoryId" element={<UpdateInventory />} />
-          <Route path="/update-products/:productId" element={<UpdateProducts />} />
+          <Route
+            path="/update-center/:dispatchUpdateId"
+            element={<UpdateDispatchCenter />}
+          />
+          <Route
+            path="/update-orders/:dispatchUpdateOrderId"
+            element={<UpdateDispatchOrder />}
+          />
+          <Route
+            path="/update-inventory/:inventoryId"
+            element={<UpdateInventory />}
+          />
+          <Route
+            path="/update-products/:productId"
+            element={<UpdateProducts />}
+          />
           <Route path="/update-store/:storeId" element={<UpdateStore />} />
           <Route path="/chart" element={<Chart />} />
           <Route path="/chart" element={<Adminpermission />} />
           <Route path="/side" element={<Sidebar />} />
           <Route path="/nav" element={<Navbar />} />
           <Route path="/footer" element={<Footer />} />
-          <Route path="*" element={<Universal />} />
         </Route>
+        <Route path="*" element={<Universal />} />
 
         <Route path="/login" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />

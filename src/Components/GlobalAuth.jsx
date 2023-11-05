@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
+import { useAuthenticator, useToken } from '../handlers/tokenHandler';
 const GlobalAuth = () => {
   const { islogin } = useAuth();
-  const authenticated = islogin;
   const navigate = useNavigate();
+  const token = useToken();
+  const { validateToken } = useAuthenticator();
 
   useEffect(() => {
-    if (!authenticated) {
+    validateToken();
+    if (!islogin) {
       navigate('/login');
-      console.log('navigate');
     }
-  }, [authenticated]);
+  }, [islogin, token]);
   return <Outlet />;
 };
 

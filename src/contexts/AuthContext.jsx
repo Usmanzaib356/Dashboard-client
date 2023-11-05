@@ -1,6 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { useAuthenticator, useToken } from '../handlers/tokenHandler';
+
 export const AuthContext = createContext();
 
 const AuthContextProvider = ({ children }) => {
@@ -9,6 +12,9 @@ const AuthContextProvider = ({ children }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? true : false
   );
+  const { getHeaders } = useAuthenticator();
+  const token = useToken();
+
   useEffect(() => {
     localStorage.setItem('theme', theme ? 'dark' : 'light');
   }, [theme]);
@@ -30,128 +36,135 @@ const AuthContextProvider = ({ children }) => {
   const [remainingOrders, setRemainingOrders] = useState([]);
   const [store, setStore] = useState([]);
 
-  // const serverURL = 'https://ill-bee-train.cyclic.cloud';
-  const serverURL = 'http://localhost:8080';
+  const serverURL = process.env.REACT_APP_SERVER_URL;
 
   // get dispatched-centers
   useEffect(() => {
     const fetchData = async () => {
+      const url = serverURL + '/dispatched-centers/dispatched-centers';
       try {
-        const url = serverURL + '/dispatched-centers/dispatched-centers';
-        const response = await axios.get(url);
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
         setDispatchCenter(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchData();
-  }, []);
 
+    fetchData();
+  }, [token]);
   // get dispatched-orders
   useEffect(() => {
     const fetchData = async () => {
+      const url = serverURL + '/dispatched-orders/dispatched-orders';
       try {
-        const url = serverURL + '/dispatched-orders/dispatched-orders';
-        const response = await axios.get(url);
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
         setDispatchOrder(response.data.data);
-        console.log(dispatchOrder);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchData();
-  }, []);
+  }, [token]);
 
   // get remaining-orders
   useEffect(() => {
     const fetchData = async () => {
+      const url = serverURL + '/remaining-orders/remaining-orders';
       try {
-        const url = serverURL + '/remaining-orders/remaining-orders';
-        const response = await axios.get(url);
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
         setRemainingOrders(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchData();
-  }, []);
+  }, [token]);
 
   // get stores
   useEffect(() => {
     const fetchData = async () => {
+      const url = serverURL + '/stores/stores';
       try {
-        const url = serverURL + '/stores/stores';
-        const response = await axios.get(url);
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
         setStore(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchData();
-  }, []);
+  }, [token]);
 
   // get supplier
   useEffect(() => {
     const fetchData = async () => {
+      const url = serverURL + '/supplier/supplier';
       try {
-        const url = serverURL + '/supplier/supplier';
-        const response = await axios.get(url);
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
         setSuppliers(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
+
     fetchData();
-  }, []);
+  }, [token]);
 
   // get inventory
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const url = serverURL + '/inventory/inventories';
-        const token = Cookies.get('token');
-        const headers = {
-          Authorization: `Bearer ${token}`,
-        };
-        const response = await axios.get(url, { headers });
+      const url = serverURL + '/inventory/inventories';
 
+      try {
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
         setInventoryIn(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchData();
-  }, []);
 
+    fetchData();
+  }, [token]);
   // get products
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const url = serverURL + '/products/product';
-        const response = await axios.get(url);
+      const url = serverURL + '/products/product';
 
+      try {
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
         setProducts(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, [serverURL]);
+  }, [token]);
 
   //  Get user
   useEffect(() => {
     const fetchData = async () => {
+      const url = serverURL + '/user/get-users';
+
       try {
-        const url = serverURL + '/user/get-users';
-        const response = await axios.get(url);
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
         setUsersGet(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, []);
+  }, [token]);
 
   return (
     <AuthContext.Provider

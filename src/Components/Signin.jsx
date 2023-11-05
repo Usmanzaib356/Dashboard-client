@@ -34,7 +34,7 @@ function Signin() {
         setIsLogin(true);
         setLoading(false);
         setMsg(response.data);
-        setCurrentUser(response.data.user)
+        setCurrentUser(response.data.user);
         const token = response.data.token;
         const expirationTime = new Date();
         expirationTime.setTime(expirationTime.getTime() + 30 * 60 * 1000);
@@ -44,7 +44,6 @@ function Signin() {
         setColor(true);
         naviagte('/');
       } catch (err) {
-        console.log(err);
         setMsg(err.message);
         setColor(false);
       } finally {
