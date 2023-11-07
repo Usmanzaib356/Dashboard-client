@@ -42,9 +42,10 @@ function ViewUsers() {
        const {getHeaders} = useAuthenticator()
        const handleDelete = async (viewUsersDelete) => {
            try {
-               const url = serverURL + `/users/${viewUsersDelete}`
+               const url = serverURL + `/user/${viewUsersDelete}`
                const headers = getHeaders()
-               await axios.delete(url,{headers})
+               const respone = await axios.delete(url,{headers})
+               console.log(respone);
                const UpdateItem = usersGet.filter(item => item._id !== viewUsersDelete)
                setUsersGet(UpdateItem)
            } catch (error) {

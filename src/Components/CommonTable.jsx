@@ -1091,27 +1091,7 @@ function CommonTable(props) {
                             {row.status}
                           </td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap">
-                            <Link
-                              to={`/change-password/${row.id}`}
-                              className="btn btn-warning btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Change Password"
-                            >
-                              <i className="fa fa-key"></i>
-                            </Link>
-
-                            <Link
-                              to={`/update-user/${row._id}`}
-                              className="mx-2 btn btn-success btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Edit"
-                            >
-                              <i className="fa fa-edit"></i>
-                            </Link>
+                         
 
                             <input type="hidden" name="id" value="1" />
 

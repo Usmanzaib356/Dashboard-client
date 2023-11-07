@@ -240,8 +240,13 @@ function AddUser() {
 
 
                         </Form>
+                        <p className='text-center text-success'>{msg}</p>
                     </ModalBody>
+                    
                     <ModalFooter>
+                        
+
+
                         <Button variant="danger" onClick={handleCloseModal}>
                         <li className='fa fa-times-circle mr-1'></li>
                             Close

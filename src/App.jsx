@@ -45,7 +45,6 @@ const DistaptchedOrderDetail = lazy(() => import('./Components/DetailsItems/Dist
 const SupplierDetail = lazy(() => import('./Components/DetailsItems/SupplierDetail'));
 const InventoryInDetail = lazy(() => import('./Components/DetailsItems/InventoryInDetail'));
 const Productdetail = lazy(() => import('./Components/DetailsItems/ProductDetail'));
-const UpdateUser = lazy(() => import('./Components/UpdateItems/UpdateUser'));
 
 function App() {
   const { islogin } = useAuth();
@@ -65,7 +64,6 @@ function App() {
         <Route path="/" element={<GlobalAuth />}>
           <Route index element={<Admin />} />
           <Route path="/view-users" element={<ViewUsers />} />
-          <Route path="/update-user/:userId" element={<UpdateUser />} />
           <Route path="/users-role" element={<UserRoles />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product-detail/:productId" element={<Productdetail />} />

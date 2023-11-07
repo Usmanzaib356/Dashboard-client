@@ -5,19 +5,20 @@ import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function Productdetail() {
     const { serverURL, theme } = useAuth()
     const [productDetail, setProductDetail] = useState({})
     const { productId } = useParams()
-
+    const {getHeaders} = useAuthenticator()
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const headers = getHeaders()
                 const url = serverURL + `/products/${productId}`
-                const response = await axios.get(url)
+                const response = await axios.get(url,{headers})
                 setProductDetail(response.data.data)
-                console.log(response.data.data);
             } catch (error) {
                 console.log(error);
             }

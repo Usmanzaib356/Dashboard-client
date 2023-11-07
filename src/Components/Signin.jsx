@@ -44,7 +44,8 @@ function Signin() {
         setColor(true);
         naviagte('/');
       } catch (err) {
-        setMsg(err.message);
+        console.log(err);
+        setMsg(err);
         setColor(false);
       } finally {
         setLoading(false);
@@ -115,7 +116,7 @@ function Signin() {
                   color ? 'text-success' : 'text-danger'
                 } `}
               >
-                {msg}
+                {/* {msg} */}
               </p>
             </div>
             <div className="submit-container mt-4">

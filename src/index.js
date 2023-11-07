@@ -9,11 +9,11 @@ import ErrorBoundary from './ErrorBoundry/ErrorBoundry';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-    <ErrorBoundary fallback="Error Occured">
+    {/* <ErrorBoundary fallback="Error Occured"> */}
      <AuthContextProvider>
        <App  />
      </AuthContextProvider>
-     </ErrorBoundary>
+     {/* </ErrorBoundary> */}
     </BrowserRouter>
   
 );
