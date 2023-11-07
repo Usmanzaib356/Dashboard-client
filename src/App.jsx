@@ -1,6 +1,10 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import useAuth from './hooks/useAuth';
+import ProtectedRoute from './Components/ProtectedRoute';
+import UnAuthorized from './Components/UnAuthorized';
+import Cookies from 'js-cookie';
+import Layout from './Components/Layout';
 
 const Admin = lazy(() => import('./Components/Dashboard/Admin'));
 const ViewUsers = lazy(() => import('./Components/ViewUsers'));
@@ -47,8 +51,9 @@ const InventoryInDetail = lazy(() => import('./Components/DetailsItems/Inventory
 const Productdetail = lazy(() => import('./Components/DetailsItems/ProductDetail'));
 
 function App() {
-  const { islogin } = useAuth();
+  const { islogin , role} = useAuth();
   const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect(() => {
     setIsLoading(false);
@@ -58,12 +63,19 @@ function App() {
     return <div>Loading...</div>;
   }
 
+  
+  
+  
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <Routes>
-        <Route path="/" element={<GlobalAuth />}>
-          <Route index element={<Admin />} />
-          <Route path="/view-users" element={<ViewUsers />} />
+        <Route  path='/' element={<Layout/>} >
+        <Route path='/' element={<GlobalAuth />}>
+          <Route 
+           index 
+           element={<ProtectedRoute element={<Admin />}  usersRole={role} />}
+          />
+          <Route path="/view-users" element={<ProtectedRoute element={<ViewUsers />}  usersRole={role} />}/>
           <Route path="/users-role" element={<UserRoles />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product-detail/:productId" element={<Productdetail />} />
@@ -100,11 +112,14 @@ function App() {
           <Route path="/side" element={<Sidebar />} />
           <Route path="/nav" element={<Navbar />} />
           <Route path="/footer" element={<Footer />} />
+
+        </Route>
         </Route>
         <Route path="*" element={<Universal />} />
         <Route path="/login" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/error" element={<ServerError />} />
+        <Route path="/unauthorized" element={<UnAuthorized />} />
       </Routes>
     </Suspense>
   );

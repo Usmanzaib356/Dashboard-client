@@ -35,6 +35,13 @@ const AuthContextProvider = ({ children }) => {
   const [dispatchOrder, setDispatchOrder] = useState([]);
   const [remainingOrders, setRemainingOrders] = useState([]);
   const [store, setStore] = useState([]);
+  const [role, setRole] = useState('');
+
+  
+  useEffect(() => { 
+    const userRole = Cookies.get('role')
+    setRole(userRole)
+  }, []);
 
   const serverURL = process.env.REACT_APP_SERVER_URL;
 
@@ -195,6 +202,8 @@ const AuthContextProvider = ({ children }) => {
         setRemainingOrders,
         currentUser,
         setCurrentUser,
+        role, 
+        setRole,
       }}
     >
       {children}

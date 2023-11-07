@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import useAuth from "../hooks/useAuth"
 function Sidebar() {
 
-    const { theme, sidebar, setSidebar } = useAuth()
+    const { theme, sidebar, role } = useAuth()
 
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -34,11 +34,14 @@ function Sidebar() {
                 <hr className="sidebar-divider my-0" />
 
                 {/*  <!-- Nav Item - Dashboard --> */}
-                <li className="nav-item active">
+                {
+                    role === "Admin" && 
+                    <li className="nav-item active">
                     <Link className="nav-link" to="/">
                         <i className="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span></Link>
                 </li>
+                }
 
                 {/*  <!-- Divider --> */}
                 <hr className="sidebar-divider" />
@@ -49,7 +52,9 @@ function Sidebar() {
                 </div>
 
                 {/*  <!-- Nav Item - Pages Collapse Menu --> */}
-                <li className={`nav-item `}>
+                {
+                    role === "Admin" && 
+                    <li className={`nav-item `}>
                     <Link className={`nav-link collapsed `} to="#" data-toggle="collapse" data-target="#collapseTwo"
                         aria-expanded="true" aria-controls="collapseTwo">
                         <i className="fas fa-fw fa-users"></i>
@@ -63,6 +68,7 @@ function Sidebar() {
                         </div>
                     </div>
                 </li>
+                }
 
 
 

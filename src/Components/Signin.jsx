@@ -41,6 +41,7 @@ function Signin() {
         Cookies.set('token', token, { expires: expirationTime });
         Cookies.set('login', true, { expires: expirationTime });
         Cookies.set('center', response.data.user.dispatch_center, { expires: expirationTime });
+        Cookies.set('role', response.data.user.role, { expires: expirationTime });       
         setColor(true);
         naviagte('/');
       } catch (err) {

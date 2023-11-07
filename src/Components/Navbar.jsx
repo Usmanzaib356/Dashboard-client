@@ -4,25 +4,7 @@ import useAuth from "../hooks/useAuth"
 import logo from '../images/logo.avif'
 function Navbar() {
     const { theme, setTheme, sidebar, setSidebar } = useAuth()
-    const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
-
-    const changeStyle = () => {
-        if (style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion") {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled");
-        }
-        else {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion")
-        }
-    };
-    const changeStyle1 = () => {
-        if (style == "navbar-nav bg-gradient-primary sidebar sidebar-dark accordion") {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled1");
-        }
-        else {
-            setStyle("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion")
-        }
-    };
-
+  
     function toggle() {
         setTheme(!theme)
     }

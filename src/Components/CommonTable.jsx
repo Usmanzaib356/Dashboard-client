@@ -32,6 +32,8 @@ function CommonTable(props) {
     remainingOrdersDelete,
   } = props;
 
+  const {role} = useAuth()
+
   const [searchTerm, setSearchTerm] = useState('');
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
@@ -1631,7 +1633,10 @@ function CommonTable(props) {
                           <td>{row.courier_service}</td>
 
                           <td className="text-start d-flex align-items-center justify-content-center flex-wrap">
-                            <Link
+                            {
+                              role === "Admin" &&
+                                <>
+                                  <Link
                               to={`/center-detail/${row._id}`}
                               className="btn btn-primary btn-sm "
                               type="button"
@@ -1651,6 +1656,8 @@ function CommonTable(props) {
                             >
                               <i className="fa fa-edit"></i>
                             </Link>
+                                </>
+                            }
 
                             <input type="hidden" name="id" value="1" />
 
