@@ -7,7 +7,6 @@ export const useToken = ()=>{
     return token
 }
 
-
 export const useAuthenticator = ()=>{
     const token = useToken() 
     const navigate = useNavigate();

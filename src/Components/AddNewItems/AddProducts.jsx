@@ -6,6 +6,7 @@ import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { Button } from 'react-bootstrap';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 function AddProducts() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
@@ -43,11 +44,14 @@ function AddProducts() {
     const Image = useRef()
 
     // Add New Products
+    const {getHeaders} = useAuthenticator()
+
     const HandleAddNewProducts = async (e) => {
         e.preventDefault()
 
         if (validateInputs()) {
             try {
+                const headers = getHeaders()
                 const url = serverURL + '/products/product'
                 const json = {
                     title: title.current.value,
@@ -57,7 +61,7 @@ function AddProducts() {
                     selling_price: sellingPrice.current.value,
                     imgURL: Image.current.value
                 }
-                const response = await axios.post(url, json)
+                const response = await axios.post(url, json,{headers})
                 console.log(response);
                 setmsg("Product has been add successfully")
                 setColor(true)

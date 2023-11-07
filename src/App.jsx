@@ -45,6 +45,7 @@ import DistaptchedOrderDetail from './Components/DetailsItems/DistaptchedOrderDe
 import SupplierDetail from './Components/DetailsItems/SupplierDetail';
 import InventoryInDetail from './Components/DetailsItems/InventoryInDetail';
 import Productdetail from './Components/DetailsItems/ProductDetail';
+import UpdateUser from './Components/UpdateItems/UpdateUser';
 
 function App() {
   const { islogin } = useAuth();
@@ -67,6 +68,7 @@ function App() {
           <Route index element={<Admin />} />
 
           <Route path="/view-users" element={<ViewUsers />} />
+          <Route path="/update-user/:userId" element={<UpdateUser />} />
           <Route path="/users-role" element={<UserRoles />} />
           <Route path="/products" element={<Products />} />
           <Route

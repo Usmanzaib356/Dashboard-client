@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 function CommonTable(props) {
   const {
     viewUsers,
+    viewUsersDelete,
     currentUser,
     usersRoles,
     products,
@@ -1090,8 +1091,8 @@ function CommonTable(props) {
                             {row.status}
                           </td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap">
-                            <a
-                              href={`/change-password/${row.id}`}
+                            <Link
+                              to={`/change-password/${row.id}`}
                               className="btn btn-warning btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1099,10 +1100,10 @@ function CommonTable(props) {
                               title="Change Password"
                             >
                               <i className="fa fa-key"></i>
-                            </a>
+                            </Link>
 
-                            <a
-                              href={`/edit-users/${row.id}`}
+                            <Link
+                              to={`/update-user/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
                               type="button"
                               data-toggle="tooltip"
@@ -1110,7 +1111,7 @@ function CommonTable(props) {
                               title="Edit"
                             >
                               <i className="fa fa-edit"></i>
-                            </a>
+                            </Link>
 
                             <input type="hidden" name="id" value="1" />
 
@@ -1120,6 +1121,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
+                              onClick={()=>viewUsersDelete(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>

@@ -7,6 +7,7 @@ import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import AddOrder from '../modal/AddOrder';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 function DispatchedOrders() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
@@ -30,11 +31,12 @@ function DispatchedOrders() {
     const { serverURL,theme, dispatchOrder, setDispatchOrder,currentUser } = useAuth()
 
    
-
+    const {getHeaders} = useAuthenticator()
     const handleDelete = async (dispatchedOrdersDelete) => {
         try {
             const url = serverURL + `/dispatched-orders/${dispatchedOrdersDelete}`
-            await axios.delete(url)
+            const headers = getHeaders()
+            await axios.delete(url,{headers})
             const removeItem = dispatchOrder.filter(item => item._id !== dispatchedOrdersDelete)
             setDispatchOrder(removeItem)
         } catch (error) {

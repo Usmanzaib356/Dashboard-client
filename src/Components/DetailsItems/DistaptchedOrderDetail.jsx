@@ -5,17 +5,20 @@ import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function DistaptchedOrderDetail() {
     const { serverURL, theme } = useAuth()
     const [dispatchedDetail, setDispatchedDetail] = useState({})
     const { dispatchUpdateOrderId } = useParams()
 
+    const {getHeaders} = useAuthenticator()
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const headers = getHeaders()
                 const url = serverURL + `/dispatched-orders/${dispatchUpdateOrderId}`
-                const response = await axios.get(url)
+                const response = await axios.get(url,{headers})
                 setDispatchedDetail(response.data.data)
             } catch (error) {
                 console.log(error);

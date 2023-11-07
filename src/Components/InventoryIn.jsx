@@ -9,6 +9,7 @@ import CommonTable from './CommonTable';
 import { Button } from 'react-bootstrap';
 import { useEffect } from 'react';
 import Cookies from 'js-cookie';
+import { useAuthenticator } from '../handlers/tokenHandler';
 function InventoryIn() {
   const [style, setStyle] = useState(
     'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
@@ -42,12 +43,14 @@ function InventoryIn() {
 
   //   Fetch Data from API
   const { serverURL, inventoryIn, setInventoryIn, theme } = useAuth();
-  
+ 
+  const {getHeaders} = useAuthenticator()
 
   const handleDelete = async ( deleteInnventoryIn) => {
     try {
+      const headers = getHeaders()
       const url = serverURL + `/inventory/${deleteInnventoryIn}`;
-      await axios.delete(url);
+      await axios.delete(url,{headers});
       const updatedInventory = inventoryIn.filter((Inventory) => {
         return Inventory._id !== deleteInnventoryIn;
       });

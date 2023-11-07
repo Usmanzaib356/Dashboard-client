@@ -5,19 +5,21 @@ import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function DispatchedCenterDetail() {
     const { serverURL, theme } = useAuth()
     const [msg, setmsg] = useState()
     const [dispatchedDetail, setDispatchedDetail] = useState({})
     const { dispatchUpdateId } = useParams()
-    console.log(dispatchUpdateId);
-
+    
+    const {getHeaders} = useAuthenticator()
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const headers = getHeaders()
                 const url = serverURL + `/dispatched-centers/${dispatchUpdateId}`
-                const response = await axios.get(url)
+                const response = await axios.get(url,{headers})
                 setDispatchedDetail(response.data.data)
                 console.log(response.data.data);
             } catch (error) {

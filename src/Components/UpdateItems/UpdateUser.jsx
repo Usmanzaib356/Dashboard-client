@@ -1,23 +1,20 @@
-import React, { useRef, useState } from 'react'
-import useAuth from "../../hooks/useAuth"
-import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel,  Row } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react'
+import Sidebar from '../Sidebar';
+import Navbar from '../Navbar';
+import Footer from '../Footer';
+import useAuth from '../../hooks/useAuth';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel,  Row } from 'react-bootstrap';
 import { useAuthenticator } from '../../handlers/tokenHandler';
 
-function AddUser() {
-
-
-    const { dispatchCenter,serverURL } = useAuth()
-
-
-    // Modal 
-    const [showModal, setShowModal] = useState(false);
-    const [passwordMsg, setPasswordMsg] = useState('');
-    const [passwordMatch, setPasswordMatch] = useState(true);
-    const [msg, setMsg] = useState("");
-
-
-    //  Ref
+function UpdateUser() {
+    const { serverURL, theme, usersGet, setUsersGet,dispatchCenter  } = useAuth()
+    const [msg,setmsg] = useState()
+    const {userId} = useParams()
+    
+    
+    // Use ref
     const firstName = useRef()
     const lastName = useRef()
     const email = useRef()
@@ -27,77 +24,77 @@ function AddUser() {
     const dispatch_center = useRef()
     const confirmPassword = useRef()
 
+    
 
-
-
-    const handlePasswordFocus = () => {
-        if (password.current.value !== confirmPassword.current.value) {
-            setPasswordMsg('Passwords do not match');
-            setPasswordMatch(false);
-        } else {
-            setPasswordMsg('Password Matched!');
-            setPasswordMatch(true);
-        }
-    };
-
-
-
-
-
-    const handleShowModal = () => {
-        setShowModal(true);
-    };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
-
-
+    
     const {getHeaders} = useAuthenticator()
-
-    const handleSend = async () => {
-
-
-        try {
-            const url = serverURL + '/user/add-user'
-            const json = {
-                first_name: firstName.current.value,
+     const updateHandle = async (e)=>{
+        e.preventDefault()
+        const url = serverURL + `/user/${userId}`
+        const json = {
+            first_name: firstName.current.value,
                 last_name: lastName.current.value,
                 email: email.current.value,
                 dispatch_center:dispatch_center.current.value,
                 role: role.current.value,
                 status: status.current.value,
                 password: password.current.value,
-            }
+        }
+        try {
             const headers = getHeaders()
-            const res =  await axios.post(url, json,{headers})
-            console.log(res);
-            setMsg("User has been add successfully")
+            const response = await axios.put(url,json,{headers})
+            setmsg("Update has been successfully")
+            console.log(response);
         } catch (error) {
             console.log(error);
         }
-    
+     } 
 
-    };
-
+     useEffect(()=>{
+        const getOneItem = usersGet.filter( item => item._id == userId )
+         getOneItem.map((item)=>{
+            return(
+              setUsersGet(item)   
+            )
+        })
+    },[])
 
 
     return (
-        <>
-            <div className='mb-3 d-flex justify-content-end'>
-                <Button variant="primary" onClick={handleShowModal}>
-                    Add New User
-                </Button>
 
-                <Modal show={showModal} onHide={handleCloseModal} >
-                    <ModalHeader >
-                        <ModalTitle  >New User</ModalTitle>
-                        <button className='btn' onClick={handleCloseModal}>
-                            <li className='fa fa-times' ></li>
-                        </button>
-                    </ModalHeader>
-                    <ModalBody>
-                        <Form>
+        <>
+            <div>
+                <section id="page-top">
+                    {/*  <!-- Page Wrapper --> */}
+                    <div id="wrapper">
+                        {/*  <!-- Sidebar --> */}
+                        <Sidebar></Sidebar>
+                        {/*  <!-- End of Sidebar --> */}
+
+                        {/*  <!-- Content Wrapper --> */}
+                        <div id="content-wrapper" className="d-flex flex-column">
+                            {/*  <!-- Main Content --> */}
+                            <div id="content" className={theme ? "darkthemecontent" : ""}>
+                                {/*  <!-- Topbar --> */}
+                                <Navbar></Navbar>
+                                {/*  <!-- End of Topbar --> */}
+
+                                {/* <!-- Begin Page Content --> */}
+
+                                {/*   <!-- /.container-fluid --> */}
+                                <div className='container-fluid'>
+
+                                    <Link to='/dispatched-centers'>
+                                        Go Back
+                                    </Link>
+                                    <form action="">
+                                        <div className={`card shadow mb-4 ${theme ? 'table-dark' : ''}`}>
+                                            <div className={`card-header py-3 ${theme ? 'table-dark' : ''}`}>
+                                                <h6 className="m-0  font-weight-bold text-primary" style={{ fontSize: "16px" }}>
+                                                    Update Center
+                                                </h6>
+                                            </div>
+                                            <Form className='px-4 py-4'>
                             <Row className='d-flex justify-content-between px-2'>
                                 <FormGroup style={{ width: '48%' }}>
                                     <FormLabel>First Name</FormLabel>
@@ -214,52 +211,41 @@ function AddUser() {
                                     <FormControl
                                         type="password"
                                         ref={password}
-                                        onFocus={handlePasswordFocus}
-                                        onChange={handlePasswordFocus}
                                     />
                                 </FormGroup>
-                                <FormGroup style={{ width: '48%' }}>
-                                    <FormLabel>Confirm Password</FormLabel>
-                                    <FormControl
-                                        type="password"
-                                        ref={confirmPassword}
-                                        onFocus={handlePasswordFocus}
-                                        onChange={handlePasswordFocus}
-                                    />
-                                    <Row className={`d-flex justify-content-center mt-2 ${passwordMatch ? 'text-success' : 'text-danger'}`}>
-                                        {passwordMsg}
-                                    </Row>
-
-                                </FormGroup>
-
-
-
-
                             </Row>
 
-
+                            <div className='mt-4 w-100'>
+                                                    <button type='submit' className='btn  btn-primary w-100'
+                                                    onClick={(e)=>updateHandle(e)}
+                                                    >
+                                                        Update
+                                                    </button>
+                                                </div>
 
                         </Form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button variant="danger" onClick={handleCloseModal}>
-                        <li className='fa fa-times-circle mr-1'></li>
-                            Close
-                        </Button>
-                        <Button variant="success" onClick={handleSend}>
-                        <li className='fa fa-plus-circle mr-1'></li>
-                            Register
-                        </Button>
-                    </ModalFooter>
-                </Modal>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {/*   <!-- End of Main Content -->
 
+                                <!-- Footer --> */}
+                            <Footer></Footer>
+                            {/* <!-- End of Footer --> */}
+                        </div>
+                        {/*  <!-- End of Content Wrapper --> */}
+                    </div>
+                    {/*  <!-- End of Page Wrapper -->
 
-
-
-
+                        <!-- Scroll to Top Button--> */}
+                    <a className="scroll-to-top rounded" href="#page-top">
+                        <i className="fas fa-angle-up"></i>
+                    </a>
+                </section>
             </div>
         </>
     )
 }
 
-export default AddUser
+export default UpdateUser;

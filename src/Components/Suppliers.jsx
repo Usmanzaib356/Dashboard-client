@@ -8,6 +8,7 @@ import Footer from './Footer';
 import CommonTable from './CommonTable';
 import { dummySuppliers } from '../utils/data';
 import { Button } from 'react-bootstrap';
+import { useAuthenticator } from '../handlers/tokenHandler';
 
 function Suppliers() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
@@ -42,10 +43,12 @@ function Suppliers() {
     
 
     // Delete Center
+    const {getHeaders} = useAuthenticator()
     const handleDelete = async (deleteSupplier) => {
         try {
+            const headers = getHeaders()
             const url = serverURL + `/supplier/${deleteSupplier}`
-            await axios.delete(url)
+            await axios.delete(url,{headers})
             const UpdateItem = suppliers.filter(item => item._id !== deleteSupplier)
             setSuppliers(UpdateItem)
         } catch (error) {

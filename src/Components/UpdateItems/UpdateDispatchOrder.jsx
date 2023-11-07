@@ -5,6 +5,7 @@ import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function UpdateDispatchOrder() {
     const { serverURL, theme, dispatchOrder,
@@ -19,6 +20,7 @@ function UpdateDispatchOrder() {
     const dispatchdate = useRef()
     const totalAmount = useRef()
 
+    const {getHeaders} = useAuthenticator()
      const updateHandle = async (e)=>{
         e.preventDefault()
         const url = serverURL + `/dispatched-orders/${dispatchUpdateOrderId}`
@@ -29,7 +31,8 @@ function UpdateDispatchOrder() {
             total_amount:totalAmount.current.value
         }
         try {
-            const response = await axios.put(url,json)
+            const headers = getHeaders()
+            const response = await axios.put(url,json,{headers})
             console.log(response);
             setmsg("Update has been successfully")
         } catch (error) {

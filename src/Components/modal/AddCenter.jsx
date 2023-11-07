@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react'
 import useAuth from "../../hooks/useAuth"
 import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel, FormSelect, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function AddCenter() {
 
@@ -31,7 +32,7 @@ function AddCenter() {
     const handleCloseModal = () => {
         setShowModal(false);
     };
-
+    const {getHeaders} = useAuthenticator()
     const handleSend = async () => {
         if (validInputs()) {
             const url = serverURL + '/dispatched-centers/dispatched-center'
@@ -41,7 +42,8 @@ function AddCenter() {
                 courier_service: CourierService.current.value
             }   
             try {
-                const response = await axios.post(url, json)
+                const headers = getHeaders()
+                const response = await axios.post(url, json,{headers})
                 const newCenter =  response.data.data
                 setDispatchCenter( prevCenter => [...prevCenter , newCenter ])
                 setMsg('Center has been Save successfully')

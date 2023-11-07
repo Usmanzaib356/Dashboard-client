@@ -6,6 +6,7 @@ import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import MessageModal from '../modal/MessageModal';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function AddNewInventory() {
   const [style, setStyle] = useState(
@@ -74,6 +75,7 @@ function AddNewInventory() {
   console.log(JSON.stringify(productsData) + ' products Data 72');
 
   // Add New Inventory
+  const {getHeaders} = useAuthenticator()
   const HandleAddNewInventory = async (e) => {
     e.preventDefault();
 
@@ -89,8 +91,9 @@ function AddNewInventory() {
         total_price: total_price.current.value,
         productsData,
       };
+      const headers = getHeaders()
 
-      const response = await axios.post(url, data);
+      const response = await axios.post(url, data ,{headers});
 
       setColor(true);
       setMsg(response.data.message);

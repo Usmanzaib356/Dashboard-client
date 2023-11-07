@@ -5,6 +5,7 @@ import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function UpdateDispatchCenter() {
     const { serverURL, theme, dispatchCenter } = useAuth()
@@ -21,7 +22,7 @@ function UpdateDispatchCenter() {
     
 
     
-    
+    const {getHeaders} = useAuthenticator()
      const updateHandle = async (e)=>{
         e.preventDefault()
         const url = serverURL + `/dispatched-centers/${dispatchUpdateId}`
@@ -31,7 +32,8 @@ function UpdateDispatchCenter() {
             courier_service:courierService.current.value
         }
         try {
-            const response = await axios.put(url,json)
+            const headers = getHeaders()
+            await axios.put(url,json,{headers})
             setmsg("Update has been successfully")
         } catch (error) {
             console.log(error);

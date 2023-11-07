@@ -6,6 +6,7 @@ import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import { Button } from 'react-bootstrap';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 function AddSupplier() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
@@ -52,17 +53,19 @@ function AddSupplier() {
 
 
     // Add New inventory
+    const {getHeaders} = useAuthenticator()
     const HandleAddNewSupplier = async (e) => {
         e.preventDefault()
 
         try {
+            const headers = getHeaders()
             const url = serverURL + '/supplier/supplier'
             const json = {
                 supplier_name: supplier_name.current.value,
                 location: location.current.value,
                 date:date.current.value
             }
-            const response = await axios.post(url,json)
+            const response = await axios.post(url,json,{headers})
             console.log(response);
             setmsg("Supplier has been add successfully")
 

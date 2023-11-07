@@ -5,6 +5,7 @@ import axios from 'axios';
 import Sidebar from '../Sidebar';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 function UpdateInventory() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
 
@@ -44,6 +45,7 @@ function UpdateInventory() {
     const total_price = useRef()
 
     // Add New inventory
+    const {getHeaders} = useAuthenticator()
     const UpdateProduct = async (e) => {
         e.preventDefault()
 
@@ -57,7 +59,8 @@ function UpdateInventory() {
                     stock: stock.current.value,
                     total_price: total_price.current.value
                 }
-                const response = await axios.put(url, json)
+                const headers = getHeaders()
+                const response = await axios.put(url, json ,{headers})
                 console.log(response);
                 setmsg("Update has been successfully")
                 setColor(true)

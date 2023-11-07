@@ -1,12 +1,12 @@
-import React, { useEffect, useState, useNavigate } from 'react';
+import React, {  useState } from 'react';
 import useAuth from '../hooks/useAuth';
-import axios from 'axios';
 import Sidebar from './Sidebar';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import CommonTable from './CommonTable';
-import { dummyDataViewUsers } from '../utils/data';
 import AddUser from './modal/AddUser';
+import { useAuthenticator } from '../handlers/tokenHandler';
+import axios from 'axios';
 function ViewUsers() {
   const [style, setStyle] = useState(
     'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
@@ -36,8 +36,22 @@ function ViewUsers() {
   };
 
   // Context Api
-  const { theme, usersGet } = useAuth();
+  const { theme, serverURL, usersGet, setUsersGet } = useAuth();
 
+       // Delete Center
+       const {getHeaders} = useAuthenticator()
+       const handleDelete = async (viewUsersDelete) => {
+           try {
+               const url = serverURL + `/users/${viewUsersDelete}`
+               const headers = getHeaders()
+               await axios.delete(url,{headers})
+               const UpdateItem = usersGet.filter(item => item._id !== viewUsersDelete)
+               setUsersGet(UpdateItem)
+           } catch (error) {
+               console.log(error);
+           }
+       }
+ 
   return (
     <>
       <div>
@@ -60,7 +74,10 @@ function ViewUsers() {
                 {/*   <!-- /.container-fluid --> */}
                 <div className="container-fluid">
                   <AddUser></AddUser>
-                  <CommonTable e viewUsers data={usersGet} />
+                  <CommonTable 
+                   viewUsersDelete={handleDelete}
+                   viewUsers
+                   data={usersGet} />
                 </div>
               </div>
               {/*   <!-- End of Main Content -->

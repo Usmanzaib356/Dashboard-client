@@ -7,6 +7,7 @@ import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import { DispatchedCenter } from '../../utils/data'
+import { useAuthenticator } from '../../handlers/tokenHandler';
 function RemainingOrders() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
     const [msg, setMsg] = useState("")
@@ -33,11 +34,13 @@ function RemainingOrders() {
 
     const { serverURL,theme,remainingOrders,setRemainingOrders, } = useAuth()
 
-
+    const {getHeaders} = useAuthenticator()
     const handleDelete = async (id) => {
         try {
+            
             const url = serverURL + `/remaining-orders/${id}`
-            await axios.delete(url)
+            const headers = getHeaders()
+            await axios.delete(url,{headers})
             const removeItem = remainingOrders.filter(item => item._id !== id)
             setRemainingOrders(removeItem)
         } catch (error) {

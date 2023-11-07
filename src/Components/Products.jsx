@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import CommonTable from './CommonTable';
 import { Button } from 'react-bootstrap';
+import { useAuthenticator } from '../handlers/tokenHandler';
 function Products() {
   const [style, setStyle] = useState(
     'navbar-nav bg-gradient-primary sidebar sidebar-dark accordion'
@@ -40,13 +41,14 @@ function Products() {
   const nav = useNavigate();
 
   // Delete Center
-
+  const {getHeaders} = useAuthenticator()
 
   const handleDelete = async (e, productId) => {
     e.preventDefault();
     try {
+      const headers = getHeaders()
       const url = serverURL + `products/${productId}`;
-      await axios.delete(url);
+      await axios.delete(url,{headers});
       const updatedProducts = Products.filter((product) => {
         return product._id !== productId;
       });

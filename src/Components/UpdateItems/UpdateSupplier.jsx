@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FormGroup, FormLabel } from 'react-bootstrap';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function UpdateSupllier() {
     const { serverURL, theme,suppliers, 
@@ -20,6 +21,7 @@ function UpdateSupllier() {
     const location = useRef()
     const date = useRef()
 
+    const {getHeaders} = useAuthenticator()
     const updateHandle = async (e) => {
         e.preventDefault()
         const url = serverURL + `/supplier/${supplierId}`
@@ -29,7 +31,8 @@ function UpdateSupllier() {
             date:date.current.value
         }
         try {
-            const response = await axios.put(url, json)
+            const headers = getHeaders()
+            const response = await axios.put(url, json,{headers})
             setmsg("Update has been successfully")
         } catch (error) {
             console.log(error);

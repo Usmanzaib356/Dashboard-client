@@ -7,6 +7,7 @@ import Footer from '../Footer';
 import useAuth from '../../hooks/useAuth';
 import AddCenter from '../modal/AddCenter';
 import axios from 'axios';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 function DispatchedCenters() {
     const [style, setStyle] = useState("navbar-nav bg-gradient-primary sidebar sidebar-dark accordion");
     const [msg, setMsg] = useState("")
@@ -33,18 +34,20 @@ function DispatchedCenters() {
 
 
 
-    const { serverURL, theme, dispatchCenter, setDispatchCenter } = useAuth
-    // Delete Center
-    const handleDelete = async (DispatchedCenterdelete) => {
-        try {
-            const url = serverURL + `/dispatched-centers/${DispatchedCenterdelete}`
-            await axios.delete(url)
-            const UpdateItem = dispatchCenter.filter(item => item._id !== DispatchedCenterdelete)
-            setDispatchCenter(UpdateItem)
-        } catch (error) {
-            console.log(error);
+    const { serverURL, theme, dispatchCenter, setDispatchCenter } = useAuth()
+        // Delete Center
+        const {getHeaders} = useAuthenticator()
+        const handleDelete = async (DispatchedCenterdelete) => {
+            try {
+                const url = serverURL + `/dispatched-centers/${DispatchedCenterdelete}`
+                const headers = getHeaders()
+                await axios.delete(url,{headers})
+                const UpdateItem = dispatchCenter.filter(item => item._id !== DispatchedCenterdelete)
+                setDispatchCenter(UpdateItem)
+            } catch (error) {
+                console.log(error);
+            }
         }
-    }
 
     return (
         <>

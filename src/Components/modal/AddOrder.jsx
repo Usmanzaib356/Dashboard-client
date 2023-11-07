@@ -17,6 +17,7 @@ import {
 } from 'react-bootstrap';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function AddOrder() {
   const { serverURL, remainingOrders, currentUser } = useAuth();
@@ -88,6 +89,8 @@ function AddOrder() {
       setTotalAmount('');
     }
   };
+  const {getHeaders} = useAuthenticator()
+
   const handleSend = async () => {
     if (validInputs()) {
       const url = serverURL + '/dispatched-orders/dispatched-order';
@@ -102,7 +105,8 @@ function AddOrder() {
       console.log(json);
 
       try {
-        const response = await axios.post(url, json);
+        const headers = getHeaders()
+        const response = await axios.post(url, json,{headers});
         console.log(response);
         setMsg('Dispatched Order has been saved successfully');
       } catch (error) {

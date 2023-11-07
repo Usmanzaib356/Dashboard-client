@@ -6,6 +6,7 @@ import useAuth from '../../hooks/useAuth';
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FormGroup, FormLabel } from 'react-bootstrap';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function UpdateStore() {
     const { serverURL, theme } = useAuth()
@@ -15,7 +16,7 @@ function UpdateStore() {
     // Use ref
     const storeName = useRef()
     const status = useRef()
-
+    const {getHeaders} = useAuthenticator()
     const updateHandle = async (e) => {
         e.preventDefault()
         const url = serverURL + `/stores/${storeId}`
@@ -24,7 +25,8 @@ function UpdateStore() {
             status: status.current.value
         }
         try {
-            const response = await axios.put(url, json)
+            const headers = getHeaders()
+            const response = await axios.put(url, json,{headers})
             console.log(response);
             setmsg("Update has been successfully")
         } catch (error) {
