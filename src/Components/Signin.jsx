@@ -5,10 +5,9 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 function Signin() {
   const [loading, setLoading] = useState(false);
-  const [msg, setMsg] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [color, setColor] = useState(false);
+  // const [color, setColor] = useState(false);
 
   const naviagte = useNavigate();
 
@@ -32,7 +31,7 @@ function Signin() {
       try {
         const response = await axios.post(url, json);
         setLoading(false);
-        setMsg(response.data);
+        // setMsg(response.data);
         setCurrentUser(response.data.user);
         const token = response.data.token;
         const expirationTime = new Date();
@@ -47,12 +46,11 @@ function Signin() {
         });
         setRole(response.data.user.role);
         setIsLogin(true);
-        setColor(true);
+        // setColor(true);
         naviagte('/');
       } catch (err) {
         console.log(err);
-        setMsg(err);
-        setColor(false);
+        // setColor(false);
       } finally {
         setLoading(false);
       }
@@ -118,13 +116,13 @@ function Signin() {
                 placeholder="Password"
               />
               <p className="error-message text-danger">{passwordError}</p>
-              <p
+              {/* <p
                 className={`text-left ${
                   color ? 'text-success' : 'text-danger'
                 } `}
               >
-                {/* {msg} */}
-              </p>
+                {msg}
+              </p> */}
             </div>
             <div className="submit-container mt-4">
               <button
@@ -137,9 +135,9 @@ function Signin() {
             </div>
             <div className="py-1">
               <div className="font-weight-bolder">Admin </div>
-              <div>Username: something | Password: something</div>
+              <div>Username: usman@zaib.com | Password: abc123</div>
               <div className="font-weight-bolder">User </div>
-              <div>Username: something | Password: something</div>
+              <div>Username: noor@zakir.com | Password: abc123</div>
             </div>
           </div>
         </div>

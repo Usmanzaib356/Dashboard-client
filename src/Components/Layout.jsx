@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import LoadingFallback from './LoadingFallback';
 
-function Layout({}) {
+function Layout() {
   const { theme } = useAuth();
   return (
     <>

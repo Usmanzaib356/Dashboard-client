@@ -1,10 +1,8 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import { RingLoader } from 'react-spinners';
 import { Route, Routes } from 'react-router-dom';
 import useAuth from './hooks/useAuth';
 import ProtectedRoute from './Components/ProtectedRoute';
 import UnAuthorized from './Components/UnAuthorized';
-import Cookies from 'js-cookie';
 import Layout from './Components/Layout';
 import LoadingFallback from './Components/LoadingFallback';
 
@@ -23,9 +21,7 @@ const ReturnInventoryMechanism = lazy(() =>
 const InventoryStatus = lazy(() => import('./Components/InventoryStatus'));
 const Suppliers = lazy(() => import('./Components/Suppliers'));
 const Warehouses = lazy(() => import('./Components/Warehouses'));
-const Signup = lazy(() => import('./Components/Signup'));
 const Signin = lazy(() => import('./Components/Signin'));
-const Chart = lazy(() => import('./Components/Chart'));
 const Universal = lazy(() => import('./Components/Universal'));
 const Stores = lazy(() => import('./Components/Stores/Stores'));
 const DispatchedCenters = lazy(() =>
@@ -38,10 +34,6 @@ const RemainingOrders = lazy(() =>
   import('./Components/Orders/RemainingOrders')
 );
 const AllOrders = lazy(() => import('./Components/Orders/AllOrders'));
-const Adminpermission = lazy(() => import('./Components/Adminpermission'));
-const Sidebar = lazy(() => import('./Components/Sidebar'));
-const Navbar = lazy(() => import('./Components/Navbar'));
-const Footer = lazy(() => import('./Components/Footer'));
 const AddNewInventory = lazy(() =>
   import('./Components/AddNewItems/AddNewInventory')
 );
