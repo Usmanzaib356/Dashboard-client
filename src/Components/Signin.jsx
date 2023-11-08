@@ -12,7 +12,7 @@ function Signin() {
 
   const naviagte = useNavigate();
 
-  const { serverURL, setIsLogin, setCurrentUser } = useAuth();
+  const { serverURL, setIsLogin, setCurrentUser,setRole } = useAuth();
 
   const email = useRef();
   const password = useRef();
@@ -31,7 +31,6 @@ function Signin() {
 
       try {
         const response = await axios.post(url, json);
-        setIsLogin(true);
         setLoading(false);
         setMsg(response.data);
         setCurrentUser(response.data.user);
@@ -41,7 +40,9 @@ function Signin() {
         Cookies.set('token', token, { expires: expirationTime });
         Cookies.set('login', true, { expires: expirationTime });
         Cookies.set('center', response.data.user.dispatch_center, { expires: expirationTime });
-        Cookies.set('role', response.data.user.role, { expires: expirationTime });       
+        Cookies.set('role', response.data.user.role, { expires: expirationTime }); 
+        setRole(response.data.user.role) 
+        setIsLogin(true);
         setColor(true);
         naviagte('/');
       } catch (err) {

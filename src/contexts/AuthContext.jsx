@@ -1,5 +1,4 @@
 import React, { createContext, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { useAuthenticator, useToken } from '../handlers/tokenHandler';
@@ -37,8 +36,8 @@ const AuthContextProvider = ({ children }) => {
   const [store, setStore] = useState([]);
   const [role, setRole] = useState('');
 
-  
-  useEffect(() => { 
+
+  useEffect(() => {
     const userRole = Cookies.get('role')
     setRole(userRole)
   }, []);
@@ -202,7 +201,7 @@ const AuthContextProvider = ({ children }) => {
         setRemainingOrders,
         currentUser,
         setCurrentUser,
-        role, 
+        role,
         setRole,
       }}
     >

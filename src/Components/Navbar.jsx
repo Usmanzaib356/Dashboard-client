@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useAuth from "../hooks/useAuth"
 import logo from '../images/logo.avif'
+import Cookies from 'js-cookie';
 function Navbar() {
-    const { theme, setTheme, sidebar, setSidebar } = useAuth()
-  
+    const { theme, setTheme, sidebar, setSidebar, role,setRole,setIsLogin } = useAuth()
+
     function toggle() {
         setTheme(!theme)
     }
 
-
     const [logout, setLogOut] = useState(false)
-
 
     const handleLogout = () => {
 
@@ -19,15 +18,22 @@ function Navbar() {
 
     }
 
+    const nav = useNavigate()
 
     const handleSidebar = () => {
         setSidebar(!sidebar)
     }
 
-
-    // navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow
-
-    // navbar navbar-expand navbar-light  topbar mb-4 static-top shadow navbardarktheme
+    const logoutUser = () => {
+        Cookies.remove("role")
+        Cookies.remove("login")
+        Cookies.remove("token")
+        Cookies.remove("center")
+        setRole(null)
+        setIsLogin(false)
+        console.log(role);
+        nav('/login')
+    }
 
     return (
         <>
@@ -41,19 +47,7 @@ function Navbar() {
                 </button>
 
                 {/*  <!-- Topbar Search --> */}
-                <form
-                    className="  searchbar-nav-none form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div className="input-group w-100 mr-4 ">
-                        <input type="text" className={theme ? "form-control srchdark  border-0 small" : "form-control bg-light  border-0 small"} placeholder="Search for available stock"
-                            aria-label="Search" aria-describedby="basic-addon2" />
-                        <div className="input-group-append ">
-                            <button className={theme ? "btn srcbtn" : "btn btn-primary"} type="button">
-                                <i className="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-
-                    </div>
-                </form>
+                <h1 className={theme ? "h3 mb-0 text-light" : "h3 mb-0 text-dark"}>{role}</h1>
 
                 {/*  <!-- Topbar Navbar --> */}
                 <ul className="navbar-nav ml-auto ">
@@ -86,10 +80,6 @@ function Navbar() {
 
                     </li>
 
-
-
-
-
                     <div className='d-flex justify-content-between gap-for-logo align-items-center '>
 
                         <li className="nav-item mt-3">
@@ -99,8 +89,6 @@ function Navbar() {
                                 <span className="slider"> </span>
                             </label>
                         </li>
-
-
 
 
                         {/*  <!-- Nav Item - Alerts --> */}
@@ -127,7 +115,7 @@ function Navbar() {
 
                                     <li className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400">  </li>
 
-                                    <a href="#" className={theme ? 'fz-80per text-decoration-none text-light' : 'fz-80per text-decoration-none '}>
+                                    <a href="#" className={theme ? 'fz-80per text-decoration-none text-light' : 'fz-80per text-decoration-none '} onClick={() => logoutUser()}>
                                         Logout
                                     </a>
                                 </div>
