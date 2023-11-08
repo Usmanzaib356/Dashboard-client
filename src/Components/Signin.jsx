@@ -12,7 +12,7 @@ function Signin() {
 
   const naviagte = useNavigate();
 
-  const { serverURL, setIsLogin, setCurrentUser,setRole } = useAuth();
+  const { serverURL, setIsLogin, setCurrentUser, setRole } = useAuth();
 
   const email = useRef();
   const password = useRef();
@@ -39,9 +39,13 @@ function Signin() {
         expirationTime.setTime(expirationTime.getTime() + 30 * 60 * 1000);
         Cookies.set('token', token, { expires: expirationTime });
         Cookies.set('login', true, { expires: expirationTime });
-        Cookies.set('center', response.data.user.dispatch_center, { expires: expirationTime });
-        Cookies.set('role', response.data.user.role, { expires: expirationTime }); 
-        setRole(response.data.user.role) 
+        Cookies.set('center', response.data.user.dispatch_center, {
+          expires: expirationTime,
+        });
+        Cookies.set('role', response.data.user.role, {
+          expires: expirationTime,
+        });
+        setRole(response.data.user.role);
         setIsLogin(true);
         setColor(true);
         naviagte('/');
@@ -91,6 +95,7 @@ function Signin() {
                 </h3>
               )}
             </div>
+
             <div className="input-container mt-4 ">
               <label htmlFor="" className="d-flex mt-2">
                 Email
@@ -129,6 +134,12 @@ function Signin() {
               >
                 Login
               </button>
+            </div>
+            <div className="py-1">
+              <div className="font-weight-bolder">Admin </div>
+              <div>Username: something | Password: something</div>
+              <div className="font-weight-bolder">User </div>
+              <div>Username: something | Password: something</div>
             </div>
           </div>
         </div>
