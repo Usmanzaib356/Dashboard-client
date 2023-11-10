@@ -33,6 +33,8 @@ const AuthContextProvider = ({ children }) => {
   const [dispatchCenter, setDispatchCenter] = useState([]);
   const [dispatchOrder, setDispatchOrder] = useState([]);
   const [remainingOrders, setRemainingOrders] = useState([]);
+  const [faultyInventory, setfaultyInventory] = useState([]);
+  const [returnInventory, setReturnInventory] = useState([]);
   const [store, setStore] = useState([]);
   const [role, setRole] = useState('');
 
@@ -172,6 +174,54 @@ const AuthContextProvider = ({ children }) => {
     fetchData();
   }, [token]);
 
+  
+  //  Get Faulty Inventory
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = serverURL + '/faulty-inventory/faulty-inventories';
+
+      try {
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
+        setfaultyInventory(response.data.message)
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [token]);
+
+    //  Get Return Inventory
+    useEffect(() => {
+      const fetchData = async () => {
+        const url = serverURL + '/return-inventory/return-inventories';
+        try {
+          const headers = getHeaders();
+          const response = await axios.get(url, { headers });
+          setReturnInventory(response.data.message)
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }, [token]);
+
+    //  Get Suppliers
+    useEffect(() => {
+      const fetchData = async () => {
+        const url = serverURL + '/supplier/supplier';
+        try {
+          const headers = getHeaders();
+          const response = await axios.get(url, { headers });
+          console.log(response);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }, [token]);
+  
+  
   return (
     <AuthContext.Provider
       value={{
@@ -202,6 +252,10 @@ const AuthContextProvider = ({ children }) => {
         setCurrentUser,
         role,
         setRole,
+        faultyInventory,
+        setfaultyInventory,
+        returnInventory, 
+        setReturnInventory,
       }}
     >
       {children}

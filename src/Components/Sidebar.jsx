@@ -83,11 +83,11 @@ function Sidebar() {
 
                 {/* <!-- Nav Item - Utilities Collapse Menu --> */}
                 <li className="nav-item">
-                    <Link className="nav-link collapsed" to="" data-toggle="collapse" data-target="#collapseUtilities"
+                    <div className="nav-link collapsed"  data-toggle="collapse" data-target="#collapseUtilities"
                         aria-expanded="true" aria-controls="collapseUtilities">
                         <i className="fas fa-fw fa-file-alt"></i>
                         <span>Inventory</span>
-                    </Link>
+                    </div>
                     <div id="collapseUtilities" className="collapse" aria-labelledby="headingUtilities"
                         data-parent="#accordionSidebar">
                         <div className={`  ${theme ? 'table-dark  ' : 'bg-white '}  py-2 collapse-inner rounded`}>

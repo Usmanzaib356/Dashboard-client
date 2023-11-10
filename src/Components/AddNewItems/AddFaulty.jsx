@@ -1,33 +1,45 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import useAuth from "../../hooks/useAuth"
+import { useAuthenticator } from '../../handlers/tokenHandler';
+import axios from 'axios';
 
 function AddFaulty() {
 
     // Context Api
-    const { theme } = useAuth()
+    const { theme, Products,serverURL } = useAuth()
+    const [msg,setMsg]= useState('')
 
 
     //  useRef
-    const order = useRef()
+    const invoice = useRef()
     const dispatchDate = useRef()
     const product = useRef()
     const comments = useRef()
 
-
+    const {getHeaders} = useAuthenticator()
 
     // Add New inventory
-    const HandleAddFaulty = (e) => {
+    const HandleAddFaulty = async (e) => {
         e.preventDefault()
+            const url = serverURL + '/faulty-inventory/faulty-inventory';
+            const json = {
+              invoice: invoice.current.value,
+              dispatch_date: dispatchDate.current.value,
+              product: product.current.value,
+              comment: comments.current.value,
+            };
+            try {
+              const headers = getHeaders()
+              const response = await axios.post(url, json,{headers});
+              setMsg("Faulty inventory has been added")
+              console.log(response);
+            } catch (error) {
+              console.log(error);
+            }
+          }
+        
 
-        console.log(
-            order.current.value,
-            dispatchDate.current.value,
-            product.current.value,
-            comments.current.value,
-        );
-
-    }
 
     return (
         <>
@@ -47,18 +59,18 @@ function AddFaulty() {
                         <div className="">
                             <div className="row">
                                 <div className="col-md-6 mb-3">
-                                    <label htmlFor="">Order #<sup className='text-danger'>*</sup></label>
+                                    <label htmlFor="">Invoice<sup className='text-danger'>*</sup></label>
 
                                     <select name="Order_id" className={`form-control ${theme ? 'srchdark' : null}`}
                                         required
-                                        ref={order}
+                                        ref={invoice}
                                     >
                                         <option value="0" disabled>
-                                            Select Order
+                                            Select Invoice
 
                                         </option>
-                                        <option value="abc" >
-                                            Order
+                                        <option  >
+                                            Invoice one
 
                                         </option>
 
@@ -80,7 +92,7 @@ function AddFaulty() {
                                 <div className="mb-4" >
                                     <label htmlFor="">Product</label>
 
-                                    <select name="product_id" className={`form-control ${theme ? 'srchdark' : null}`}
+                                    <select Name="product_id" className={`form-control ${theme ? 'srchdark' : null}`}
                                         required
                                         ref={product}
 
@@ -90,14 +102,15 @@ function AddFaulty() {
 
                                         </option>
 
-                                        <option value="okh" style={{ Width: '600px' }} >
-                                            Products
+                                        {
+                                            Products.map((item, i) => {
+                                                return (
+                                                    <option key={i}  style={{ Width: '600px' }} >
+                                                        {item.title}
 
-                                        </option>
-                                        <option value="abc" style={{ Width: '600px' }} >
-                                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis voluptatem
-                                        </option>
-
+                                                    </option>
+                                                )
+                                            })}
 
                                     </select>
 
@@ -114,7 +127,7 @@ function AddFaulty() {
                                 </div>
                             </div>
                         </div>
-
+                        <p className='text-center text-success'>{msg}</p>
                         <div className='mt-4 w-100'>
                             <button onClick={e => HandleAddFaulty(e)} className='btn  btn-primary w-100'>
                                 Save

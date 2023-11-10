@@ -7,7 +7,6 @@ function CommonTable(props) {
   const {
     viewUsers,
     viewUsersDelete,
-    currentUser,
     usersRoles,
     products,
     handleDelete,
@@ -30,6 +29,8 @@ function CommonTable(props) {
     dispatchedOrdersDelete,
     remainingOrders,
     remainingOrdersDelete,
+    deleteFaulty,
+    deleteReturnInventory,
   } = props;
 
   const {role} = useAuth()
@@ -522,7 +523,7 @@ function CommonTable(props) {
                           aria-sort="ascending"
                           aria-label="Name: activate to sort column descending"
                         >
-                          Order #:
+                          Invoice
                         </th>
                         <th
                           className="sorting sorting_asc "
@@ -546,17 +547,7 @@ function CommonTable(props) {
                         >
                           Dispatch date
                         </th>
-                        <th
-                          className="sorting sorting_asc "
-                          tabIndex="0"
-                          aria-controls="dataTable"
-                          rowSpan="1"
-                          colSpan="1"
-                          aria-sort="ascending"
-                          aria-label="Name: activate to sort column descending"
-                        >
-                          Supplier
-                        </th>
+
                         <th
                           className="sorting sorting_asc "
                           tabIndex="0"
@@ -567,6 +558,18 @@ function CommonTable(props) {
                           aria-label="Name: activate to sort column descending"
                         >
                           Comments
+                        </th>
+                        
+                        <th
+                          className="sorting sorting_asc "
+                          tabIndex="0"
+                          aria-controls="dataTable"
+                          rowSpan="1"
+                          colSpan="1"
+                          aria-sort="ascending"
+                          aria-label="Name: activate to sort column descending"
+                        >
+                          Actiom
                         </th>
                       </tr>
                     )}
@@ -581,7 +584,7 @@ function CommonTable(props) {
                           aria-sort="ascending"
                           aria-label="Name: activate to sort column descending"
                         >
-                          Order #:
+                          Invoice:
                         </th>
                         <th
                           className="sorting sorting_asc "
@@ -614,7 +617,7 @@ function CommonTable(props) {
                           aria-sort="ascending"
                           aria-label="Name: activate to sort column descending"
                         >
-                          Supplier
+                          Comments
                         </th>
                         <th
                           className="sorting sorting_asc "
@@ -625,7 +628,7 @@ function CommonTable(props) {
                           aria-sort="ascending"
                           aria-label="Name: activate to sort column descending"
                         >
-                          Comments
+                          Action
                         </th>
                       </tr>
                     )}
@@ -1292,13 +1295,27 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even     ' : 'odd '}
                           key={index}
                         >
-                          <td className="sorting_1 ">{row.orderNo}</td>
+                          <td className="sorting_1 ">{row.invoice}</td>
                           <td className="sorting_1 ">{row.product}</td>
                           <td className="sorting_1 ">{row.dispatch_date}</td>
-                          <td className="sorting_1 ">{row.supplier}</td>
                           <td className="sorting_1 ">
-                            {row.comments[0]}
-                            {row.comments[1]}
+                          {row.comment}
+                          </td>
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+
+                            <input type="hidden" name="id" value="1" />
+
+                            <button
+                              className="btn btn-danger btn-sm  delete"
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="Delete"
+                              onClick={()=>deleteFaulty(row._id)}
+
+                            >
+                              <i className="fa fa-trash"></i>
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -1311,13 +1328,27 @@ function CommonTable(props) {
                           className={index % 2 === 0 ? 'even     ' : 'odd '}
                           key={index}
                         >
-                          <td className="sorting_1 ">{row.orderNo}</td>
+                          <td className="sorting_1 ">{row.invoice}</td>
                           <td className="sorting_1 ">{row.product}</td>
                           <td className="sorting_1 ">{row.dispatch_date}</td>
-                          <td className="sorting_1 ">{row.supplier}</td>
                           <td className="sorting_1 ">
-                            {row.comments[0]}
-                            {row.comments[1]}
+                            {row.comment}
+                          </td>
+                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+
+                            <input type="hidden" name="id" value="1" />
+
+                            <button
+                              className="btn btn-danger btn-sm  delete"
+                              type="button"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="Delete"
+                              onClick={()=>deleteReturnInventory(row._id)}
+
+                            >
+                              <i className="fa fa-trash"></i>
+                            </button>
                           </td>
                         </tr>
                       ))}
