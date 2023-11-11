@@ -38,18 +38,17 @@ const AuthContextProvider = ({ children }) => {
   const [store, setStore] = useState([]);
   const [role, setRole] = useState('');
 
-
   useEffect(() => {
-    const userRole = Cookies.get('role')
-    setRole(userRole)
+    const userRole = Cookies.get('role');
+    setRole(userRole);
   }, []);
-
-  const serverURL = process.env.REACT_APP_SERVER_URL;
 
   // get dispatched-centers
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/dispatched-centers/dispatched-centers';
+      const url =
+        process.env.REACT_APP_SERVER_URL +
+        '/dispatched-centers/dispatched-centers';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
@@ -64,7 +63,9 @@ const AuthContextProvider = ({ children }) => {
   // get dispatched-orders
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/dispatched-orders/dispatched-orders';
+      const url =
+        process.env.REACT_APP_SERVER_URL +
+        '/dispatched-orders/dispatched-orders';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
@@ -80,7 +81,8 @@ const AuthContextProvider = ({ children }) => {
   // get remaining-orders
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/remaining-orders/remaining-orders';
+      const url =
+        process.env.REACT_APP_SERVER_URL + '/remaining-orders/remaining-orders';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
@@ -96,7 +98,7 @@ const AuthContextProvider = ({ children }) => {
   // get stores
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/stores/stores';
+      const url = process.env.REACT_APP_SERVER_URL + '/stores/stores';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
@@ -112,7 +114,7 @@ const AuthContextProvider = ({ children }) => {
   // get supplier
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/supplier/supplier';
+      const url = process.env.REACT_APP_SERVER_URL + '/supplier/supplier';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
@@ -129,7 +131,7 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/inventory/inventories';
+      const url = process.env.REACT_APP_SERVER_URL + '/inventory/inventories';
 
       try {
         const headers = getHeaders();
@@ -145,7 +147,7 @@ const AuthContextProvider = ({ children }) => {
   // get products
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/products/product';
+      const url = process.env.REACT_APP_SERVER_URL + '/products/product';
 
       try {
         const headers = getHeaders();
@@ -161,7 +163,7 @@ const AuthContextProvider = ({ children }) => {
   //  Get user
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/user/get-users';
+      const url = process.env.REACT_APP_SERVER_URL + '/user/get-users';
 
       try {
         const headers = getHeaders();
@@ -174,16 +176,17 @@ const AuthContextProvider = ({ children }) => {
     fetchData();
   }, [token]);
 
-  
   //  Get Faulty Inventory
   useEffect(() => {
     const fetchData = async () => {
-      const url = serverURL + '/faulty-inventory/faulty-inventories';
+      const url =
+        process.env.REACT_APP_SERVER_URL +
+        '/faulty-inventory/faulty-inventories';
 
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
-        setfaultyInventory(response.data.message)
+        setfaultyInventory(response.data.message);
       } catch (error) {
         console.log(error);
       }
@@ -191,41 +194,40 @@ const AuthContextProvider = ({ children }) => {
     fetchData();
   }, [token]);
 
-    //  Get Return Inventory
-    useEffect(() => {
-      const fetchData = async () => {
-        const url = serverURL + '/return-inventory/return-inventories';
-        try {
-          const headers = getHeaders();
-          const response = await axios.get(url, { headers });
-          setReturnInventory(response.data.message)
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }, [token]);
+  //  Get Return Inventory
+  useEffect(() => {
+    const fetchData = async () => {
+      const url =
+        process.env.REACT_APP_SERVER_URL +
+        '/return-inventory/return-inventories';
+      try {
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
+        setReturnInventory(response.data.message);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [token]);
 
-    //  Get Suppliers
-    useEffect(() => {
-      const fetchData = async () => {
-        const url = serverURL + '/supplier/supplier';
-        try {
-          const headers = getHeaders();
-          const response = await axios.get(url, { headers });
-          console.log(response);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }, [token]);
-  
-  
+  //  Get Suppliers
+  useEffect(() => {
+    const fetchData = async () => {
+      const url = process.env.REACT_APP_SERVER_URL + '/supplier/supplier';
+      try {
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [token]);
+
   return (
     <AuthContext.Provider
       value={{
-        serverURL,
         islogin,
         setIsLogin,
         theme,
@@ -254,7 +256,7 @@ const AuthContextProvider = ({ children }) => {
         setRole,
         faultyInventory,
         setfaultyInventory,
-        returnInventory, 
+        returnInventory,
         setReturnInventory,
       }}
     >
