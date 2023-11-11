@@ -1,25 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useAuthenticator } from '../../handlers/tokenHandler';
 
 
 function InventoryInDetail() {
-    const {  theme } = useAuth()
-    // const { dispatchUpdateId } = useParams()
+    const [invemtoryDetail, setInvemtoryDetail] = useState({})
+    const {  theme,serverURL } = useAuth()
+    const { inventoryId } = useParams()
+    const { getHeaders } = useAuthenticator()
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const url = serverURL + `/dispatched-centers/${dispatchUpdateId}`
-    //             const response = await axios.get(url)
-    //             setDispatchedDetail(response.data.data)
-    //             console.log(response.data.data);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchData();
-    // }, [])
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const headers = getHeaders()
+                const url = serverURL + `/inventory/${inventoryId}`
+                const response = await axios.get(url, { headers })
+                setInvemtoryDetail(response.data.data)
+                console.log(response.data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, [])
 
 
     return (
@@ -28,9 +33,13 @@ function InventoryInDetail() {
             <Link to='/inventory'>
                 Go Back
             </Link>
-            <div className={`card shadow mb-4 ${theme ? 'table-dark' : ''}`}>
-                <div className={`card-header py-3 ${theme ? 'table-dark' : ''}`}>
-                    <h6 className="m-0  font-weight-bold text-primary" style={{ fontSize: "16px" }}>
+            <div className={`card w-100  shadow mb-4 ${theme ? 'table-dark' : ''}`}
+             style={{
+                overflowX:"scroll"
+             }}
+            >
+                <div className={`card-header py-3 w-100 ${theme ? 'table-dark' : ''}`}>
+                    <h6 className="m-0 w-100  font-weight-bold text-primary" style={{ fontSize: "16px" }}>
                         InventoryIn Detail
                     </h6>
                 </div>
@@ -117,7 +126,7 @@ function InventoryInDetail() {
                                             aria-label="Email: activate to sort column ascending"
                                             style={{ width: '336.406px' }}
                                         >
-                                            Price
+                                            Total Price
                                         </th>
 
                                     </tr>
@@ -125,12 +134,17 @@ function InventoryInDetail() {
 
                                 </thead>
                                 <tbody className={`${theme ? 'table-dark' : ''}`}>
-                                    {/* <tr
+                                    <tr
                                                             >
-                                                                <td className="sorting_1">{dispatchedDetail.center_name}</td>
-                                                                <td>{dispatchedDetail.location}</td>
-                                                                <td>{dispatchedDetail.courier_service}</td>
-                                                            </tr> */}
+                                                                <td className="sorting_1">{invemtoryDetail.invoice}</td>
+                                                                <td>{invemtoryDetail.date}</td>
+                                                                <td>{invemtoryDetail.stock}</td>
+                                                                <td>{invemtoryDetail.supplier
+}</td>
+                                                                <td>{invemtoryDetail.warehouse}</td>
+                                                                <td>{invemtoryDetail.total_price}</td>
+
+                                                            </tr>
                                 </tbody>
                             </table>
                         </div>

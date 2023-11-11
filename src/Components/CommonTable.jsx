@@ -921,20 +921,8 @@ function CommonTable(props) {
                           aria-label="Email: activate to sort column ascending"
                           style={{ width: '336.406px' }}
                         >
-                          Order #
+                          Product #
                         </th>
-                        <th
-                          className="sorting"
-                          tabIndex="0"
-                          aria-controls="dataTable"
-                          rowSpan="1"
-                          colSpan="1"
-                          aria-label="Email: activate to sort column ascending"
-                          style={{ width: '336.406px' }}
-                        >
-                          Product
-                        </th>
-
                         <th
                           className="sorting"
                           tabIndex="0"
@@ -1177,7 +1165,7 @@ function CommonTable(props) {
                                 </Link>
 
                                 <Link
-                                  to={`/update-product/${row._id}`}
+                                  to={`/update-products/${row._id}`}
                                   className=" mx-2 btn btn-success btn-sm "
                                   type="button"
                                   data-toggle="tooltip"
@@ -1608,7 +1596,6 @@ function CommonTable(props) {
                           key={index}
                         >
                           <td>{row._id}</td>
-                          <td>{row.product_title}</td>
                           <td>{row.quantity}</td>
                           <td>{row.total_amount}</td>
                           <td>{row.location}</td>

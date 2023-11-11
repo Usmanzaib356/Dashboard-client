@@ -1,39 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import React, { useState } from 'react'
 import useAuth from "../../hooks/useAuth"
-import {dummyOverallInventory} from "../../utils/data"
 
-function CardsData(props) {
-    const total_Inventory = dummyOverallInventory.length
+function CardsData() {
 
-
-
-
-    // Get Request
-
-    const [data, setData] = useState([])
-    const { Server_Url, theme } = useAuth()
-
-    // axois
-    useEffect(() => {
-
-        const url = Server_Url + "/admindata"
-
-        axios.get(url).then(
-            (res) => {
-                
-                setData(res.data)
-            }
-        ).catch(
-            (err) => {
-                // console.log(err);
-            }
-        )
-
-
-
-    }, [])
-
+    const { theme,
+        totalInventory,
+        totalInventoryCost,
+        allOrder,
+        totalDispatchOrderCost
+         } = useAuth()
 
 
     return (
@@ -49,7 +24,7 @@ function CardsData(props) {
                                 <div className="col mr-2">
                                     <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         TOTAL (INVENTORY)</div>
-                                    <div className={theme ? "h5 mb-0 font-weight-bold text-light" : "h5 mb-0 font-weight-bold text-gray-800"}>{total_Inventory? total_Inventory : "Loading" }</div>
+                                    <div className={theme ? "h5 mb-0 font-weight-bold text-light" : "h5 mb-0 font-weight-bold text-gray-800"}>{totalInventory}</div>
                                 </div>
                                 <div className="col-auto">
                                     <i className="fas fa-calendar fa-2x text-gray-300"></i>
@@ -67,7 +42,7 @@ function CardsData(props) {
                                 <div className="col mr-2">
                                     <div className="text-xs font-weight-bold text-success text-uppercase mb-1">
                                         TOTAL COST (INVENTORY)</div>
-                                    <div className={theme ? "h5 mb-0 font-weight-bold text-light" : "h5 mb-0 font-weight-bold text-gray-800"}>${data.REVENUE}</div>
+                                    <div className={theme ? "h5 mb-0 font-weight-bold text-light" : "h5 mb-0 font-weight-bold text-gray-800"}>${totalInventoryCost}</div>
                                 </div>
                                 <div className="col-auto">
                                     <i className="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -87,7 +62,7 @@ function CardsData(props) {
                                     </div>
                                     <div className="row no-gutters align-items-center">
                                         <div className="col-auto">
-                                            <div className={theme ? "h5 mb-0 font-weight-bold text-light" : "h5 mb-0 font-weight-bold text-gray-800"}>{data.GROSS_PROFIT}</div>
+                                            <div className={theme ? "h5 mb-0 font-weight-bold text-light" : "h5 mb-0 font-weight-bold text-gray-800"}>{allOrder}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +82,7 @@ function CardsData(props) {
                                 <div className="col mr-2">
                                     <div className="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                         TOTAL COST (DISPATCHED ORDERS)</div>
-                                    <div className={theme ? "h5 mb-0 font-weight-bold text-light" : "h5 mb-0 font-weight-bold text-gray-800"}> $  {data.NET_PROFIT}</div>
+                                    <div className={theme ? "h5 mb-0 font-weight-bold text-light" : "h5 mb-0 font-weight-bold text-gray-800"}>$ {totalDispatchOrderCost}</div>
                                 </div>
                                 <div className="col-auto">
                                     <i className="fas fa-comments fa-2x text-gray-300"></i>

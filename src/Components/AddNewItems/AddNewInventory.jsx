@@ -224,7 +224,7 @@ function AddNewInventory() {
                               theme ? 'srchdark' : null
                             }`}
                             required
-                            value={''}
+                            value={item.id}
                             onChange={(e) =>
                               handleInputChange(i, 'id', e.target.value)
                             }

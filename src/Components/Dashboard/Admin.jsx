@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react'
 import useAuth from "../../hooks/useAuth"
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Pie, PieChart, Legend, CartesianGrid, Tooltip } from 'recharts';
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Pie, PieChart, Legend,  Tooltip } from 'recharts';
 import CardsData from '../Cards/CardsData';
 function Admin() {
 
     // Chart Get Request
 
     const [chartdata, setChartData] = useState([])
-    const { Server_Url, theme } = useAuth()
+    const { theme} = useAuth()
 
 
     useEffect(() => {
@@ -42,7 +42,7 @@ function Admin() {
             <div className="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 className={theme ? "h3 mb-0 text-light" : "h3 mb-0 text-dark"}>Hello Admin! Welcome to Dashboard</h1>
             </div>
-            <CardsData></CardsData>
+            <CardsData/>
             <div className="row ">
 
                 {/* <!-- Area Chart --> */}
