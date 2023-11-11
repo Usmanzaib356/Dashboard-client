@@ -22,7 +22,7 @@ function Signin() {
     if (!loading && validateInputs()) {
       setLoading(true);
 
-      const url = serverURL + '/user/login-user';
+      const url = process.env.REACT_APP_SERVER_URL + '/user/login-user';
       const json = {
         email: email.current.value,
         password: password.current.value,
@@ -31,7 +31,7 @@ function Signin() {
       try {
         const response = await axios.post(url, json);
         setLoading(false);
-        // setMsg(response.data);
+
         setCurrentUser(response.data.user);
         const token = response.data.token;
         const expirationTime = new Date();
