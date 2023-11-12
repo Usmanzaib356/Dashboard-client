@@ -31,7 +31,7 @@ function Signin() {
       try {
         const response = await axios.post(url, json);
         setLoading(false);
-        // setMsg(response.data);
+
         setCurrentUser(response.data.user);
         const token = response.data.token;
         const expirationTime = new Date();
