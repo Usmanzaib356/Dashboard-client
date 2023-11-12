@@ -32,7 +32,7 @@ function UpdateProduct() {
         if (validateInputs()) {
             try {
                 const headers = getHeaders()
-                const url = serverURL + `/products/${productId}`
+                const url = process.env.REACT_APP_SERVER_URL + `/products/${productId}`
                 const json = {
                     title: title.current.value,
                     desc: description.current.value,

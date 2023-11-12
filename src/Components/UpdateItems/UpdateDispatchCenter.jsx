@@ -22,7 +22,7 @@ function UpdateDispatchCenter() {
     const { getHeaders } = useAuthenticator()
     const updateHandle = async (e) => {
         e.preventDefault()
-        const url = serverURL + `/dispatched-centers/${dispatchUpdateId}`
+        const url = process.env.REACT_APP_SERVER_URL + `/dispatched-centers/${dispatchUpdateId}`
         const json = {
             center_name: centerName.current.value,
             location: location.current.value,

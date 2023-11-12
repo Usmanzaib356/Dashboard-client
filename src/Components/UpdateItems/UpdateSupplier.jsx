@@ -20,7 +20,7 @@ function UpdateSupllier() {
     const { getHeaders } = useAuthenticator()
     const updateHandle = async (e) => {
         e.preventDefault()
-        const url = serverURL + `/supplier/${supplierId}`
+        const url = process.env.REACT_APP_SERVER_URL + `/supplier/${supplierId}`
         const json = {
             supplier_name: supplier_name.current.value,
             location: location.current.value,

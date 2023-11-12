@@ -36,7 +36,7 @@ function Signup() {
 
     // Axois Post request
 
-    const url = Server_Url + "/signup"
+    const url = process.env.REACT_APP_SERVER_URL + "/signup"
     const json = {
       name: name.current.value,
       email: email.current.value, 

@@ -921,7 +921,18 @@ function CommonTable(props) {
                           aria-label="Email: activate to sort column ascending"
                           style={{ width: '336.406px' }}
                         >
-                          Product #
+                          Product Id
+                        </th>
+                        <th
+                          className="sorting"
+                          tabIndex="0"
+                          aria-controls="dataTable"
+                          rowSpan="1"
+                          colSpan="1"
+                          aria-label="Email: activate to sort column ascending"
+                          style={{ width: '336.406px' }}
+                        >
+                          Product
                         </th>
                         <th
                           className="sorting"
@@ -1009,18 +1020,6 @@ function CommonTable(props) {
                         >
                           Order Dispatch date
                         </th>
-                        <th
-                          className="sorting"
-                          tabIndex="0"
-                          aria-controls="dataTable"
-                          rowSpan="1"
-                          colSpan="1"
-                          aria-label="Email: activate to sort column ascending"
-                          style={{ width: '336.406px' }}
-                        >
-                          Order Quantity
-                        </th>
-
                         <th
                           className="sorting text-center"
                           tabIndex="0"
@@ -1596,6 +1595,7 @@ function CommonTable(props) {
                           key={index}
                         >
                           <td>{row._id}</td>
+                          <td>{row.product_id}</td>
                           <td>{row.quantity}</td>
                           <td>{row.total_amount}</td>
                           <td>{row.location}</td>
@@ -1705,7 +1705,6 @@ function CommonTable(props) {
                           <td className="sorting_1">{row.order_number}</td>
                           <td>{row.dispatch_center}</td>
                           <td>{row.dispatch_date}</td>
-                          <td>{row.quantity}</td>
                           <td>{row.total_amount}</td>
                           <td>{row.quantity}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">

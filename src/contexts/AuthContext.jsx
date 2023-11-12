@@ -1,7 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
 import Cookies from 'js-cookie';
-import axios from 'axios';
-import { useAuthenticator, useToken } from '../handlers/tokenHandler';
 
 export const AuthContext = createContext();
 
@@ -11,8 +9,6 @@ const AuthContextProvider = ({ children }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem('theme') === 'dark' ? true : false
   );
-  const { getHeaders } = useAuthenticator();
-  const token = useToken();
 
   useEffect(() => {
     localStorage.setItem('theme', theme ? 'dark' : 'light');
@@ -25,7 +21,7 @@ const AuthContextProvider = ({ children }) => {
     }
   });
 
-  const serverURL = process.env.REACT_APP_SERVER_URL;
+  // const serverURL = process.env.REACT_APP_SERVER_URL
 
   const [sidebar, setSidebar] = useState(false);
   const [usersGet, setUsersGet] = useState([]);
@@ -49,206 +45,11 @@ const AuthContextProvider = ({ children }) => {
     setRole(userRole);
   }, []);
 
-  // get dispatched-centers
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/dispatched-centers/dispatched-centers';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setDispatchCenter(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
-  // get dispatched-orders
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/dispatched-orders/dispatched-orders';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        const totalDispatchOrderCost = response.data.data.reduce(
-          (acc, itemCost) => {
-            return acc + itemCost.total_amount;
-          },
-          0
-        );
-        setTotalDispatchOrderCost(totalDispatchOrderCost);
-        setAllOrder(response.data.data.length);
-        setDispatchOrder(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
-  // get remaining-orders
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/remaining-orders/remaining-orders';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        console.log(response.data.data);
-        setRemainingOrders(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
-  // get stores
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/stores/stores';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setStore(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
-  // get supplier
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/supplier/supplier';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setSuppliers(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
-
-  // get inventory
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/inventory/inventories';
-
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setInventoryIn(response.data.data);
-        // Calculate total stock
-        const totalInventory = response.data.data.reduce((acc, itemStock) => {
-          return acc + itemStock.stock;
-        }, 0);
-        setTotalInventory(totalInventory);
-        const totalInventoryCost = response.data.data.reduce(
-          (acc, itemCost) => {
-            return acc + itemCost.total_price;
-          },
-          0
-        );
-        setTotalInventoryCost(totalInventoryCost);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, [token]);
-  // get products
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/products/product';
-
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setProducts(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [token]);
-
-  //  Get user
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/user/get-users';
-
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setUsersGet(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [token]);
-
-  //  Get Faulty Inventory
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/faulty-inventory/faulty-inventories';
-
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setfaultyInventory(response.data.message);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [token]);
-
-  //  Get Return Inventory
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/return-inventory/return-inventories';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setReturnInventory(response.data.message);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [token]);
-
-  //  Get Suppliers
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = serverURL + '/supplier/supplier';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, [token]);
-
   return (
     <AuthContext.Provider
       value={{
         islogin,
         setIsLogin,
-        serverURL,
         theme,
         setTheme,
         sidebar,

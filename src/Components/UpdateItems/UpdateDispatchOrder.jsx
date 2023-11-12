@@ -20,7 +20,7 @@ function UpdateDispatchOrder() {
     const { getHeaders } = useAuthenticator()
     const updateHandle = async (e) => {
         e.preventDefault()
-        const url = serverURL + `/dispatched-orders/${dispatchUpdateOrderId}`
+        const url = process.env.REACT_APP_SERVER_URL + `/dispatched-orders/${dispatchUpdateOrderId}`
         const json = {
             order_number: orderNumber.current.value,
             dispatch_center: DispatchCenter.current.value,

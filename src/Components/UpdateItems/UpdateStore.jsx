@@ -16,7 +16,7 @@ function UpdateStore() {
     const { getHeaders } = useAuthenticator()
     const updateHandle = async (e) => {
         e.preventDefault()
-        const url = serverURL + `/stores/${storeId}`
+        const url = process.env.REACT_APP_SERVER_URL + `/stores/${storeId}`
         const json = {
             store_name: storeName.current.value,
             status: status.current.value

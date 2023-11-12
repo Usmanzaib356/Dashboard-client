@@ -93,7 +93,7 @@ function AddOrder() {
 
   const handleSend = async () => {
     if (validInputs()) {
-      const url = serverURL + '/dispatched-orders/dispatched-order';
+      const url = process.env.REACT_APP_SERVER_URL + '/dispatched-orders/dispatched-order';
       const json = {
         product_id: ProductId,
         order_number: order_number.current.value,

@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react'
-import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel, FormSelect, Row, Col } from 'react-bootstrap';
+import { Button, Modal, Form, FormControl, FormGroup, ModalHeader, ModalBody, ModalFooter, ModalTitle, FormLabel,  Row } from 'react-bootstrap';
 function AddInventoryStatus() {
   // Modal 
 

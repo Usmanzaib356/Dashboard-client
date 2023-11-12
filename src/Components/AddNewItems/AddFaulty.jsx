@@ -18,7 +18,7 @@ function AddFaulty() {
 
   const HandleAddFaulty = async (e) => {
     e.preventDefault();
-    const url = serverURL + '/faulty-inventory/faulty-inventory';
+    const url = process.env.REACT_APP_SERVER_URL + '/faulty-inventory/faulty-inventory';
     const json = {
       invoice: invoice.current.value,
       dispatch_date: dispatchDate.current.value,
@@ -113,7 +113,7 @@ function AddFaulty() {
 
                       {currInvoice?.products.map((item, i) => {
                         return (
-                          <option key={i} style={{ Width: '600px' }}>
+                          <option   key={i} style={{ Width: '600px' }}>
                             {item.title}
                           </option>
                         );

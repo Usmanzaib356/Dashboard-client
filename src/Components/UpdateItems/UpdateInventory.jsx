@@ -28,7 +28,7 @@ function UpdateInventory() {
         e.preventDefault()
 
         try {
-            const url = serverURL + `/inventory/${inventoryId}`
+            const url = process.env.REACT_APP_SERVER_URL + `/inventory/${inventoryId}`
             const json = {
                 invoice: invoice.current.value,
                 date: date.current.value,

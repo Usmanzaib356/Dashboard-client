@@ -49,7 +49,7 @@ function AddNewInventory() {
     e.preventDefault();
 
     try {
-      const url = serverURL + '/inventory/inventory';
+      const url = process.env.REACT_APP_SERVER_URL + '/inventory/inventory';
 
       const data = {
         invoice: invoice.current.value,

@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import CommonTable from './CommonTable';
@@ -10,9 +10,32 @@ function FaultyInventoryMechanism() {
   const { serverURL, faultyInventory, setfaultyInventory } = useAuth();
 
   const { getHeaders } = useAuthenticator();
+
+
+  
+  //  Get Faulty Inventory
+  useEffect(() => {
+    const fetchData = async () => {
+      const url =
+        serverURL +
+        '/faulty-inventory/faulty-inventories';
+
+      try {
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
+        setfaultyInventory(response.data.message);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
+
   const handleDelete = async (deleteFaulty) => {
     try {
-      const url = serverURL + `/faulty-inventory/${deleteFaulty}`;
+      const url = process.env.REACT_APP_SERVER_URL + `/faulty-inventory/${deleteFaulty}`;
       const headers = getHeaders();
       await axios.delete(url, { headers });
       const UpdateItem = faultyInventory.filter(
