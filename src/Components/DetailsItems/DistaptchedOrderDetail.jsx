@@ -14,7 +14,7 @@ function DistaptchedOrderDetail() {
         const fetchData = async () => {
             try {
                 const headers = getHeaders()
-                const url = serverURL + `/dispatched-orders/${dispatchUpdateOrderId}`
+                const url = process.env.REACT_APP_SERVER_URL + `/dispatched-orders/${dispatchUpdateOrderId}`
                 const response = await axios.get(url, { headers })
                 setDispatchedDetail(response.data.data)
             } catch (error) {
@@ -105,6 +105,17 @@ function DistaptchedOrderDetail() {
                                                 >
                                                     Total Amount
                                                 </th>
+                                                <th
+                                                    className="sorting"
+                                                    tabIndex="0"
+                                                    aria-controls="dataTable"
+                                                    rowSpan="1"
+                                                    colSpan="1"
+                                                    aria-label="Email: activate to sort column ascending"
+                                                    style={{ width: '336.406px' }}
+                                                >
+                                                    Quantity
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody className={`${theme ? 'table-dark' : ''}`}>
@@ -114,6 +125,7 @@ function DistaptchedOrderDetail() {
                                                 <td>{dispatchedDetail.dispatch_center}</td>
                                                 <td>{dispatchedDetail.dispatch_date}</td>
                                                 <td>{dispatchedDetail.total_amount}</td>
+                                                <td>{dispatchedDetail.quantity}</td>
                                             </tr>
                                         </tbody>
                                     </table>

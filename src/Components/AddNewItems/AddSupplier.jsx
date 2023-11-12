@@ -21,7 +21,7 @@ function AddSupplier() {
 
         try {
             const headers = getHeaders()
-            const url = serverURL + '/supplier/supplier'
+            const url = process.env.REACT_APP_SERVER_URL + '/supplier/supplier'
             const json = {
                 supplier_name: supplier_name.current.value,
                 location: location.current.value,

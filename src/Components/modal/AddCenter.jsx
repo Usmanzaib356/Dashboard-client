@@ -35,7 +35,7 @@ function AddCenter() {
     const {getHeaders} = useAuthenticator()
     const handleSend = async () => {
         if (validInputs()) {
-            const url = serverURL + '/dispatched-centers/dispatched-center'
+            const url = process.env.REACT_APP_SERVER_URL + '/dispatched-centers/dispatched-center'
             const json = {
                 center_name: centerName.current.value,
                 location: location.current.value,

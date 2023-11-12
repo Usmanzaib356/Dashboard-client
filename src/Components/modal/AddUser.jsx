@@ -59,7 +59,7 @@ function AddUser() {
 
 
         try {
-            const url = serverURL + '/user/add-user'
+            const url = process.env.REACT_APP_SERVER_URL + '/user/add-user'
             const json = {
                 first_name: firstName.current.value,
                 last_name: lastName.current.value,

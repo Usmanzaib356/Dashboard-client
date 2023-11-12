@@ -26,7 +26,7 @@ function AddStore() {
     const handleSend = async () => {
 
         try {
-            const url = serverURL + '/stores/store'
+            const url = process.env.REACT_APP_SERVER_URL + '/stores/store'
             const json = {
                 store_name: StoreName.current.value,
                 status: status.current.value

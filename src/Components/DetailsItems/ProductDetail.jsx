@@ -13,7 +13,7 @@ function Productdetail() {
         const fetchData = async () => {
             try {
                 const headers = getHeaders()
-                const url = serverURL + `/products/${productId}`
+                const url = process.env.REACT_APP_SERVER_URL + `/products/${productId}`
                 const response = await axios.get(url, { headers })
                 setProductDetail(response.data.data)
             } catch (error) {

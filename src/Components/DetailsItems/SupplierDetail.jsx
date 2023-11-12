@@ -14,7 +14,7 @@ function SupplierDetail() {
         const fetchData = async () => {
             try {
                 const headers = getHeaders()
-                const url = serverURL + `/supplier/${supplierId}`
+                const url = process.env.REACT_APP_SERVER_URL + `/supplier/${supplierId}`
                 const response = await axios.get(url, { headers })
                 setSupllierDetail(response)
                 console.log(response);

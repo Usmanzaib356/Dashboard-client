@@ -14,7 +14,7 @@ function DispatchedCenterDetail() {
         const fetchData = async () => {
             try {
                 const headers = getHeaders()
-                const url = serverURL + `/dispatched-centers/${dispatchUpdateId}`
+                const url = process.env.REACT_APP_SERVER_URL + `/dispatched-centers/${dispatchUpdateId}`
                 const response = await axios.get(url, { headers })
                 setDispatchedDetail(response.data.data)
             } catch (error) {

@@ -22,7 +22,7 @@ function Signin() {
     if (!loading && validateInputs()) {
       setLoading(true);
 
-      const url = serverURL + '/user/login-user';
+      const url = process.env.REACT_APP_SERVER_URL + '/user/login-user';
       const json = {
         email: email.current.value,
         password: password.current.value,

@@ -24,12 +24,11 @@ function Admin() {
             }
         }).then(
             (res) => {
-                // console.log(res);
                 setChartData(res.data)
             }
         ).catch(
             (err) => {
-                // console.log(err);
+                console.log(err);
             }
         )
 

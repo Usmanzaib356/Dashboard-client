@@ -31,7 +31,7 @@ function AddProducts() {
         if (validateInputs()) {
             try {
                 const headers = getHeaders()
-                const url = serverURL + '/products/product'
+                const url = process.env.REACT_APP_SERVER_URL + '/products/product'
                 const json = {
                     title: title.current.value,
                     desc: description.current.value,

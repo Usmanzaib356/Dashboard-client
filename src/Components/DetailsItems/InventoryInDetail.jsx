@@ -15,7 +15,7 @@ function InventoryInDetail() {
         const fetchData = async () => {
             try {
                 const headers = getHeaders()
-                const url = serverURL + `/inventory/${inventoryId}`
+                const url = process.env.REACT_APP_SERVER_URL + `/inventory/${inventoryId}`
                 const response = await axios.get(url, { headers })
                 setInvemtoryDetail(response.data.data)
                 console.log(response.data.data);
