@@ -11,52 +11,42 @@ import {
   ModalFooter,
   ModalTitle,
   FormLabel,
-  FormSelect,
   Row,
-  Col,
 } from 'react-bootstrap';
 import axios from 'axios';
-import Cookies from 'js-cookie';
+
 import { useAuthenticator } from '../../handlers/tokenHandler';
 
-function AddOrder() {
-  const { serverURL, remainingOrders, currentUser, Products } = useAuth();
+function AddORemOrder() {
+  const { Products } = useAuth();
   const { getHeaders } = useAuthenticator();
 
   const [currProduct, setCurrProduct] = useState(null);
-  const [ProductId, setProductId] = useState('');
-  const [dispatchCenterValid, setDispatchCenterValid] = useState('');
-  const [dispatchDate, setDispatchDate] = useState('');
-  const [totalAmount, setTotalAmount] = useState('');
-  const [quantity, setQuantity] = useState(0);
-  const [msg, setMsg] = useState('');
-  const [remainingObject, setRemainingObject] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  console.log(currProduct);
 
+  const [locationError, setLocationError] = useState('');
+  const [addressError, setAddressError] = useState('');
+  const [totalAmount, setTotalAmount] = useState('');
+  const [msg, setMsg] = useState('');
+  const [showModal, setShowModal] = useState(false);
+
+  const formRef = useRef(null);
   const product_id = useRef(null);
   const product_title = useRef(null);
   const order_quantity = useRef(null);
   const total_amount = useRef(null);
   const location = useRef(null);
   const address = useRef(null);
-  //   const order_quantity = useRef(null);
-  //   const centerRef = useRef(null);
-  //   const OrderNo = useRef(null);
 
   const validInputs = () => {
     let valid = true;
-    setDispatchCenterValid('');
-    setDispatchDate('');
-    setTotalAmount('');
 
     if (location.current.value.trim() === '') {
       valid = false;
-      setDispatchDate('Please enter your Services');
+      setLocationError('Please enter your Location');
     }
     if (address.current.value.trim() === '') {
       valid = false;
-      setDispatchDate('Please enter your Services');
+      setAddressError('Please enter your Address');
     }
 
     if (order_quantity.current.value.trim() === '') {
@@ -71,15 +61,12 @@ function AddOrder() {
     const selectValue = event.target.value;
     setCurrProduct(selectValue);
 
-    // Find the selected order and set the total_amount
     const selectedProduct = Products.find((item) => item._id === selectValue);
     setCurrProduct(selectedProduct);
 
     if (selectedProduct) {
       product_id.current.value = selectedProduct._id;
       total_amount.current.value = selectedProduct.price;
-      setProductId(selectedProduct.product_id);
-      setTotalAmount(selectedProduct.total_amount);
     } else {
       total_amount.current.value = '';
       setTotalAmount('');
@@ -94,31 +81,28 @@ function AddOrder() {
 
   const handleSend = async () => {
     if (validInputs()) {
-      const url = serverURL + '/dispatched-orders/dispatched-order';
+      const url =
+        process.env.REACT_APP_SERVER_URL + '/remaining-orders/remaining-order';
       const json = {
         product_id: product_id.current.value,
         product_title: product_title.current.value,
-        // dispatch_center: dispatch_center.current.value,
-        // dispatch_date: dispatch_date.current.value,
         total_amount: total_amount.current.value,
         quantity: order_quantity.current.value,
         location: location.current.value,
         address: address.current.value,
       };
-      console.log(json);
 
       try {
         const headers = getHeaders();
         const response = await axios.post(url, json, { headers });
         console.log(response);
-        setMsg('Dispatched Order has been saved successfully');
+        setMsg('Remaining Order has been saved successfully');
+        formRef.current.reset();
       } catch (error) {
         console.log(error);
       }
     }
   };
-
-  const center = Cookies.get('center');
 
   return (
     <>
@@ -149,7 +133,7 @@ function AddOrder() {
             </button>
           </ModalHeader>
           <ModalBody>
-            <Form>
+            <Form ref={formRef}>
               <FormGroup
                 className="d-flex flex-column"
                 style={{ width: '100%' }}
@@ -182,29 +166,8 @@ function AddOrder() {
                 />
               </FormGroup>
 
-              {/* <FormGroup className="mt-2">
-                <FormLabel>Dispatch Center </FormLabel>
-                <FormControl
-                  disabled
-                  type="text"
-                  //   ref={dispatch_center}
-                  value={center}
-                />
-              </FormGroup> */}
-
-              <p className="error-message text-danger">{dispatchCenterValid}</p>
+              {/* <p className="error-message text-danger">{dispatchCenterValid}</p> */}
               <Row className="d-flex justify-content-between px-2 mt-3">
-                {/* <FormGroup>
-                  <FormLabel>Order Dispatch date</FormLabel>
-                  <FormControl
-                    type="date"
-                    // ref={dispatch_date}
-                    required
-                    aria-required="true"
-                    placeholder="date"
-                  />
-                  <p className="error-message text-danger">{dispatchDate}</p>
-                </FormGroup> */}
                 <FormGroup>
                   <FormLabel>Total Amount</FormLabel>
                   <FormControl
@@ -233,6 +196,8 @@ function AddOrder() {
                     placeholder={'Enter your location'}
                   />
                 </FormGroup>
+                <p className="error-message text-danger">{locationError}</p>
+
                 <FormGroup>
                   <FormLabel>Address</FormLabel>
                   <FormControl
@@ -241,6 +206,7 @@ function AddOrder() {
                     placeholder={'Enter your address'}
                   />
                 </FormGroup>
+                <p className="error-message text-danger">{addressError}</p>
               </Row>
             </Form>
           </ModalBody>
@@ -262,4 +228,4 @@ function AddOrder() {
   );
 }
 
-export default AddOrder;
+export default AddORemOrder;

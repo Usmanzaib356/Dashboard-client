@@ -14,14 +14,6 @@ function Modal(prop) {
     addNewCenter,
   } = prop;
 
-  const {
-    addNewUser,
-    addNewRole,
-    addInventoryStatus,
-    addNewStore,
-    addNewCenter,
-  } = prop;
-
   return (
     <>
       {/*Add User Modal  */}
