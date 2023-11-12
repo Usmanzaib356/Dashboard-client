@@ -1,35 +1,36 @@
-import React from 'react'
+import React from 'react';
 import CommonTable from '../CommonTable';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import { useAuthenticator } from '../../handlers/tokenHandler';
+import AddRemOrder from '../modal/AddRemOrder';
 function RemainingOrders() {
-  
-    const { serverURL, remainingOrders, setRemainingOrders, } = useAuth()
+  const { serverURL, remainingOrders, setRemainingOrders } = useAuth();
 
-    const { getHeaders } = useAuthenticator()
-    const handleDelete = async (id) => {
-        try {
-
-            const url = serverURL + `/remaining-orders/${id}`
-            const headers = getHeaders()
-            await axios.delete(url, { headers })
-            const removeItem = remainingOrders.filter(item => item._id !== id)
-            setRemainingOrders(removeItem)
-        } catch (error) {
-            console.log(error);
-            alert("Something went wrong")
-        }
+  const { getHeaders } = useAuthenticator();
+  const handleDelete = async (id) => {
+    try {
+      const url = serverURL + `/remaining-orders/${id}`;
+      const headers = getHeaders();
+      await axios.delete(url, { headers });
+      const removeItem = remainingOrders.filter((item) => item._id !== id);
+      setRemainingOrders(removeItem);
+    } catch (error) {
+      console.log(error);
+      alert('Something went wrong');
     }
+  };
 
-    return (
-
-        <>
-            <CommonTable remainingOrders
-                remainingOrdersDelete={handleDelete}
-                data={remainingOrders} />
-        </>
-    )
+  return (
+    <>
+      <AddRemOrder />
+      <CommonTable
+        remainingOrders
+        remainingOrdersDelete={handleDelete}
+        data={remainingOrders}
+      />
+    </>
+  );
 }
 
-export default RemainingOrders
+export default RemainingOrders;

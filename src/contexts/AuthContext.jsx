@@ -25,8 +25,7 @@ const AuthContextProvider = ({ children }) => {
     }
   });
 
-
-  const serverURL = process.env.REACT_APP_SERVER_URL 
+  const serverURL = process.env.REACT_APP_SERVER_URL;
 
   const [sidebar, setSidebar] = useState(false);
   const [usersGet, setUsersGet] = useState([]);
@@ -44,7 +43,7 @@ const AuthContextProvider = ({ children }) => {
   const [totalInventoryCost, setTotalInventoryCost] = useState(0);
   const [totalDispatchOrderCost, setTotalDispatchOrderCost] = useState(0);
   const [allOrder, setAllOrder] = useState(0);
-  
+
   useEffect(() => {
     const userRole = Cookies.get('role');
     setRole(userRole);
@@ -53,9 +52,7 @@ const AuthContextProvider = ({ children }) => {
   // get dispatched-centers
   useEffect(() => {
     const fetchData = async () => {
-      const url =
-      serverURL +
-        '/dispatched-centers/dispatched-centers';
+      const url = serverURL + '/dispatched-centers/dispatched-centers';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
@@ -65,22 +62,23 @@ const AuthContextProvider = ({ children }) => {
       }
     };
 
-    
     fetchData();
   }, [token]);
   // get dispatched-orders
   useEffect(() => {
     const fetchData = async () => {
-      const url =
-      serverURL + '/dispatched-orders/dispatched-orders';
+      const url = serverURL + '/dispatched-orders/dispatched-orders';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
-        const totalDispatchOrderCost = response.data.data.reduce((acc,itemCost)=>{
-          return acc + itemCost.total_amount
-        },0)
-        setTotalDispatchOrderCost(totalDispatchOrderCost)
-        setAllOrder(response.data.data.length)
+        const totalDispatchOrderCost = response.data.data.reduce(
+          (acc, itemCost) => {
+            return acc + itemCost.total_amount;
+          },
+          0
+        );
+        setTotalDispatchOrderCost(totalDispatchOrderCost);
+        setAllOrder(response.data.data.length);
         setDispatchOrder(response.data.data);
       } catch (error) {
         console.log(error);
@@ -93,8 +91,7 @@ const AuthContextProvider = ({ children }) => {
   // get remaining-orders
   useEffect(() => {
     const fetchData = async () => {
-      const url =
-      serverURL + '/remaining-orders/remaining-orders';
+      const url = serverURL + '/remaining-orders/remaining-orders';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
@@ -144,21 +141,24 @@ const AuthContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url =serverURL + '/inventory/inventories';
+      const url = serverURL + '/inventory/inventories';
 
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
         setInventoryIn(response.data.data);
         // Calculate total stock
-        const totalInventory = response.data.data.reduce((acc,itemStock)=>{
-           return acc + itemStock.stock
-        },0)
-        setTotalInventory(totalInventory)
-        const totalInventoryCost = response.data.data.reduce((acc,itemCost)=>{
-          return acc + itemCost.total_price
-        },0)
-        setTotalInventoryCost(totalInventoryCost)
+        const totalInventory = response.data.data.reduce((acc, itemStock) => {
+          return acc + itemStock.stock;
+        }, 0);
+        setTotalInventory(totalInventory);
+        const totalInventoryCost = response.data.data.reduce(
+          (acc, itemCost) => {
+            return acc + itemCost.total_price;
+          },
+          0
+        );
+        setTotalInventoryCost(totalInventoryCost);
       } catch (error) {
         console.log(error);
       }
@@ -201,9 +201,7 @@ const AuthContextProvider = ({ children }) => {
   //  Get Faulty Inventory
   useEffect(() => {
     const fetchData = async () => {
-      const url =
-      serverURL +
-        '/faulty-inventory/faulty-inventories';
+      const url = serverURL + '/faulty-inventory/faulty-inventories';
 
       try {
         const headers = getHeaders();
@@ -219,9 +217,7 @@ const AuthContextProvider = ({ children }) => {
   //  Get Return Inventory
   useEffect(() => {
     const fetchData = async () => {
-      const url =
-      serverURL +
-        '/return-inventory/return-inventories';
+      const url = serverURL + '/return-inventory/return-inventories';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
@@ -285,9 +281,9 @@ const AuthContextProvider = ({ children }) => {
         setTotalInventory,
         totalInventoryCost,
         setTotalInventoryCost,
-        totalDispatchOrderCost, 
+        totalDispatchOrderCost,
         setTotalDispatchOrderCost,
-        allOrder, 
+        allOrder,
         setAllOrder,
       }}
     >
