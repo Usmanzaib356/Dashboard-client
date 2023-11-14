@@ -11,26 +11,6 @@ function RemainingOrders() {
     const { getHeaders } = useAuthenticator()
 
 
-
-    // get remaining-orders
-    useEffect(() => {
-        const fetchData = async () => {
-            const url =
-            process.env.REACT_APP_SERVER_URL + '/remaining-orders/remaining-orders';
-            try {
-                const headers = getHeaders();
-                const response = await axios.get(url, { headers });
-                console.log(response.data.data);
-                setRemainingOrders(response.data.data);
-            } catch (error) {
-                console.log(error);
-            }
-        };
-
-        fetchData();
-    }, []);
-
-
   const handleDelete = async (id) => {
     try {
       const url = serverURL + `/remaining-orders/${id}`;
