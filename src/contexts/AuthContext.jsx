@@ -195,7 +195,7 @@ const AuthContextProvider = ({ children }) => {
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
-        console.log(response.data.data);
+        console.log(response.data);
         setRemainingOrders(response.data.data);
       } catch (error) {
         console.log(error);
