@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import CommonTable from './CommonTable';
@@ -7,29 +7,9 @@ import { useAuthenticator } from '../handlers/tokenHandler';
 import axios from 'axios';
 
 function FaultyInventoryMechanism() {
-  const { serverURL, faultyInventory, setfaultyInventory } = useAuth();
+  const {  faultyInventory, setfaultyInventory } = useAuth();
 
   const { getHeaders } = useAuthenticator();
-
-
-  
-  //  Get Faulty Inventory
-  useEffect(() => {
-    const fetchData = async () => {
-      const url =
-        serverURL +
-        '/faulty-inventory/faulty-inventories';
-
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setfaultyInventory(response.data.message);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
 
 
 

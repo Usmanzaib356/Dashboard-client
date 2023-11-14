@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 import useAuth from "../hooks/useAuth"
 import CommonTable from './CommonTable';
@@ -12,22 +12,6 @@ function FaultyInventoryMechanism() {
     const { getHeaders } = useAuthenticator()
 
     
-  //  Get Return Inventory
-  useEffect(() => {
-    const fetchData = async () => {
-      const url =
-        serverURL +
-        '/return-inventory/return-inventories';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setReturnInventory(response.data.message);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
 
 
   // Delete Center

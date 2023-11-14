@@ -12,26 +12,6 @@ function InventoryIn() {
   const { getHeaders } = useAuthenticator()
 
 
-// get inventory
-useEffect(() => {
-  const fetchData = async () => {
-    const url = process.env.REACT_APP_SERVER_URL + '/inventory/inventories';
-
-    try {
-      const headers = getHeaders();
-      const response = await axios.get(url, { headers });
-      setInventoryIn(response.data.data);
-      const totalInventoryCost = response.data.data.reduce((acc, itemCost) => {
-        return acc + itemCost.total_price
-      }, 0)
-      setTotalInventoryCost(totalInventoryCost)
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  fetchData();
-}, []);
 
 
 

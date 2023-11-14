@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom';
 import useAuth from "../hooks/useAuth"
 import axios from 'axios';
@@ -14,19 +14,6 @@ function Suppliers() {
     const { getHeaders } = useAuthenticator()
 
 
-    //  Get Suppliers
-    useEffect(() => {
-        const fetchData = async () => {
-            const url = process.env.REACT_APP_SERVER_URL + '/supplier/supplier';
-            try {
-                const headers = getHeaders();
-                await axios.get(url, { headers });
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchData();
-    }, []);
 
     // Delete Center
     const handleDelete = async (deleteSupplier) => {
