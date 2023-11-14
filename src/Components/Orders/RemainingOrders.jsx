@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import CommonTable from '../CommonTable';
 import useAuth from '../../hooks/useAuth';
 import axios from 'axios';
 import { useAuthenticator } from '../../handlers/tokenHandler';
+import AddORemOrder from '../modal/AddRemOrder';
 function RemainingOrders() {
 
     const { serverURL, remainingOrders, setRemainingOrders, } = useAuth()
@@ -11,28 +12,48 @@ function RemainingOrders() {
 
 
 
-    const handleDelete = async (id) => {
-        try {
+    // get remaining-orders
+    useEffect(() => {
+        const fetchData = async () => {
+            const url =
+            process.env.REACT_APP_SERVER_URL + '/remaining-orders/remaining-orders';
+            try {
+                const headers = getHeaders();
+                const response = await axios.get(url, { headers });
+                console.log(response.data.data);
+                setRemainingOrders(response.data.data);
+            } catch (error) {
+                console.log(error);
+            }
+        };
 
-            const url = serverURL + `/remaining-orders/${id}`
-            const headers = getHeaders()
-            await axios.delete(url, { headers })
-            const removeItem = remainingOrders.filter(item => item._id !== id)
-            setRemainingOrders(removeItem)
-        } catch (error) {
-            console.log(error);
-            alert("Something went wrong")
-        }
+        fetchData();
+    }, []);
+
+
+  const handleDelete = async (id) => {
+    try {
+      const url = serverURL + `/remaining-orders/${id}`;
+      const headers = getHeaders();
+      await axios.delete(url, { headers });
+      const removeItem = remainingOrders.filter((item) => item._id !== id);
+      setRemainingOrders(removeItem);
+    } catch (error) {
+      console.log(error);
+      alert('Something went wrong');
     }
+  };
 
-    return (
-
-        <>
-            <CommonTable remainingOrders
-                remainingOrdersDelete={handleDelete}
-                data={remainingOrders} />
-        </>
-    )
+  return (
+    <>
+      <AddORemOrder />
+      <CommonTable
+        remainingOrders
+        remainingOrdersDelete={handleDelete}
+        data={remainingOrders}
+      />
+    </>
+  );
 }
 
-export default RemainingOrders
+export default RemainingOrders;
