@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useAuth from '../hooks/useAuth';
 import CommonTable from './CommonTable';
 import AddUser from './modal/AddUser';
@@ -9,23 +9,6 @@ function ViewUsers() {
   // Context Api
   const {  serverURL, usersGet, setUsersGet } = useAuth();
 
-
-
-  //  Get user
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = process.env.REACT_APP_SERVER_URL + '/user/get-users';
-
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setUsersGet(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
 
 
 

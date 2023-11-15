@@ -9,26 +9,6 @@ function DispatchedCenters() {
     const { serverURL, dispatchCenter, setDispatchCenter, role } = useAuth()
     const { getHeaders } = useAuthenticator()
 
-
-    
-  // get dispatched-centers
-  useEffect(() => {
-    const fetchData = async () => {
-      const url =
-      process.env.REACT_APP_SERVER_URL +
-        '/dispatched-centers/dispatched-centers';
-      try {
-        const headers = getHeaders();
-        const response = await axios.get(url, { headers });
-        setDispatchCenter(response.data.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
  
 
     // Delete Center
