@@ -66,7 +66,7 @@ function AddORemOrder() {
 
     if (selectedProduct) {
       product_id.current.value = selectedProduct._id;
-      total_amount.current.value = selectedProduct.price;
+      total_amount.current.value = selectedProduct.selling_price;
     } else {
       total_amount.current.value = '';
       setTotalAmount('');
@@ -75,7 +75,7 @@ function AddORemOrder() {
 
   function handleQuantity(e) {
     const quantity = e.target.value;
-    const price = currProduct?.price;
+    const price = currProduct?.selling_price;
     total_amount.current.value = quantity * price;
   }
 

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useAuthenticator } from '../../handlers/tokenHandler';
 import AddORemOrder from '../modal/AddRemOrder';
 function RemainingOrders() {
-  const { serverURL, remainingOrders, setRemainingOrders } = useAuth();
+  const { remainingOrders, setRemainingOrders } = useAuth();
   const { getHeaders } = useAuthenticator();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function RemainingOrders() {
 
   const handleDelete = async (id) => {
     try {
-      const url = serverURL + `/remaining-orders/${id}`;
+      const url = process.env.REACT_APP_SERVER_URL + `/remaining-orders/${id}`;
       const headers = getHeaders();
       await axios.delete(url, { headers });
       const removeItem = remainingOrders.filter((item) => item._id !== id);

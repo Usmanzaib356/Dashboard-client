@@ -33,7 +33,7 @@ function CommonTable(props) {
     deleteReturnInventory,
   } = props;
 
-  const {role} = useAuth()
+  const { role } = useAuth();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -559,7 +559,7 @@ function CommonTable(props) {
                         >
                           Comments
                         </th>
-                        
+
                         <th
                           className="sorting sorting_asc "
                           tabIndex="0"
@@ -1083,8 +1083,6 @@ function CommonTable(props) {
                             {row.status}
                           </td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap">
-                         
-
                             <input type="hidden" name="id" value="1" />
 
                             <button
@@ -1093,7 +1091,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
-                              onClick={()=>viewUsersDelete(row._id)}
+                              onClick={() => viewUsersDelete(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1285,11 +1283,8 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.invoice}</td>
                           <td className="sorting_1 ">{row.product}</td>
                           <td className="sorting_1 ">{row.dispatch_date}</td>
-                          <td className="sorting_1 ">
-                          {row.comment}
-                          </td>
+                          <td className="sorting_1 ">{row.comment}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-
                             <input type="hidden" name="id" value="1" />
 
                             <button
@@ -1298,8 +1293,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
-                              onClick={()=>deleteFaulty(row._id)}
-
+                              onClick={() => deleteFaulty(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1318,11 +1312,8 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.invoice}</td>
                           <td className="sorting_1 ">{row.product}</td>
                           <td className="sorting_1 ">{row.dispatch_date}</td>
-                          <td className="sorting_1 ">
-                            {row.comment}
-                          </td>
+                          <td className="sorting_1 ">{row.comment}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-
                             <input type="hidden" name="id" value="1" />
 
                             <button
@@ -1331,8 +1322,7 @@ function CommonTable(props) {
                               data-toggle="tooltip"
                               data-placement="top"
                               title="Delete"
-                              onClick={()=>deleteReturnInventory(row._id)}
-
+                              onClick={() => deleteReturnInventory(row._id)}
                             >
                               <i className="fa fa-trash"></i>
                             </button>
@@ -1651,31 +1641,30 @@ function CommonTable(props) {
                           <td>{row.courier_service}</td>
 
                           <td className="text-start d-flex align-items-center justify-content-center flex-wrap">
-                            {
-                              role === "Admin" &&
-                                <>
-                                  <Link
-                              to={`/center-detail/${row._id}`}
-                              className="btn btn-primary btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="View"
-                            >
-                              <i className="fa fa-eye"></i>
-                            </Link>
-                            <Link
-                              to={`/update-center/${row._id}`}
-                              className="mx-2 btn btn-success btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Edit"
-                            >
-                              <i className="fa fa-edit"></i>
-                            </Link>
-                                </>
-                            }
+                            {role === 'Admin' && (
+                              <>
+                                <Link
+                                  to={`/center-detail/${row._id}`}
+                                  className="btn btn-primary btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="View"
+                                >
+                                  <i className="fa fa-eye"></i>
+                                </Link>
+                                <Link
+                                  to={`/update-center/${row._id}`}
+                                  className="mx-2 btn btn-success btn-sm "
+                                  type="button"
+                                  data-toggle="tooltip"
+                                  data-placement="top"
+                                  title="Edit"
+                                >
+                                  <i className="fa fa-edit"></i>
+                                </Link>
+                              </>
+                            )}
 
                             <input type="hidden" name="id" value="1" />
 
@@ -1697,53 +1686,59 @@ function CommonTable(props) {
 
                   {dispatchedOrders && (
                     <tbody className={`${theme ? 'table-dark' : ''}`}>
-                      {displayedRows.map((row, index) => (
-                        <tr
-                          className={index % 2 === 0 ? 'even' : 'odd'}
-                          key={index}
-                        >
-                          <td className="sorting_1">{row.order_number}</td>
-                          <td>{row.dispatch_center}</td>
-                          <td>{row.dispatch_date}</td>
-                          <td>{row.total_amount}</td>
-                          <td>{row.quantity}</td>
-                          <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                            <Link
-                              to={`/orders-detail/${row._id}`}
-                              className="btn btn-primary btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="View"
-                            >
-                              <i className="fa fa-eye"></i>
-                            </Link>
-                            <Link
-                              to={`/update-orders/${row._id}`}
-                              className="mx-2 btn btn-success btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Edit"
-                            >
-                              <i className="fa fa-edit"></i>
-                            </Link>
+                      {displayedRows.map((row, index) => {
+                        const dateString = row.dispatch_date;
+                        const dateParts = dateString.split('T')[0];
+                        console.log(dateParts);
 
-                            <input type="hidden" name="id" value="1" />
+                        return (
+                          <tr
+                            className={index % 2 === 0 ? 'even' : 'odd'}
+                            key={index}
+                          >
+                            <td className="sorting_1">{row.order_number}</td>
+                            <td>{row.dispatch_center}</td>
+                            <td>{dateParts}</td>
+                            <td>{row.total_amount}</td>
+                            <td>{row.quantity}</td>
+                            <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
+                              <Link
+                                to={`/orders-detail/${row._id}`}
+                                className="btn btn-primary btn-sm "
+                                type="button"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="View"
+                              >
+                                <i className="fa fa-eye"></i>
+                              </Link>
+                              <Link
+                                to={`/update-orders/${row._id}`}
+                                className="mx-2 btn btn-success btn-sm "
+                                type="button"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Edit"
+                              >
+                                <i className="fa fa-edit"></i>
+                              </Link>
 
-                            <button
-                              className="btn btn-danger btn-sm  delete"
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Delete"
-                              onClick={() => dispatchedOrdersDelete(row._id)}
-                            >
-                              <i className="fa fa-trash"></i>
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
+                              <input type="hidden" name="id" value="1" />
+
+                              <button
+                                className="btn btn-danger btn-sm  delete"
+                                type="button"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Delete"
+                                onClick={() => dispatchedOrdersDelete(row._id)}
+                              >
+                                <i className="fa fa-trash"></i>
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   )}
                 </table>
