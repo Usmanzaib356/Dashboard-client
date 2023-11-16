@@ -6,7 +6,6 @@ import AddOrder from '../modal/AddOrder';
 import { useAuthenticator } from '../../handlers/tokenHandler';
 function DispatchedOrders() {
   const {
-    serverURL,
     dispatchOrder,
     setDispatchOrder,
     setTotalDispatchOrderCost,

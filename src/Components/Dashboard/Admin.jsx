@@ -15,46 +15,27 @@ import {
 } from 'recharts';
 import CardsData from '../Cards/CardsData';
 function Admin() {
-  // Chart Get Request
-
   const [chartdata, setChartData] = useState([]);
   const { theme } = useAuth();
 
   useEffect(() => {
-    const url = 'https://famous-jacket-goat.cyclic.app' + '/chartdata';
-    const url2 = process.env.REACT_APP_SERVER_URL + '/api/salesdata';
-    axios
-      .get(url2)
-      .then((res) => {
-        console.log(res);
-        setChartData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    const token = Cookies.get('Token');
-
-    axios
-      .get(url, {
-        headers: {
-          x_access_token: token,
-        },
-      })
-      .then((res) => {
-        // setChartData(res.data);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const url = process.env.REACT_APP_SERVER_URL + '/data/chart-data';
+    async function fetchData() {
+      try {
+        const response = await axios.get(url);
+        setChartData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
   }, []);
 
   return (
     <>
       <div className="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 className={theme ? 'h3 mb-0 text-light' : 'h3 mb-0 text-dark'}>
-          Hello Admin! Welcome to Dashboard
+          Welcome to Dashboard
         </h1>
       </div>
       <CardsData />
