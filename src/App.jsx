@@ -81,16 +81,7 @@ const Productdetail = lazy(() =>
 );
 
 function App() {
-  const { islogin, role } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    setIsLoading(false);
-  }, [islogin]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  const { role } = useAuth();
 
   return (
     <Suspense fallback={<LoadingFallback />}>

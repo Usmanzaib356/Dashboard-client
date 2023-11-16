@@ -5,20 +5,19 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import AuthContextProvider from './contexts/AuthContext';
 import ErrorBoundary from './ErrorBoundry/ErrorBoundry';
+import LoadingFallback from './Components/LoadingFallback';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
-    {/* <ErrorBoundary fallback="Error Occured"> */}
-     <AuthContextProvider>
+    <ErrorBoundary fallback={<LoadingFallback/>}>
+    <AuthContextProvider>
        <App  />
-     </AuthContextProvider>
-     {/* </ErrorBoundary> */}
+       </AuthContextProvider>
+     </ErrorBoundary>
     </BrowserRouter>
   
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
