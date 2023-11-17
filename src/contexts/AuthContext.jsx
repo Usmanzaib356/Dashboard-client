@@ -22,7 +22,7 @@ const AuthContextProvider = ({ children }) => {
       setIsLogin(true);
       fetchDataOnLogin()
     }
-  });
+  },[]);
 
   // const serverURL = process.env.REACT_APP_SERVER_URL
 
@@ -184,8 +184,7 @@ const AuthContextProvider = ({ children }) => {
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
-
-        setRemainingOrders(response.data.data);
+        setRemainingOrders(response.data.data)
       } catch (error) {
         console.log(error.response.data.message);
       }
