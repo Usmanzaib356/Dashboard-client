@@ -1,4 +1,4 @@
-import React, { useEffect }  from 'react';
+import React  from 'react';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 import { useAuthenticator } from '../handlers/tokenHandler';
 function InventoryIn() {
   //   Fetch Data from API
-  const { serverURL, inventoryIn, setInventoryIn,setTotalInventoryCost } = useAuth();
+  const {  inventoryIn, setInventoryIn } = useAuth();
 
   const { getHeaders } = useAuthenticator()
 
@@ -18,7 +18,7 @@ function InventoryIn() {
   const handleDelete = async (deleteInnventoryIn) => {
     try {
       const headers = getHeaders()
-      const url = serverURL + `/inventory/${deleteInnventoryIn}`;
+      const url = process.env.REACT_APP_SERVER_URL + `/inventory/${deleteInnventoryIn}`;
       await axios.delete(url, { headers });
       const updatedInventory = inventoryIn.filter((Inventory) => {
         return Inventory._id !== deleteInnventoryIn;

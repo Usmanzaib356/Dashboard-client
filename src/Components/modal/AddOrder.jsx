@@ -20,7 +20,7 @@ import Cookies from 'js-cookie';
 import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function AddOrder() {
-  const { serverURL, remainingOrders, currentUser } = useAuth();
+  const { setDispatchOrder, remainingOrders, } = useAuth();
 
   const [orderNumber, setOrderNumber] = useState('');
   const [ProductId, setProductId] = useState('');
@@ -29,7 +29,6 @@ function AddOrder() {
   const [totalAmount, setTotalAmount] = useState('');
   const [quantity, setQuantity] = useState(0);
   const [msg, setMsg] = useState('');
-  const [remainingObject, setRemainingObject] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   const order_number = useRef(null);
@@ -38,8 +37,7 @@ function AddOrder() {
   const dispatch_date = useRef(null);
   const total_amount = useRef(null);
   const order_quantity = useRef(null);
-  const centerRef = useRef(null);
-  const OrderNo = useRef(null);
+
 
   const handleShowModal = () => {
     setShowModal(true);
@@ -108,6 +106,7 @@ function AddOrder() {
         const headers = getHeaders()
         const response = await axios.post(url, json,{headers});
         console.log(response);
+        setDispatchOrder((prev)=>[...prev,response.data.data])
         setMsg('Dispatched Order has been saved successfully');
       } catch (error) {
         console.log(error);

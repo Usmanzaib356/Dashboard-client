@@ -6,7 +6,7 @@ import { useAuthenticator } from '../../handlers/tokenHandler';
 function AddSupplier() {
 
     // Context Api
-    const { serverURL, theme } = useAuth()
+    const { setSuppliers, theme } = useAuth()
     const [msg, setmsg] = useState()
 
     // Use ref
@@ -29,6 +29,7 @@ function AddSupplier() {
             }
             const response = await axios.post(url, json, { headers })
             console.log(response);
+            setSuppliers((prev)=>[...prev,response.data.data])
             setmsg("Supplier has been add successfully")
 
         } catch (error) {
@@ -89,7 +90,7 @@ function AddSupplier() {
                             <button type='submit' className='btn  btn-primary w-100'
                                 onClick={(e) => HandleAddNewSupplier(e)}
                             >
-                                Update
+                                Add
                             </button>
                         </div>
                     </div>

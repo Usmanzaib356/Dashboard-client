@@ -18,7 +18,7 @@ import axios from 'axios';
 import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function AddORemOrder() {
-  const { Products } = useAuth();
+  const { Products,setRemainingOrders } = useAuth();
   const { getHeaders } = useAuthenticator();
 
   const [currProduct, setCurrProduct] = useState(null);
@@ -95,7 +95,7 @@ function AddORemOrder() {
       try {
         const headers = getHeaders();
         const response = await axios.post(url, json, { headers });
-        console.log(response);
+        setRemainingOrders((prev)=>[...prev,response.data.data])
         setMsg('Remaining Order has been saved successfully');
         formRef.current.reset();
       } catch (error) {

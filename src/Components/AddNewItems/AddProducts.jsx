@@ -8,7 +8,7 @@ function AddProducts() {
 
 
     // Context Api
-    const { serverURL, theme } = useAuth()
+    const {theme,setProducts } = useAuth()
     const [msg, setmsg] = useState()
     const [Title, setTitle] = useState()
     const [des, setDes] = useState()
@@ -41,7 +41,7 @@ function AddProducts() {
                     imgURL: Image.current.value
                 }
                 const response = await axios.post(url, json, { headers })
-                console.log(response);
+                setProducts((prevProducts) => [...prevProducts, response.data.data]);
                 setmsg("Product has been add successfully")
                 setColor(true)
 

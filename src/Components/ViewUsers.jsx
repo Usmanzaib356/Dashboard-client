@@ -7,7 +7,7 @@ import axios from 'axios';
 function ViewUsers() {
  
   // Context Api
-  const {  serverURL, usersGet, setUsersGet } = useAuth();
+  const {   usersGet, setUsersGet } = useAuth();
 
 
 
@@ -17,7 +17,7 @@ function ViewUsers() {
   const { getHeaders } = useAuthenticator()
   const handleDelete = async (viewUsersDelete) => {
     try {
-      const url = serverURL + `/user/${viewUsersDelete}`
+      const url = process.env.REACT_APP_SERVER_URL + `/user/${viewUsersDelete}`
       const headers = getHeaders()
       const respone = await axios.delete(url, { headers })
       console.log(respone);
