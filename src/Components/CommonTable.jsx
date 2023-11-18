@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import useAuth from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
@@ -1434,26 +1433,6 @@ function CommonTable(props) {
                           <td className="sorting_1 ">{row.location}</td>
                           <td className="sorting_1 ">{row.date}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                            <Link
-                              to={`${row._id}`}
-                              className="btn btn-primary btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="View"
-                            >
-                              <i className="fa fa-eye"></i>
-                            </Link>
-                            <a
-                              href={`/edit-users/${row.id}`}
-                              className="mx-2 btn btn-success btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Edit"
-                            >
-                              <i className="fa fa-edit"></i>
-                            </a>
                             <input type="hidden" name="id" value="1" />
                             <button
                               className="btn btn-danger btn-sm  delete"
@@ -1488,16 +1467,6 @@ function CommonTable(props) {
                           </td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
                             <Link
-                              to={`${row._id}`}
-                              className="btn btn-primary btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="View"
-                            >
-                              <i className="fa fa-eye"></i>
-                            </Link>
-                            <Link
                               to={`/update-store/${row._id}`}
                               className="mx-2 btn btn-success btn-sm "
                               type="button"
@@ -1507,9 +1476,7 @@ function CommonTable(props) {
                             >
                               <i className="fa fa-edit"></i>
                             </Link>
-
                             <input type="hidden" name="id" value="1" />
-
                             <button
                               className="btn btn-danger btn-sm  delete"
                               type="button"
@@ -1590,26 +1557,6 @@ function CommonTable(props) {
                           <td>{row.total_amount}</td>
                           <td>{row.location}</td>
                           <td className="text-center d-flex align-items-center justify-content-center flex-wrap ">
-                            <Link
-                              to={`${row._id}`}
-                              className="btn btn-primary btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="View"
-                            >
-                              <i className="fa fa-eye"></i>
-                            </Link>
-                            <a
-                              href={`/edit-users/${row._id}`}
-                              className="mx-2 btn btn-success btn-sm "
-                              type="button"
-                              data-toggle="tooltip"
-                              data-placement="top"
-                              title="Edit"
-                            >
-                              <i className="fa fa-edit"></i>
-                            </a>
 
                             <input type="hidden" name="id" value="1" />
 
@@ -1689,8 +1636,6 @@ function CommonTable(props) {
                       {displayedRows.map((row, index) => {
                         const dateString = row.dispatch_date;
                         const dateParts = dateString.split('T')[0];
-                        console.log(dateParts);
-
                         return (
                           <tr
                             className={index % 2 === 0 ? 'even' : 'odd'}

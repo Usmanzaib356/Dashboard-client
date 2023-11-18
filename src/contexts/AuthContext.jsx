@@ -58,6 +58,7 @@ const AuthContextProvider = ({ children }) => {
       await fetchDataFaultyInventory();
       await fetchDataReturnInventory();
       await fetchDataGetSuppliers();
+      await fetchDataRemainingOrders();
       await fetchDatastores();
       await fetchDataremainingOrders();
       await fetchDatadispatchedOrders();
@@ -154,12 +155,26 @@ const AuthContextProvider = ({ children }) => {
       }
     };
 
+    // Get Remaning Orders
+    const fetchDataRemainingOrders = async () => {
+      const url =
+        process.env.REACT_APP_SERVER_URL + '/remaining-orders/remaining-orders';
+      try {
+        const headers = getHeaders();
+        const response = await axios.get(url, { headers });
+        setRemainingOrders(response.data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
   //  Get Suppliers
     const fetchDataGetSuppliers = async () => {
       const url = process.env.REACT_APP_SERVER_URL + '/supplier/supplier';
       try {
         const headers = getHeaders();
-        await axios.get(url, { headers });
+        const res =  await axios.get(url, { headers });
+        setSuppliers(res.data.data)
       } catch (error) {
         console.log(error);
       }

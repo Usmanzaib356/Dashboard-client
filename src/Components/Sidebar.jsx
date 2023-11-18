@@ -64,7 +64,7 @@ function Sidebar() {
                         <div className={` ${theme ? 'table-dark  ' : 'bg-white '}  py-2 collapse-inner rounded`}>
                             <h6 className="collapse-header">USERS</h6>
                             <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/view-users">View Users</Link>
-                            <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/users-role">User Roles </Link>
+                            {/* <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/users-role">User Roles </Link> */}
                         </div>
                     </div>
                 </li>
@@ -93,11 +93,11 @@ function Sidebar() {
                         <div className={`  ${theme ? 'table-dark  ' : 'bg-white '}  py-2 collapse-inner rounded`}>
                             <h6 className="collapse-header">INVENTORY</h6>
                             <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/inventory">Inventory in</Link>
-                            <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/overall-inventory">Overall Inventory</Link>
+                            {/* <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/overall-inventory">Overall Inventory</Link> */}
                             <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/faulty-inventory">Faulty Inventory</Link>
                             <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/return-inventory">Return Inventory</Link>
-                            <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/inventory-status" 
-                            >Inventory Status  </Link>
+                            {/* <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/inventory-status" 
+                            >Inventory Status  </Link> */}
                         </div>
                     </div>
                 </li>
@@ -139,7 +139,7 @@ function Sidebar() {
                     <div id="collapseThree" className="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
                         <div className={` ${theme ? 'table-dark  ' : 'bg-white '}  py-2 collapse-inner rounded`}>
                             <h6 className="collapse-header">ORDERS</h6>
-                            <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/all-orders">All Orders</Link>
+                            {/* <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/all-orders">All Orders</Link> */}
                             <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/remaining-orders">Remaining Orders </Link>
                             <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/dispatched-orders">Dispatched Orders</Link>
                             <Link className={`collapse-item ${theme ? 'text-light text-h-none-nav' : 'text-dark'} `} to="/dispatched-centers">Dispatched Centers </Link>

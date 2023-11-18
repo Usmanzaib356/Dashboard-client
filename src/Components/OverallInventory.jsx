@@ -34,23 +34,23 @@ function OverallInventory() {
 
     // Delete Function
 
-    function dlt(id) {
+    // function dlt(id) {
 
-        const url = Server_Url + "/deleteinventory"
-        const json = { id: id }
+    //     const url = Server_Url + "/deleteinventory"
+    //     const json = { id: id }
 
-        axios.post(url, json).then(
-            (res) => {
-                console.log(res);
-                setInventory(previnv => previnv.filter(inv => inv._id !== id))
-            }
-        ).catch(
-            (err) => {
-                console.log(err);
-            }
-        )
+    //     axios.post(url, json).then(
+    //         (res) => {
+    //             console.log(res);
+    //             setInventory(previnv => previnv.filter(inv => inv._id !== id))
+    //         }
+    //     ).catch(
+    //         (err) => {
+    //             console.log(err);
+    //         }
+    //     )
 
-    }
+    // }
 
     return (
         <>
