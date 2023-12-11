@@ -50,7 +50,7 @@ function Signin() {
       } catch (err) {
         setLoading(false);
         if (err.response.data.status === 'Fail') {
-          return setInvalidCred('Fuck you');
+          return setInvalidCred(err.response.data.message);
         }
         console.log(err.response.data.message);
       }
