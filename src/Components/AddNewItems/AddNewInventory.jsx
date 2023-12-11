@@ -6,7 +6,7 @@ import { useAuthenticator } from '../../handlers/tokenHandler';
 
 function AddNewInventory() {
   // Context Api
-  const { serverURL, theme, Products, suppliers } = useAuth();
+  const { setInventoryIn, theme, Products, suppliers } = useAuth();
   const [msg, setMsg] = useState('');
   const [selectedWarehouse, setSelectedWarehouse] = useState('');
   const [selectedSupplier, setSelectedSupplier] = useState('');
@@ -63,8 +63,8 @@ function AddNewInventory() {
       const headers = getHeaders();
 
       const response = await axios.post(url, data, { headers });
-
       setColor(true);
+      setInventoryIn((prev)=>[...prev,response.data.data])
       setMsg(response.data.message);
     } catch (error) {
       console.log(error);

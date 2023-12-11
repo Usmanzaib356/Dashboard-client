@@ -6,7 +6,7 @@ import axios from 'axios';
 import { useAuthenticator } from '../../handlers/tokenHandler';
 function DispatchedCenters() {
 
-    const { serverURL, dispatchCenter, setDispatchCenter, role } = useAuth()
+    const {  dispatchCenter, setDispatchCenter, role } = useAuth()
     const { getHeaders } = useAuthenticator()
 
  
@@ -14,7 +14,7 @@ function DispatchedCenters() {
     // Delete Center
     const handleDelete = async (DispatchedCenterdelete) => {
         try {
-            const url = serverURL + `/dispatched-centers/${DispatchedCenterdelete}`
+            const url = process.env.REACT_APP_SERVER_URL + `/dispatched-centers/${DispatchedCenterdelete}`
             const headers = getHeaders()
             await axios.delete(url, { headers })
             const UpdateItem = dispatchCenter.filter(item => item._id !== DispatchedCenterdelete)

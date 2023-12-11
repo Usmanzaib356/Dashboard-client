@@ -20,8 +20,9 @@ const AuthContextProvider = ({ children }) => {
     const login = Cookies.get('login');
     if (login) {
       setIsLogin(true);
+      fetchDataOnLogin()
     }
-  });
+  },[]);
 
   // const serverURL = process.env.REACT_APP_SERVER_URL
 
@@ -48,9 +49,29 @@ const AuthContextProvider = ({ children }) => {
   }, []);
 
   const { getHeaders } = useAuthenticator();
+
+  const fetchDataOnLogin = async () => {
+    try {
+      await fetchDataUser();
+      await fetchDataproducts();
+      await fetchDatainventory();
+      await fetchDataFaultyInventory();
+      await fetchDataReturnInventory();
+      await fetchDataGetSuppliers();
+      await fetchDataRemainingOrders();
+      await fetchDatastores();
+      await fetchDataremainingOrders();
+      await fetchDatadispatchedOrders();
+      await fetchDatadispatchedCenters();
+
+    } catch (error) {
+      console.error('Error fetching data on login:', error);
+    }
+  };
+
   //  Get user
-  useEffect(() => {
-    const fetchData = async () => {
+  
+    const fetchDataUser = async () => {
       const url = process.env.REACT_APP_SERVER_URL + '/user/get-users';
 
       try {
@@ -61,12 +82,9 @@ const AuthContextProvider = ({ children }) => {
         console.log(error);
       }
     };
-    fetchData();
-  }, []);
 
   // get products
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchDataproducts = async () => {
       const url = process.env.REACT_APP_SERVER_URL + '/products/product';
 
       try {
@@ -85,12 +103,9 @@ const AuthContextProvider = ({ children }) => {
         console.log(error);
       }
     };
-    fetchData();
-  }, []);
 
   // get inventory
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchDatainventory = async () => {
       const url = process.env.REACT_APP_SERVER_URL + '/inventory/inventories';
 
       try {
@@ -109,12 +124,10 @@ const AuthContextProvider = ({ children }) => {
       }
     };
 
-    fetchData();
-  }, []);
+    
 
   //  Get Faulty Inventory
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchDataFaultyInventory = async () => {
       const url =
         process.env.REACT_APP_SERVER_URL +
         '/faulty-inventory/faulty-inventories';
@@ -127,12 +140,9 @@ const AuthContextProvider = ({ children }) => {
         console.log(error);
       }
     };
-    fetchData();
-  }, []);
 
   //  Get Return Inventory
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchDataReturnInventory = async () => {
       const url =
         process.env.REACT_APP_SERVER_URL +
         '/return-inventory/return-inventories';
@@ -144,26 +154,34 @@ const AuthContextProvider = ({ children }) => {
         console.log(error);
       }
     };
-    fetchData();
-  }, []);
 
-  //  Get Suppliers
-  useEffect(() => {
-    const fetchData = async () => {
-      const url = process.env.REACT_APP_SERVER_URL + '/supplier/supplier';
+    // Get Remaning Orders
+    const fetchDataRemainingOrders = async () => {
+      const url =
+        process.env.REACT_APP_SERVER_URL + '/remaining-orders/remaining-orders';
       try {
         const headers = getHeaders();
-        await axios.get(url, { headers });
+        const response = await axios.get(url, { headers });
+        setRemainingOrders(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
-    fetchData();
-  }, []);
+
+  //  Get Suppliers
+    const fetchDataGetSuppliers = async () => {
+      const url = process.env.REACT_APP_SERVER_URL + '/supplier/supplier';
+      try {
+        const headers = getHeaders();
+        const res =  await axios.get(url, { headers });
+        setSuppliers(res.data.data)
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   // get stores
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchDatastores = async () => {
       const url = process.env.REACT_APP_SERVER_URL + '/stores/stores';
       try {
         const headers = getHeaders();
@@ -174,30 +192,22 @@ const AuthContextProvider = ({ children }) => {
       }
     };
 
-    fetchData();
-  }, []);
-
   // get remaining-orders
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchDataremainingOrders = async () => {
       const url =
         process.env.REACT_APP_SERVER_URL + '/remaining-orders/remaining-orders';
       try {
         const headers = getHeaders();
         const response = await axios.get(url, { headers });
-
-        setRemainingOrders(response.data.data);
+        setRemainingOrders(response.data.data)
       } catch (error) {
         console.log(error.response.data.message);
       }
     };
 
-    fetchData();
-  }, []);
 
   // get dispatched-orders
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchDatadispatchedOrders = async () => {
       const url =
         process.env.REACT_APP_SERVER_URL +
         '/dispatched-orders/dispatched-orders';
@@ -218,12 +228,8 @@ const AuthContextProvider = ({ children }) => {
       }
     };
 
-    fetchData();
-  }, []);
-
   // get dispatched-centers
-  useEffect(() => {
-    const fetchData = async () => {
+    const fetchDatadispatchedCenters = async () => {
       const url =
         process.env.REACT_APP_SERVER_URL +
         '/dispatched-centers/dispatched-centers';
@@ -235,9 +241,6 @@ const AuthContextProvider = ({ children }) => {
         console.log(error);
       }
     };
-
-    fetchData();
-  }, []);
 
   return (
     <AuthContext.Provider

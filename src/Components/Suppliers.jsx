@@ -9,7 +9,7 @@ import { useAuthenticator } from '../handlers/tokenHandler';
 function Suppliers() {
 
     // Context Api
-    const { serverURL, suppliers, setSuppliers } = useAuth()
+    const {  suppliers, setSuppliers } = useAuth()
 
     const { getHeaders } = useAuthenticator()
 
@@ -19,7 +19,7 @@ function Suppliers() {
     const handleDelete = async (deleteSupplier) => {
         try {
             const headers = getHeaders()
-            const url = serverURL + `/supplier/${deleteSupplier}`
+            const url = process.env.REACT_APP_SERVER_URL + `/supplier/${deleteSupplier}`
             await axios.delete(url, { headers })
             const UpdateItem = suppliers.filter(item => item._id !== deleteSupplier)
             setSuppliers(UpdateItem)

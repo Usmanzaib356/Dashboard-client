@@ -7,7 +7,7 @@ import { useAuthenticator } from '../../handlers/tokenHandler';
 function AddUser() {
 
 
-    const { dispatchCenter,serverURL } = useAuth()
+    const { dispatchCenter,setUsersGet } = useAuth()
 
 
     // Modal 
@@ -71,7 +71,8 @@ function AddUser() {
             }
             const headers = getHeaders()
             const res =  await axios.post(url, json,{headers})
-            console.log(res);
+            setUsersGet((prev)=>[...prev,res.data.data])
+            console.log(res.data.data);
             setMsg("User has been add successfully")
         } catch (error) {
             console.log(error);

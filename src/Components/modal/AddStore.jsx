@@ -7,7 +7,7 @@ function AddStore() {
 
     const [showModal, setShowModal] = useState(false);
     const [msg, setMsg] = useState('');
-    const { serverURL } = useAuth()
+    const { setStore } = useAuth()
 
 
     const handleShowModal = () => {
@@ -31,7 +31,8 @@ function AddStore() {
                 store_name: StoreName.current.value,
                 status: status.current.value
             }
-             await axios.post(url, json)
+            const response =  await axios.post(url, json)
+            setStore((prev)=>[...prev,response.data.data])
             setMsg("Store has been add successfully")
         } catch (error) {
             console.log(error);

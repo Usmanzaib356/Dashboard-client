@@ -8,7 +8,7 @@ import axios from 'axios';
 
 function FaultyInventoryMechanism() {
     // Context Api
-    const { serverURL,returnInventory, setReturnInventory} = useAuth()
+    const { returnInventory, setReturnInventory} = useAuth()
     const { getHeaders } = useAuthenticator()
 
     
@@ -17,7 +17,7 @@ function FaultyInventoryMechanism() {
   // Delete Center
   const handleDelete = async (deleteReturnInventory) => {
       try {
-          const url = serverURL + `/return-inventory/${deleteReturnInventory}`
+          const url = process.env.REACT_APP_SERVER_URL + `/return-inventory/${deleteReturnInventory}`
           const headers = getHeaders()
           await axios.delete(url, { headers })
           const UpdateItem = returnInventory.filter(item => item._id !== deleteReturnInventory)
