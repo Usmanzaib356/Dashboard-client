@@ -11,7 +11,7 @@ function Signin() {
 
   const naviagte = useNavigate();
 
-  const { serverURL, setIsLogin, setCurrentUser, setRole } = useAuth();
+  const { setIsLogin, setCurrentUser, setRole } = useAuth();
 
   const email = useRef();
   const password = useRef();
