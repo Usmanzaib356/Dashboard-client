@@ -7,6 +7,7 @@ function Signin() {
   const [loading, setLoading] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [invalidCred, setInvalidCred] = useState('');
   // const [color, setColor] = useState(false);
 
   const naviagte = useNavigate();
@@ -31,7 +32,6 @@ function Signin() {
       try {
         const response = await axios.post(url, json);
         setLoading(false);
-
         setCurrentUser(response.data.user);
         const token = response.data.token;
         const expirationTime = new Date();
@@ -46,13 +46,13 @@ function Signin() {
         });
         setRole(response.data.user.role);
         setIsLogin(true);
-        // setColor(true);
         naviagte('/');
       } catch (err) {
-        console.log(err);
-        // setColor(false);
-      } finally {
         setLoading(false);
+        if (err.response.data.status === 'Fail') {
+          return setInvalidCred('Fuck you');
+        }
+        console.log(err.response.data.message);
       }
     }
   }
@@ -116,6 +116,7 @@ function Signin() {
                 placeholder="Password"
               />
               <p className="error-message text-danger">{passwordError}</p>
+              <p className="error-message text-danger">{invalidCred}</p>
               {/* <p
                 className={`text-left ${
                   color ? 'text-success' : 'text-danger'
